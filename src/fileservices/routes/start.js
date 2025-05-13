@@ -115,22 +115,10 @@ var SMB2 = require('smb2'); // We use this to view and maintain the external fil
 
 var router = express.Router();
 
-//var sendgridApiKey = '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';
-//var sendgrid = require('sendgrid')(sendgridApiKey);
-
-var sendgridApiKey = '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';
-//var sendgrid = require('sendgrid')(sendgridApiKey);
-var sendgrid = require('@sendgrid/mail');
-sendgrid.setApiKey(sendgridApiKey);
 
 const EmailValidator = require("email-validator");
 
-//const Vonage = require('@vonage/server-sdk');
 
-//const vonage = new Vonage({
-//    apiKey: "d1352aea",
-//    apiSecret: "GRbOiynTNdR83jmr"
-//});
 
 const checkDiskSpace = require('check-disk-space').default;
 
