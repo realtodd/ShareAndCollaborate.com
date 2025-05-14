@@ -26,6 +26,17 @@
             for the JavaScript code in this page.
         */
 
+
+        webservicesUrl: null,
+        webservicesPort: null,
+        websiteUrl: null,
+        websitePort: null,
+
+
+
+
+
+
         LeftMenuWidth: '250px', // This is the default, until we figure out device sizing and left top org circle sizing diameter etc. 7-20-2023.
         LeftMenuFontSize: '12pt',
         //LeftMenuWidth: null, //'125px',
@@ -45,7 +56,7 @@
         this.element.addClass("bwActiveMenu_Main");
         var thiz = this; // Need this because of the asynchronous operations below.
         try {
-            
+
 
 
 
@@ -64,6 +75,11 @@
             if (this.options.HomePage == true) {
                 this.renderHomePage();
             }
+
+            setTimeout(function () {
+                thiz.displayStatusOfWebServices();
+            }, 5000);
+            
 
             this.options.HasBeenInitialized = true;
             console.log('In bwActiveMenu_Main._create(). The widget has been initialized.');
@@ -92,6 +108,42 @@
             .removeClass("bwActiveMenu_Main")
             .text("");
     },
+    updateWebservicesUri: function () {
+        try {
+            console.log('In bwActiveMenu_Main.js.updateWebservicesUri().');
+
+            //var uri = $('#textWebservicesUri').val();
+
+            $('#textWebservicesUri').val('');
+
+            //alert('In bwActiveMenu_Main.js.updateWebservicesUri(). CALLING ipcRenderer.send(ping-good).'); // uri: ' + uri);
+
+
+            // Receive reply from elecron
+            // See file main.js on line 37
+            ipcRenderer.on('ping-good-reply', (event, response) => {
+                //document.getElementById('ping-good-response').innerText = response
+                $('#textWebservicesUri').val(response);
+            })
+
+            ipcRenderer.send('ping-good', 'ping');
+
+
+
+
+
+
+            ////ipc.send('asynchronous-message', 'ping')
+
+            //const filePath = window.electronAPI.openFile();
+            //$('#textWebservicesUri').val(filePath);
+            ////filePathElement.innerText = filePath;
+
+        } catch (e) {
+            console.log('Exception in bwActiveMenu_Main.js.updateWebservicesUri(): ' + e.message + ', ' + e.stack);
+            alert('Exception in bwActiveMenu_Main.js.updateWebservicesUri(): ' + e.message + ', ' + e.stack);
+        }
+    },
     renderHomePage: function () {
         try {
             console.log('In bwActiveMenu_Main.js.renderHomePage().');
@@ -100,136 +152,138 @@
             this.options.HomePage = true;
             this.renderMenu();
 
+           
+
         } catch (e) {
             console.log('Exception in bwActiveMenu_Main.js.renderHomePage(): ' + e.message + ', ' + e.stack);
             this.displayAlertDialog('Exception in bwActiveMenu_Main.js.renderHomePage(): ' + e.message + ', ' + e.stack);
         }
     },
 
-displayAlertDialog: function (errorMessage, displayDialog) {
-    try {
+    displayAlertDialog: function (errorMessage, displayDialog) {
+        try {
 
-        // Added this here so we always get the error message. 7-17-2023.
+            // Added this here so we always get the error message. 7-17-2023.
 
-        //displayAlertDialog_Persistent(errorMessage);
+            //displayAlertDialog_Persistent(errorMessage);
 
-        console.log('');
-        console.log('>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<');
-        console.log('>>>>>>>>>>>>> In index.js.displayAlertDialog().');
-        console.log('>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<');
-        console.log('');
-        //alert('In index.js.displayAlertDialog().');
+            console.log('');
+            console.log('>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<');
+            console.log('>>>>>>>>>>>>> In index.js.displayAlertDialog().');
+            console.log('>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<');
+            console.log('');
+            //alert('In index.js.displayAlertDialog().');
 
-        if (errorMessage) { // Don't do anything if there is no message.
-            //hideWorkingOnItDialog();
+            if (errorMessage) { // Don't do anything if there is no message.
+                //hideWorkingOnItDialog();
 
-            try {
-                //debugger;
-                WriteToErrorLog('displayAlertDialog()', errorMessage);
-            } catch (e) {
-                // alert('Error writing to error log in displayAlertDialog: ' + e.message);
-            }
-
-            if (displayDialog == false) {
-                // Do nothing. Do not display.
-            } else {
-                // First we have to check if it is displayed already.
-                var isDisplayed = false;
-                //if ($("#dialog-divAlertDialog").hasClass("ui-dialog-content") && $("#dialog-divAlertDialog").dialog("isOpen")) {
-                if ($("#divAlertDialog").hasClass("ui-dialog-content") && $("#divAlertDialog").dialog("isOpen")) {
-                    // This first checks that the dialog has been initialized, then it checks if it is open.
-                    isDisplayed = true;
+                try {
+                    //debugger;
+                    WriteToErrorLog('displayAlertDialog()', errorMessage);
+                } catch (e) {
+                    // alert('Error writing to error log in displayAlertDialog: ' + e.message);
                 }
 
-                if (isDisplayed == false) { // NOTE: This blocks the next alert from showing.
-                    // First we have to show the dialog box.
-                    //$("#divAlertDialog").dialog({
-                    //    modal: true,
-                    //    resizable: false,
-                    //    //closeText: "Cancel",
-                    //    closeOnEscape: false, // Hit the ESC key to hide! Yeah!
-                    //    title: 'Alert',
-                    //    width: "720",
-                    //    dialogClass: "no-close", // No close button in the upper right corner.
-                    //    hide: false,//, // This means when hiding just disappear with no effects.
-                    //    //buttons: {
-                    //    //    "Close": function () {
-                    //    //        $(this).dialog("close");
-                    //    //    }
-                    //    //}
-                    //    open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#divAlertDialog").dialog('close');});} // This allows the dialog to close when clicked outside of the dialog. Only works for modal dialogs.
-                    //});
-                    //$("#divAlertDialog").dialog().parents(".ui-dialog").find(".ui-dialog-titlebar").remove();
-                    try {
-                        if (errorMessage.toString().toUpperCase().indexOf("SERVICE UNAVAILABLE") > -1 || errorMessage.toString().toUpperCase().indexOf("BACKEND FETCH FAILED") > -1 || errorMessage.toString().toUpperCase().indexOf("ERROR RENDERING") > -1 || errorMessage.toString().toUpperCase().indexOf("UNDEFINED IS NOT AN OBJECT") > -1 || errorMessage.toString().toUpperCase().indexOf("NULL IS NOT AN OBJECT") > -1) {
-                            //debugger;
-                            try {
-                                $("#divAlertDialog").dialog('close'); // Close the existing alert dialog.
-                            } catch (e) {
-                                // do nothing
+                if (displayDialog == false) {
+                    // Do nothing. Do not display.
+                } else {
+                    // First we have to check if it is displayed already.
+                    var isDisplayed = false;
+                    //if ($("#dialog-divAlertDialog").hasClass("ui-dialog-content") && $("#dialog-divAlertDialog").dialog("isOpen")) {
+                    if ($("#divAlertDialog").hasClass("ui-dialog-content") && $("#divAlertDialog").dialog("isOpen")) {
+                        // This first checks that the dialog has been initialized, then it checks if it is open.
+                        isDisplayed = true;
+                    }
+
+                    if (isDisplayed == false) { // NOTE: This blocks the next alert from showing.
+                        // First we have to show the dialog box.
+                        //$("#divAlertDialog").dialog({
+                        //    modal: true,
+                        //    resizable: false,
+                        //    //closeText: "Cancel",
+                        //    closeOnEscape: false, // Hit the ESC key to hide! Yeah!
+                        //    title: 'Alert',
+                        //    width: "720",
+                        //    dialogClass: "no-close", // No close button in the upper right corner.
+                        //    hide: false,//, // This means when hiding just disappear with no effects.
+                        //    //buttons: {
+                        //    //    "Close": function () {
+                        //    //        $(this).dialog("close");
+                        //    //    }
+                        //    //}
+                        //    open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#divAlertDialog").dialog('close');});} // This allows the dialog to close when clicked outside of the dialog. Only works for modal dialogs.
+                        //});
+                        //$("#divAlertDialog").dialog().parents(".ui-dialog").find(".ui-dialog-titlebar").remove();
+                        try {
+                            if (errorMessage.toString().toUpperCase().indexOf("SERVICE UNAVAILABLE") > -1 || errorMessage.toString().toUpperCase().indexOf("BACKEND FETCH FAILED") > -1 || errorMessage.toString().toUpperCase().indexOf("ERROR RENDERING") > -1 || errorMessage.toString().toUpperCase().indexOf("UNDEFINED IS NOT AN OBJECT") > -1 || errorMessage.toString().toUpperCase().indexOf("NULL IS NOT AN OBJECT") > -1) {
+                                //debugger;
+                                try {
+                                    $("#divAlertDialog").dialog('close'); // Close the existing alert dialog.
+                                } catch (e) {
+                                    // do nothing
+                                }
+
+
+
+
+                                //
+                                // Commented this out 5-14-2023.
+                                //
+                                connectionTimerObject = setInterval(function () {
+                                    $('.bwAuthentication:first').bwAuthentication('checkConnectionAndRemoveBlueBarErrorMessage');
+                                }, 6000);
+
+
+
+
+
+
+
+                                // This code pops up the modal dialog. I am converting to an Alert! link in the top blue bar because it is less intrusive.
+                                //var html = '';
+                                //html += 'We apologize! It looks like our servers are unavailable at the moment.';
+                                //document.getElementById('spanErrorMessage').innerHTML = html;
+                                //// We are hiding this when the renderAlerts() successfully repaint the screen...this means communication has been re-established.
+                                //connectionTimerObject = setInterval('checkConnectionAndRemoveAlertDialog()', 6000);
+                            } else {
+
+
+                                $("#divAlertDialog").dialog({
+                                    modal: true,
+                                    resizable: false,
+                                    //closeText: "Cancel",
+                                    closeOnEscape: false, // Hit the ESC key to hide! Yeah!
+                                    title: 'Alert',
+                                    width: "720",
+                                    dialogClass: "no-close", // No close button in the upper right corner.
+                                    hide: false,//, // This means when hiding just disappear with no effects.
+                                    //buttons: {
+                                    //    "Close": function () {
+                                    //        $(this).dialog("close");
+                                    //    }
+                                    //}
+                                    open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#divAlertDialog").dialog('close'); }); } // This allows the dialog to close when clicked outside of the dialog. Only works for modal dialogs.
+                                });
+                                $("#divAlertDialog").dialog().parents(".ui-dialog").find(".ui-dialog-titlebar").remove();
+
+                                document.getElementById('spanErrorMessage').innerHTML = errorMessage;
+
                             }
-
-
-
-
-                            //
-                            // Commented this out 5-14-2023.
-                            //
-                            connectionTimerObject = setInterval(function () {
-                                $('.bwAuthentication:first').bwAuthentication('checkConnectionAndRemoveBlueBarErrorMessage');
-                            }, 6000);
-
-
-
-
-
-
-
-                            // This code pops up the modal dialog. I am converting to an Alert! link in the top blue bar because it is less intrusive.
-                            //var html = '';
-                            //html += 'We apologize! It looks like our servers are unavailable at the moment.';
-                            //document.getElementById('spanErrorMessage').innerHTML = html;
-                            //// We are hiding this when the renderAlerts() successfully repaint the screen...this means communication has been re-established.
-                            //connectionTimerObject = setInterval('checkConnectionAndRemoveAlertDialog()', 6000);
-                        } else {
-
-
-                            $("#divAlertDialog").dialog({
-                                modal: true,
-                                resizable: false,
-                                //closeText: "Cancel",
-                                closeOnEscape: false, // Hit the ESC key to hide! Yeah!
-                                title: 'Alert',
-                                width: "720",
-                                dialogClass: "no-close", // No close button in the upper right corner.
-                                hide: false,//, // This means when hiding just disappear with no effects.
-                                //buttons: {
-                                //    "Close": function () {
-                                //        $(this).dialog("close");
-                                //    }
-                                //}
-                                open: function (event, ui) { $('.ui-widget-overlay').bind('click', function () { $("#divAlertDialog").dialog('close'); }); } // This allows the dialog to close when clicked outside of the dialog. Only works for modal dialogs.
-                            });
-                            $("#divAlertDialog").dialog().parents(".ui-dialog").find(".ui-dialog-titlebar").remove();
-
-                            document.getElementById('spanErrorMessage').innerHTML = errorMessage;
-
+                        } catch (e) {
+                            console.log('In xcx3423542345-2. ' + e.message + ', ' + e.stack);
+                            displayAlertDialog('In xcx3423542345-2. ' + e.message + ', ' + e.stack);
                         }
-                    } catch (e) {
-                        console.log('In xcx3423542345-2. ' + e.message + ', ' + e.stack);
-                        displayAlertDialog('In xcx3423542345-2. ' + e.message + ', ' + e.stack);
                     }
                 }
             }
+        } catch (e) {
+            console.log('In xcx3423542345-1. ' + e.message + ', ' + e.stack);
+            //this.displayAlertDialog('In xcx3423542345-1. ' + e.message + ', ' + e.stack);
         }
-    } catch (e) {
-        console.log('In xcx3423542345-1. ' + e.message + ', ' + e.stack);
-        //this.displayAlertDialog('In xcx3423542345-1. ' + e.message + ', ' + e.stack);
-    }
-},
+    },
 
 
-expandOrCollapseAlertsSection: function (rowId, imageId, collapsibleRowId, drawerType, source) {
+    expandOrCollapseAlertsSection: function (rowId, imageId, collapsibleRowId, drawerType, source) {
         try {
             console.log('In bwActiveMenu_Main.js.expandOrCollapseAlertsSection(' + rowId + ', ' + imageId + ', ' + collapsibleRowId + ', drawerType: ' + drawerType + ').');
             //alert('In bwActiveMenu_Main.js.expandOrCollapseAlertsSection(' + rowId + ', ' + imageId + ', ' + collapsibleRowId + ', drawerType: ' + drawerType + ').');
@@ -275,7 +329,7 @@ expandOrCollapseAlertsSection: function (rowId, imageId, collapsibleRowId, drawe
                                 }
                             }
 
-                            
+
                             $(accordionDrawerElement).html('');
 
                             var elementId = $(accordionDrawerElement).attr('id'); // divBwExecutiveSummariesCarousel_PinnedRequests
@@ -1100,7 +1154,7 @@ expandOrCollapseAlertsSection: function (rowId, imageId, collapsibleRowId, drawe
             var topBlueBar_Height = rect.bottom - rect.top;
             height = Math.round(height - topBlueBar_Height);
 
-var developerModeEnabled = false;
+            var developerModeEnabled = false;
             // 1-2-2022
             //var developerModeEnabled = $('.bwAuthentication').bwAuthentication('option', 'developerModeEnabled');
             //if (developerModeEnabled == true) {
@@ -2185,7 +2239,7 @@ var developerModeEnabled = false;
             console.log('In bwActiveMenu_Main.js.renderHomeScreen().');
 
 
-            
+
 
             var userIsATenantOwner = $('.bwAuthentication').bwAuthentication('option', 'userIsATenantOwner');
             var iData = $('.bwAuthentication').bwAuthentication('option', 'iData');
@@ -2711,11 +2765,133 @@ var developerModeEnabled = false;
             //this.options.HomePage = false;
             this.renderMenu();
 
+            this.callIpcAndPopulateValues();
+
         } catch (e) {
             console.log('Exception in bwActiveMenu_Main.js.renderHomePage(): ' + e.message + ', ' + e.stack);
             displayAlertDialog('Exception in bwActiveMenu_Main.js.renderHomePage(): ' + e.message + ', ' + e.stack);
         }
     },
+    callIpcAndPopulateValues: function () {
+        try {
+            console.log('In bwActiveMenu_Main.js.callIpcAndPopulateValues().');
+            var thiz = this;
+
+            // Receive reply from elecron
+            // See file main.js on line 37
+            ipcRenderer.on('retrieve-current-values-reply', (event, response) => {
+
+                console.log('In bwActiveMenu_Main.js.callIpcAndPopulateValues(). RESPONSE RECEIVED xcx231: ' + JSON.stringify(response));
+
+                // website
+                thiz.options.websiteUrl = response.websiteUri.url;
+                thiz.options.websitePort = response.websiteUri.port;
+                $('#spanWebsitePort').val(thiz.options.websitePort);
+                var websiteUrl = thiz.options.websiteUrl + ':' + thiz.options.websitePort;
+                var html = `<a href="` + websiteUrl + `" target="_blank">` + websiteUrl + `</a>`;
+                $('#spanWebsiteLink').html(html);
+                thiz.expandOrCollapseAlertsSection('functionalAreaRow_0_2', 'alertSectionImage_0_2', 'alertSectionRow_0_2', 'PINNED_REQUESTS');
+
+                // webservices
+                thiz.options.webservicesUrl = response.webservicesUri.url;
+                thiz.options.webservicesPort = response.webservicesUri.port;
+                $('#spanWebservicesPort').val(thiz.options.webservicesPort);
+                thiz.expandOrCollapseAlertsSection('functionalAreaRow_0_3', 'alertSectionImage_0_3', 'alertSectionRow_0_3', 'PINNED_REQUESTS');
+
+                // fileservices
+                thiz.options.fileservicesUrl = response.fileservicesUri.url;
+                thiz.options.fileservicesPort = response.fileservicesUri.port;
+                $('#spanFileservicesPort').val(thiz.options.fileservicesPort);
+                thiz.expandOrCollapseAlertsSection('functionalAreaRow_0_4', 'alertSectionImage_0_4', 'alertSectionRow_0_4', 'PINNED_REQUESTS');
+                
+
+
+            })
+
+            ipcRenderer.send('retrieve-current-values', 'ping');
+
+        } catch (e) {
+            console.log('Exception in bwActiveMenu_Main.js.callIpcAndPopulateValues(): ' + e.message + ', ' + e.stack);
+            displayAlertDialog('Exception in bwActiveMenu_Main.js.callIpcAndPopulateValues(): ' + e.message + ', ' + e.stack);
+        }
+    },
+    displayStatusOfWebServices: function () {
+        try {
+            console.log('In bwActiveMenu_Main.js.displayStatusOfWebServices().');
+            var thiz = this;
+
+            var operationUri = thiz.options.webservicesUrl + ':' + thiz.options.webservicesPort + "/_bw/getstatusofwebservices";
+            $.ajax({
+                url: operationUri,
+                type: "GET",
+                contentType: 'application/json',
+                success: function (data) {
+                    var html = '';
+                    if (data == 'SUCCESS') {
+                        // Green.
+                        html += '<span style="color:#009933;">' + 'responding' + '</span>';
+
+                        $('#buttonStartStopWebServices').val('Stop Web Services');
+
+                    } else {
+                        // Red.
+                        html += '<span style="color:#ff0000;">' + data + '</span>';
+
+                        $('#buttonStartStopWebServices').val('Start Web Services');
+
+                    }
+                    document.getElementById('spanWebservicesStatus').innerHTML = html;
+
+                    
+
+                },
+                error: function (data, errorCode, errorMessage) {
+                    // Red.
+                    var html = '';
+                    html += '<span style="color:#ff0000;">' + errorMessage + '</span>';
+                    document.getElementById('spanAttachmentsServerStatus').innerHTML = html;
+                }
+            });
+
+            var operationUri = thiz.options.fileservicesUrl + ':' + thiz.options.fileservicesPort + "/_files/getstatusoffileservices";
+            $.ajax({
+                url: operationUri,
+                type: "GET",
+                contentType: 'application/json',
+                success: function (data) {
+                    var html = '';
+                    if (data == 'SUCCESS') {
+                        // Green.
+                        html += '<span style="color:#009933;">' + 'responding' + '</span>';
+
+                        $('#buttonStartStopFileServices').val('Stop Web Services');
+
+                    } else {
+                        // Red.
+                        html += '<span style="color:#ff0000;">' + data + '</span>';
+
+                        $('#buttonStartStopFileServices').val('Start Web Services');
+
+                    }
+                    document.getElementById('spanFileservicesStatus').innerHTML = html;
+
+
+
+                },
+                error: function (data, errorCode, errorMessage) {
+                    // Red.
+                    var html = '';
+                    html += '<span style="color:#ff0000;">' + errorMessage + '</span>';
+                    document.getElementById('spanAttachmentsServerStatus').innerHTML = html;
+                }
+            });
+
+        } catch (e) {
+            console.log('Exception in bwActiveMenu_Main.js.displayStatusOfWebServices(): ' + e.message + ', ' + e.stack);
+            displayAlertDialog('Exception in bwActiveMenu_Main.js.displayStatusOfWebServices(): ' + e.message + ', ' + e.stack);
+        }
+    },
+
 
     txtOrganizationPickerDropdown_OnKeyup: function (elementId) {
         try {
@@ -2933,7 +3109,7 @@ var developerModeEnabled = false;
                 //console.log('In bwActiveMenu_Main.js.renderMenu(). Rendering the menu with theme: ' + workflowAppTheme);
                 //alert('In bwActiveMenu_Main.js.renderMenu(). Rendering the menu with theme: ' + workflowAppTheme);
 
-var workflowAppTheme = 'brushedAluminum_orange';
+                var workflowAppTheme = 'brushedAluminum_orange';
 
                 var html = '';
 
@@ -2983,7 +3159,7 @@ var workflowAppTheme = 'brushedAluminum_orange';
                 //if (developerModeEnabled == true) {
                 //    html += '                <div class="' + workflowAppTheme + '_noanimation noanimation" style="border-radius:0 26px 26px 0;width: 30px; float:left; height:49px; background-color:darkgray; ">xcx2132-1</div>';
                 //} else {
-                    html += '                <div class="' + workflowAppTheme + '_noanimation noanimation" style="border-radius:0 26px 26px 0;width: 30px; float:left; height:49px; background-color:darkgray; "></div>';
+                html += '                <div class="' + workflowAppTheme + '_noanimation noanimation" style="border-radius:0 26px 26px 0;width: 30px; float:left; height:49px; background-color:darkgray; "></div>';
                 //}
                 html += '            </td>';
 
@@ -3305,9 +3481,11 @@ var workflowAppTheme = 'brushedAluminum_orange';
 
                 //this.renderHomePageContent();
 
+                html = '';
 
+                html += '<script type="text/javascript" src="bwMonitoringTools_Main.js"></script>';
 
-html = `    <span style="font-size:20pt;">Your self-hosted network software social & organization space, with file-sharing, email, calendaring, collaboration, and more.</span>
+                html += `    <span style="font-size:20pt;">Your self-hosted network software social & organization space, with file-sharing, email, calendaring, collaboration, and more.</span>
     <br />
     <br />
     
@@ -3317,10 +3495,11 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
     <table id="tblHomePageAlertSectionForWorkflow0" style="cursor:default;">
     <tbody>
         <tr id="functionalAreaRow_0_1" class="bwFunctionalAreaRow bwNoUserSelect">
-            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6');"></td>
-            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6', 'PINNED_REQUESTS');">   <img title="expand" id="alertSectionImage_0_6" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
+            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_1', 'alertSectionImage_0_1', 'alertSectionRow_0_1');"></td>
+            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_1', 'alertSectionImage_0_1', 'alertSectionRow_0_1', 'PINNED_REQUESTS');">   
+                <img title="expand" id="alertSectionImage_0_1" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
                 &nbsp;<input style="transform: scale(2);" type="checkbox">
-                &nbsp;<span class="bwNoUserSelect bwAccordionDrawerTitle">Primary/Master           </span>       
+                &nbsp;<span class="bwNoUserSelect bwAccordionDrawerTitle">Primary/Master</span><span>&nbsp&nbsp:: URI for connecting from other computers running this software. http://192.168.0.25:8080</span>       
             </td>   
         </tr>   
         <tr id="alertSectionRow_0_1" style="display:none;">       
@@ -3330,7 +3509,7 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
                 <tbody>
                     <tr>
                         <td></td>
-                        <td>
+                        <td style="padding:0 0 0 100px;">
                             <div id="divBwExecutiveSummariesCarousel_PinnedRequests" class="bwAccordionDrawer" bwaccordiondrawertype="PINNED_REQUESTS" style="display: inline;">
                                 TODD xcx23542436543
                             </div>
@@ -3342,8 +3521,9 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
         </tr>   
 
         <tr id="functionalAreaRow_0_2" class="bwFunctionalAreaRow bwNoUserSelect">
-            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6');"></td>
-            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6', 'PINNED_REQUESTS');">   <img title="expand" id="alertSectionImage_0_6" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
+            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_2', 'alertSectionImage_0_2', 'alertSectionRow_0_2');"></td>
+            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_2', 'alertSectionImage_0_2', 'alertSectionRow_0_2', 'PINNED_REQUESTS');">   
+                <img title="expand" id="alertSectionImage_0_2" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
                 &nbsp;<input style="transform: scale(2);" type="checkbox">
                 &nbsp;<span class="bwNoUserSelect bwAccordionDrawerTitle">Website           </span>       
             </td>   
@@ -3355,9 +3535,16 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
                 <tbody>
                     <tr>
                         <td></td>
-                        <td>
+                        <td style="padding:0 0 0 100px;">
                             <div id="divBwExecutiveSummariesCarousel_PinnedRequests" class="bwAccordionDrawer" bwaccordiondrawertype="WEBSITE" style="display: inline;">
-                                TODD xcx23542436543
+                                
+
+                                    <span>http://localhost:</span><input id="spanWebsitePort" type="text" style="width:40px;" />&nbsp;&nbsp;<input type="button" value="Change Port" />
+                                    <br />
+                                    <input id="buttonStartStopWebSite" type="button" value="Start Web Site" style="float:right;" />
+                                    <br />
+                                    <span id="spanWebsiteStatus" style="font-weight:bold;color:tomato;">NOT RUNNING</span>&nbsp;&nbsp;<input type="button" value="Refresh Status" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayStatusOfWebSite');" />
+                               
                             </div>
                         </td>
                     </tr>
@@ -3367,8 +3554,9 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
         </tr>   
 
         <tr id="functionalAreaRow_0_3" class="bwFunctionalAreaRow bwNoUserSelect">
-            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6');"></td>
-            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6', 'PINNED_REQUESTS');">   <img title="expand" id="alertSectionImage_0_6" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
+            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_3', 'alertSectionImage_0_3', 'alertSectionRow_0_3');"></td>
+            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_3', 'alertSectionImage_0_3', 'alertSectionRow_0_3', 'PINNED_REQUESTS');">   
+                <img title="expand" id="alertSectionImage_0_3" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
                 &nbsp;<input style="transform: scale(2);" type="checkbox">
                 &nbsp;<span class="bwNoUserSelect bwAccordionDrawerTitle">Web services           </span>       
             </td>   
@@ -3380,9 +3568,18 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
                 <tbody>
                     <tr>
                         <td></td>
-                        <td>
+                        <td style="padding:0 0 0 100px;">
                             <div id="divBwExecutiveSummariesCarousel_PinnedRequests" class="bwAccordionDrawer" bwaccordiondrawertype="WEB_SERVICES" style="display: inline;">
-                                TODD xcx23542436543
+                          
+
+                                    <span>http://localhost:</span><input id="spanWebservicesPort" type="text" style="width:40px;" />&nbsp;&nbsp;<input type="button" value="Change Port" />
+                                    <br />
+                                    <input id="buttonStartStopWebServices" type="button" value="Start Web Services" style="float:right;" />
+                                    <br />
+                                    <input type="button" value="View Console" style="float:right;" />
+                                    <br />
+                                    <span id="spanWebservicesStatus" style="font-weight:bold;color:tomato;">NOT RUNNING</span>&nbsp;&nbsp;<input type="button" value="Refresh Status" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayStatusOfWebServices');" />
+                               
                             </div>
                         </td>
                     </tr>
@@ -3392,8 +3589,9 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
         </tr>   
 
         <tr id="functionalAreaRow_0_4" class="bwFunctionalAreaRow bwNoUserSelect">
-            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6');"></td>
-            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6', 'PINNED_REQUESTS');">   <img title="expand" id="alertSectionImage_0_6" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
+            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_4', 'alertSectionImage_0_4', 'alertSectionRow_0_4');"></td>
+            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_4', 'alertSectionImage_0_4', 'alertSectionRow_0_4', 'PINNED_REQUESTS');">   
+                <img title="expand" id="alertSectionImage_0_4" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
                 &nbsp;<input style="transform: scale(2);" type="checkbox">
                 &nbsp;<span class="bwNoUserSelect bwAccordionDrawerTitle">File services           </span>       
             </td>   
@@ -3405,9 +3603,17 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
                 <tbody>
                     <tr>
                         <td></td>
-                        <td>
+                        <td style="padding:0 0 0 100px;">
                             <div id="divBwExecutiveSummariesCarousel_PinnedRequests" class="bwAccordionDrawer" bwaccordiondrawertype="FILE_SERVICES" style="display: inline;">
-                                TODD xcx23542436543
+                                
+                                    <span>http://localhost:</span><input id="spanFileservicesPort" type="text" style="width:40px;" />&nbsp;&nbsp;<input type="button" value="Change Port" />
+                                    <br />
+                                    <input id="buttonStartStopFileServices" type="button" value="Start File Services" style="float:right;" />
+                                    <br />
+                                    <input type="button" value="View Console" style="float:right;" />
+                                    <br />
+                                    <span id="spanFileservicesStatus" style="font-weight:bold;color:tomato;">NOT RUNNING</span>&nbsp;&nbsp;<input type="button" value="Refresh Status" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayStatusOfWebServices');" />
+                               
                             </div>
                         </td>
                     </tr>
@@ -3417,8 +3623,9 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
         </tr>   
 
         <tr id="functionalAreaRow_0_5" class="bwFunctionalAreaRow bwNoUserSelect">
-            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6');"></td>
-            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6', 'PINNED_REQUESTS');">   <img title="expand" id="alertSectionImage_0_6" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
+            <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_5', 'alertSectionImage_0_5', 'alertSectionRow_0_5');"></td>
+            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_5', 'alertSectionImage_0_5', 'alertSectionRow_0_5', 'PINNED_REQUESTS');">   
+                <img title="expand" id="alertSectionImage_0_5" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
                 &nbsp;<input style="transform: scale(2);" type="checkbox">
                 &nbsp;<span class="bwNoUserSelect bwAccordionDrawerTitle">Timer services           </span>       
             </td>   
@@ -3430,7 +3637,7 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
                 <tbody>
                     <tr>
                         <td></td>
-                        <td>
+                        <td style="padding:0 0 0 100px;">
                             <div id="divBwExecutiveSummariesCarousel_PinnedRequests" class="bwAccordionDrawer" bwaccordiondrawertype="TIMER_SERVICES" style="display: inline;">
                                 TODD xcx23542436543
                             </div>
@@ -3443,7 +3650,8 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
 
         <tr id="functionalAreaRow_0_6" class="bwFunctionalAreaRow bwNoUserSelect">
             <td style="width:11px;vertical-align:top;" class="bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6');"></td>
-            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6', 'PINNED_REQUESTS');">   <img title="expand" id="alertSectionImage_0_6" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
+            <td style="padding-left:11px;" class="bwHPNDrillDownLinkCell2 bwNoUserSelect" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('expandOrCollapseAlertsSection', 'functionalAreaRow_0_6', 'alertSectionImage_0_6', 'alertSectionRow_0_6', 'PINNED_REQUESTS');">   
+                <img title="expand" id="alertSectionImage_0_6" style="cursor:pointer;width:45px;height:45px;vertical-align:middle;float:none;" src="drawer-open.png">           
                 &nbsp;<input style="transform: scale(2);" type="checkbox">
                 &nbsp;<span class="bwNoUserSelect bwAccordionDrawerTitle">Database           </span>       
             </td>   
@@ -3455,7 +3663,7 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
                 <tbody>
                     <tr>
                         <td></td>
-                        <td>
+                        <td style="padding:0 0 0 100px;">
                             <div id="divBwExecutiveSummariesCarousel_PinnedRequests" class="bwAccordionDrawer" bwaccordiondrawertype="DATABASE" style="display: inline;">
                                 TODD xcx23542436543
                             </div>
@@ -3469,24 +3677,27 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
     </tbody>
     </table>
 
- <br />
-    <br />
 
-<span style="font-size:18pt;">Users can connect to this instance at <a href="http://localhost:6060" target="_blank">http://localhost:6060</a>.<br /><span style="font-size:15pt;font-style:italic;">This is you local endpoint for serving with SSL through NGINX, for example. Varnish may add additional scalability.</span></span>
+<input type="button" value="REFRESH" style="font-size:15pt;" />
+<input type="button" value="Create Varnish .xx file(s)" style="font-size:15pt;" />
+<input type="button" value="Create NGINX .xx file(s)" style="font-size:15pt;" />
+
+    <br /> <br /> <br />
+
+<span style="font-size:18pt;">Users can connect to this instance at <span id="spanWebsiteLink"><a href="http://localhost:6060" target="_blank">http://localhost:6060</a></span>.<br /><span style="font-size:15pt;font-style:italic;">This is you local endpoint for serving with SSL through NGINX, for example. Varnish may add additional scalability.</span></span>
    
+<br /><br />
+<input id="textWebservicesUri" type="text" />&nbsp;<input type="button" value="Update the webservices Uri" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('updateWebservicesUri');" />
 <br /><br />
 
 <div id="divConsoleLogs">[divConsoleLogs]</div>
 
-<br />
     <br /><br />
+
+    <div id="divBwMonitoringTools_Main"></div>
     <br /><br />
-    <br /><br />
-    <br />
 
-
-
-    Webservices are RESPONDING
+    Webservices are RESPONDING xcx44444
     <br />
     <br />
     Fileservices are RESPONDING
@@ -3524,11 +3735,14 @@ html = `    <span style="font-size:20pt;">Your self-hosted network software soci
 `;
 
 
-$('#divPageContent1').html(html);
+                $('#divPageContent1').html(html);
 
 
 
-
+                $('#divBwMonitoringTools_Main').bwMonitoringTools_Main({
+                    webservicesUrl: this.options.webservicesUrl,
+                    webservicesPort: this.options.webservicesPort
+                });
 
 
 
@@ -3579,7 +3793,7 @@ $('#divPageContent1').html(html);
                 // TEXT ANIMATION. 11-6-2023. See: https://codepen.io/alvarotrigo/pen/PoKMyNO
                 //
 
-var developerModeEnabled = false;
+                var developerModeEnabled = false;
 
                 if (developerModeEnabled == true) {
 
@@ -4123,9 +4337,9 @@ var developerModeEnabled = false;
                     });
                 }
 
-               // var imageElement = $('#topbar_usersettings_icon');
-               // var smallHeadPath = '/_files/' + workflowAppId + '/participantimages/' + participantId + '/' + 'userimage_50x50px.png';
-               // lookForImage(imageElement, smallHeadPath);
+                // var imageElement = $('#topbar_usersettings_icon');
+                // var smallHeadPath = '/_files/' + workflowAppId + '/participantimages/' + participantId + '/' + 'userimage_50x50px.png';
+                // lookForImage(imageElement, smallHeadPath);
 
                 //
                 // end: This backfills the user small circle icon in the top bar. Trying to standardize this chunk of code so it can be used throughout.
@@ -4150,9 +4364,9 @@ var developerModeEnabled = false;
             //var participantFriendlyName = $('.bwAuthentication').bwAuthentication('option', 'participantFriendlyName');
             //if (participantFriendlyName) {
 
-                // Display the users name on hover over for the top bar user settings circle icon.
-                //$('#topbar_usersettings_icon').attr('title', participantFriendlyName);
-                //$('#topbar_usersettings_icon').attr('alt', participantFriendlyName);
+            // Display the users name on hover over for the top bar user settings circle icon.
+            //$('#topbar_usersettings_icon').attr('title', participantFriendlyName);
+            //$('#topbar_usersettings_icon').attr('alt', participantFriendlyName);
 
             //}
 
@@ -4622,239 +4836,227 @@ I am working to have the source code and documentation available here in the nex
 
                     break;
 
-//                case 'CODE':
+                //                case 'CODE':
 
-//                    document.getElementById('divPageContent1').innerHTML = '';
+                //                    document.getElementById('divPageContent1').innerHTML = '';
 
-//                    var html = '';
+                //                    var html = '';
 
-//                    // |  [master drop down]  |  branch  |  tags  |				<span style="float:right;">[Go to file] [Code drop down]    About</span>
+                //                    // |  [master drop down]  |  branch  |  tags  |				<span style="float:right;">[Go to file] [Code drop down]    About</span>
 
-//                    html += `
+                //                    html += `
 
-//BudgetWorkflow.com
-//<hr /><br />
-//BudgetWorkflow.com is a NodeJs Social Network for financial decision making. In other words, an organization-centric CAPEX/OPEX/Project-Management Request System.
+                //BudgetWorkflow.com
+                //<hr /><br />
+                //BudgetWorkflow.com is a NodeJs Social Network for financial decision making. In other words, an organization-centric CAPEX/OPEX/Project-Management Request System.
 
 
 
-//<br />
-// <br /> <br />
-//BudgetWorkflow.com is an organization-centric financial request system (project management social network) with inventory, workflow, reconciliation, invoicing. It is an extensible framework of jQuery widgets. Intended as a 1-stop shop for an organizations' financial decision making and management. Capital Expenditure Planning (CAPEX), Operational (OPEX), and as it turns out, great for almost any kind of paperwork based process that needs to be archived, searchable, shared.
-//My theory is that a free, easy to deploy and use system such as this would level the financial playing field globally, by allowing all organizations access to the best software tools available. 
-// <br /> <br />
-//<br />
+                //<br />
+                // <br /> <br />
+                //BudgetWorkflow.com is an organization-centric financial request system (project management social network) with inventory, workflow, reconciliation, invoicing. It is an extensible framework of jQuery widgets. Intended as a 1-stop shop for an organizations' financial decision making and management. Capital Expenditure Planning (CAPEX), Operational (OPEX), and as it turns out, great for almost any kind of paperwork based process that needs to be archived, searchable, shared.
+                //My theory is that a free, easy to deploy and use system such as this would level the financial playing field globally, by allowing all organizations access to the best software tools available. 
+                // <br /> <br />
+                //<br />
 
-//    Free and Open Source, fully licensed under GNU AGPLv3.
-//    <br />
-  
+                //    Free and Open Source, fully licensed under GNU AGPLv3.
+                //    <br />
 
 
 
 
 
 
-//    <hr />
 
+                //    <hr />
 
-//    <span style="float:right;">About section xcx2321354</span>
 
-
-  
+                //    <span style="float:right;">About section xcx2321354</span>
 
 
-
-
-//    <br />
-
-//    <hr />
-
-
-
-
-
-
-//<table style="border:2px solid lightgray;width:100%;">
-//        <tr>
-//            <td style="vertical-align:top;width:17%;">
-//                FILES<br />
-//                <span style="color:tomato;">Select a link to view this code.</span>
-
-//<br />
-
-//<table style="border:3px solid lightgray;">
-//        <tbody>
-
-//            <!-- widgets -->
-
-          
-//<tr><td>&nbsp;</td></tr>
-//<tr><td>/widgets</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwActiveMenu_Main.js');">bwActiveMenu_Main.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwActivitySpinner_FileUpload.js');">bwActivitySpinner_FileUpload.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwActivitySpinner.js');">bwActivitySpinner.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwAdvancedProductSearch.js');">bwAdvancedProductSearch.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwAppThemeColorPicker.js');">bwAppThemeColorPicker.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwAuthentication.js');">bwAuthentication.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwChecklistsEditor.js');">bwChecklistsEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwCircleDialog.js');">bwCircleDialog.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwCoreComponent.js');">bwCoreComponent.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwCustomerSummariesCarousel.js');">bwCustomerSummariesCarousel.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwDataGrid.js');">bwDataGrid.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwDistributorBundling.js');">bwDistributorBundling.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwDonate.js');">bwDonate.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailClient_Haraka.js');">bwEmailClient_Haraka.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailClient.js');">bwEmailClient.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailEditor_DeletedRequest.js');">bwEmailEditor_DeletedRequest.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailEditor_RevertedRequest.js');">bwEmailEditor_RevertedRequest.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailMonitor.js');">bwEmailMonitor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailTemplateEditor.js');">bwEmailTemplateEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwExecutiveSummariesCarousel.js');">bwExecutiveSummariesCarousel.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwExecutiveSummariesCarousel2.js');">bwExecutiveSummariesCarousel2.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwExternallySharedFiles.js');">bwExternallySharedFiles.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwFormsEditor.js');">bwFormsEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwHomePage.js');">bwHomePage.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwHowDoesItWorkCarousel2.js');">bwHowDoesItWorkCarousel2.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwHowDoesItWorkCarousel3.js');">bwHowDoesItWorkCarousel3.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwInvitation.js');">bwInvitation.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwInvitationsAdmin.js');">bwInvitationsAdmin.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwKeypressAndMouseEventHandler.js');">bwKeypressAndMouseEventHandler.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwLibreJs.js');">bwLibreJs.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwLocationEditor.js');">bwLocationEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwMonitoringTools.js');">bwMonitoringTools.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserBusinessModelEditor.js');">bwNewUserBusinessModelEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserChecklistsEditor.js');">bwNewUserChecklistsEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserEmailEditor.js');">bwNewUserEmailEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserFormsEditor.js');">bwNewUserFormsEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserRolesEditor.js');">bwNewUserRolesEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserWorkflowEditor.js');">bwNewUserWorkflowEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNotificationSound.js');">bwNotificationSound.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOneTimeRequestReminders.js');">bwOneTimeRequestReminders.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOperationalHours.js');">bwOperationalHours.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationEditor.js');">bwOrganizationEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationEditorAdmin.js');">bwOrganizationEditorAdmin.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationEvents.js');">bwOrganizationEvents.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationPicker.js');">bwOrganizationPicker.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationPicker2.js');">bwOrganizationPicker2.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPageScrollingHandler.js');">bwPageScrollingHandler.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwParticipantsEditor.js');">bwParticipantsEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPeoplePicker.js');">bwPeoplePicker.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPersonalErrorAdministration.js');">bwPersonalErrorAdministration.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPillarTypeEditor.js');">bwPillarTypeEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPrintButton.js');">bwPrintButton.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwProductCarousel.js');">bwProductCarousel.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwProjectTypeEditor.js');">bwProjectTypeEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequest.js');">bwRequest.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequest.min.js');">bwRequest.min.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequestTitleFormatAdmin.js');">bwRequestTitleFormatAdmin.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequestTypeDropDown_NewTenant.js');">bwRequestTypeDropDown_NewTenant.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequestTypeEditor.js');">bwRequestTypeEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwResubscribeUserEmailEditor.js');">bwResubscribeUserEmailEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRolesEditor.js');">bwRolesEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwSharePointFormEditor.js');">bwSharePointFormEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwSharePointWorkflowEditor.js');">bwSharePointWorkflowEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwSpeech.js');">bwSpeech.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwTardyParticipants.js');">bwTardyParticipants.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwTipsCarousel.js');">bwTipsCarousel.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwTrackSpending.js');">bwTrackSpending.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwUnsubscribeUserEmailEditor.js');">bwUnsubscribeUserEmailEditor.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwWorkflowEditor.js');">bwWorkflowEditor.js</td></tr>
-
-//<tr><td>&nbsp;</td></tr>
-//<tr><td>/formwidgets</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwAttachments.js');">bwAttachments.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCapitalInternalOrderNumberField.js');">bwCapitalInternalOrderNumberField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCommentsField_Events.js');">bwCommentsField_Events.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCommentsField.js');">bwCommentsField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCostCenterDescriptionField.js');">bwCostCenterDescriptionField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCostCenterNumberField.js');">bwCostCenterNumberField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCostsGrid.js');">bwCostsGrid.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwDescriptionDetailsField.js');">bwDescriptionDetailsField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwDocumentScan.js');">bwDocumentScan.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwDurationInMonthsCalculatedField.js');">bwDurationInMonthsCalculatedField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwEndDatePicker.js');">bwEndDatePicker.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwExpenseInternalOrderNumberField.js');">bwExpenseInternalOrderNumberField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwInvoiceGrid.js');">bwInvoiceGrid.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwJustificationDetailsField.js');">bwJustificationDetailsField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwLocationPicker.js');">bwLocationPicker.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPaybackGrid.js');">bwPaybackGrid.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPaybackTypeField.js');">bwPaybackTypeField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPeoplePicker_Customer.js');">bwPeoplePicker_Customer.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPeoplePicker_EmailRecipients.js');">bwPeoplePicker_EmailRecipients.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPeoplePicker.js');">bwPeoplePicker.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPillarTypeCheckboxGroup.js');">bwPillarTypeCheckboxGroup.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPillarTypeDropDown.js');">bwPillarTypeDropDown.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwProjectClassField.js');">bwProjectClassField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwProjectTypeCheckboxGroup.js');">bwProjectTypeCheckboxGroup.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwProjectTypeDropDown.js');">bwProjectTypeDropDown.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwReasonDetailsField.js');">bwReasonDetailsField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwRecordAudio.js');">bwRecordAudio.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwRequestedCapitalField.js');">bwRequestedCapitalField.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwRequestTypeDropDown.js');">bwRequestTypeDropDown.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwSelectInventoryItems.js');">bwSelectInventoryItems.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwSelectQuoteItems.js');">bwSelectQuoteItems.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwSpendGrid.js');">bwSpendGrid.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwStartDatePicker.js');">bwStartDatePicker.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwYearDropDown.js');">bwYearDropDown.js</td></tr>
-//<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/ProjectTitle.js');">ProjectTitle.js</td></tr>
 
 
 
 
-//        </tbody>
-//    </table>
 
+                //    <br />
 
+                //    <hr />
 
 
 
 
-//            </td>
-//            <td></td>
-//            <td style="border-left:2px solid lightgray;width:83%;vertical-align:top;">
-//                <table>
-//                    <tr>
-//                        <td id="tdFilePath">[tdFilePath]</td>
-//                    </tr>
-//                    <tr>
-//                        <td>[AGPL-3.0]</td>
-//                    </tr>
-//                    <tr>
-//                        <td>
-//                            <table style="border:2px solid olive;">
-//                                <tr>
-//                                    <td style="border-bottom:1px solid gray;">top row</td>
-//                                </tr>
-//                                <tr>
-//                                    <td>
 
-//                                        <div id="javascriptCodeWindow"></div>
 
-//                                    </td>
-//                                </tr>
-//                            </table>
-//                        </td>
-//                    </tr>
-//                </table>
-//            </td>
-//        </tr>
+                //<table style="border:2px solid lightgray;width:100%;">
+                //        <tr>
+                //            <td style="vertical-align:top;width:17%;">
+                //                FILES<br />
+                //                <span style="color:tomato;">Select a link to view this code.</span>
+
+                //<br />
+
+                //<table style="border:3px solid lightgray;">
+                //        <tbody>
+
+                //            <!-- widgets -->
+
+
+                //<tr><td>&nbsp;</td></tr>
+                //<tr><td>/widgets</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwActiveMenu_Main.js');">bwActiveMenu_Main.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwActivitySpinner_FileUpload.js');">bwActivitySpinner_FileUpload.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwActivitySpinner.js');">bwActivitySpinner.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwAdvancedProductSearch.js');">bwAdvancedProductSearch.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwAppThemeColorPicker.js');">bwAppThemeColorPicker.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwAuthentication.js');">bwAuthentication.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwChecklistsEditor.js');">bwChecklistsEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwCircleDialog.js');">bwCircleDialog.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwCoreComponent.js');">bwCoreComponent.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwCustomerSummariesCarousel.js');">bwCustomerSummariesCarousel.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwDataGrid.js');">bwDataGrid.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwDistributorBundling.js');">bwDistributorBundling.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwDonate.js');">bwDonate.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailClient_Haraka.js');">bwEmailClient_Haraka.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailClient.js');">bwEmailClient.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailEditor_DeletedRequest.js');">bwEmailEditor_DeletedRequest.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailEditor_RevertedRequest.js');">bwEmailEditor_RevertedRequest.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailMonitor.js');">bwEmailMonitor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwEmailTemplateEditor.js');">bwEmailTemplateEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwExecutiveSummariesCarousel.js');">bwExecutiveSummariesCarousel.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwExecutiveSummariesCarousel2.js');">bwExecutiveSummariesCarousel2.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwExternallySharedFiles.js');">bwExternallySharedFiles.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwFormsEditor.js');">bwFormsEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwHomePage.js');">bwHomePage.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwHowDoesItWorkCarousel2.js');">bwHowDoesItWorkCarousel2.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwHowDoesItWorkCarousel3.js');">bwHowDoesItWorkCarousel3.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwInvitation.js');">bwInvitation.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwInvitationsAdmin.js');">bwInvitationsAdmin.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwKeypressAndMouseEventHandler.js');">bwKeypressAndMouseEventHandler.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwLibreJs.js');">bwLibreJs.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwLocationEditor.js');">bwLocationEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwMonitoringTools.js');">bwMonitoringTools.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserBusinessModelEditor.js');">bwNewUserBusinessModelEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserChecklistsEditor.js');">bwNewUserChecklistsEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserEmailEditor.js');">bwNewUserEmailEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserFormsEditor.js');">bwNewUserFormsEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserRolesEditor.js');">bwNewUserRolesEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNewUserWorkflowEditor.js');">bwNewUserWorkflowEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwNotificationSound.js');">bwNotificationSound.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOneTimeRequestReminders.js');">bwOneTimeRequestReminders.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOperationalHours.js');">bwOperationalHours.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationEditor.js');">bwOrganizationEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationEditorAdmin.js');">bwOrganizationEditorAdmin.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationEvents.js');">bwOrganizationEvents.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationPicker.js');">bwOrganizationPicker.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwOrganizationPicker2.js');">bwOrganizationPicker2.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPageScrollingHandler.js');">bwPageScrollingHandler.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwParticipantsEditor.js');">bwParticipantsEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPeoplePicker.js');">bwPeoplePicker.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPersonalErrorAdministration.js');">bwPersonalErrorAdministration.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPillarTypeEditor.js');">bwPillarTypeEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwPrintButton.js');">bwPrintButton.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwProductCarousel.js');">bwProductCarousel.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwProjectTypeEditor.js');">bwProjectTypeEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequest.js');">bwRequest.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequest.min.js');">bwRequest.min.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequestTitleFormatAdmin.js');">bwRequestTitleFormatAdmin.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequestTypeDropDown_NewTenant.js');">bwRequestTypeDropDown_NewTenant.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRequestTypeEditor.js');">bwRequestTypeEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwResubscribeUserEmailEditor.js');">bwResubscribeUserEmailEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwRolesEditor.js');">bwRolesEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwSharePointFormEditor.js');">bwSharePointFormEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwSharePointWorkflowEditor.js');">bwSharePointWorkflowEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwSpeech.js');">bwSpeech.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwTardyParticipants.js');">bwTardyParticipants.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwTipsCarousel.js');">bwTipsCarousel.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwTrackSpending.js');">bwTrackSpending.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwUnsubscribeUserEmailEditor.js');">bwUnsubscribeUserEmailEditor.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/widgets/bwWorkflowEditor.js');">bwWorkflowEditor.js</td></tr>
+
+                //<tr><td>&nbsp;</td></tr>
+                //<tr><td>/formwidgets</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwAttachments.js');">bwAttachments.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCapitalInternalOrderNumberField.js');">bwCapitalInternalOrderNumberField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCommentsField_Events.js');">bwCommentsField_Events.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCommentsField.js');">bwCommentsField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCostCenterDescriptionField.js');">bwCostCenterDescriptionField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCostCenterNumberField.js');">bwCostCenterNumberField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwCostsGrid.js');">bwCostsGrid.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwDescriptionDetailsField.js');">bwDescriptionDetailsField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwDocumentScan.js');">bwDocumentScan.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwDurationInMonthsCalculatedField.js');">bwDurationInMonthsCalculatedField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwEndDatePicker.js');">bwEndDatePicker.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwExpenseInternalOrderNumberField.js');">bwExpenseInternalOrderNumberField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwInvoiceGrid.js');">bwInvoiceGrid.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwJustificationDetailsField.js');">bwJustificationDetailsField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwLocationPicker.js');">bwLocationPicker.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPaybackGrid.js');">bwPaybackGrid.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPaybackTypeField.js');">bwPaybackTypeField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPeoplePicker_Customer.js');">bwPeoplePicker_Customer.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPeoplePicker_EmailRecipients.js');">bwPeoplePicker_EmailRecipients.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPeoplePicker.js');">bwPeoplePicker.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPillarTypeCheckboxGroup.js');">bwPillarTypeCheckboxGroup.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwPillarTypeDropDown.js');">bwPillarTypeDropDown.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwProjectClassField.js');">bwProjectClassField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwProjectTypeCheckboxGroup.js');">bwProjectTypeCheckboxGroup.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwProjectTypeDropDown.js');">bwProjectTypeDropDown.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwReasonDetailsField.js');">bwReasonDetailsField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwRecordAudio.js');">bwRecordAudio.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwRequestedCapitalField.js');">bwRequestedCapitalField.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwRequestTypeDropDown.js');">bwRequestTypeDropDown.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwSelectInventoryItems.js');">bwSelectInventoryItems.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwSelectQuoteItems.js');">bwSelectQuoteItems.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwSpendGrid.js');">bwSpendGrid.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwStartDatePicker.js');">bwStartDatePicker.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/bwYearDropDown.js');">bwYearDropDown.js</td></tr>
+                //<tr><td style="border-bottom:2px solid lightgray;text-decoration:underline;cursor:pointer;" onclick="$('.bwActiveMenu_Main').bwActiveMenu_Main('displayCodeFile', '/formwidgets/ProjectTitle.js');">ProjectTitle.js</td></tr>
 
 
 
 
-//    </table>
+                //        </tbody>
+                //    </table>
 
 
 
 
 
 
+                //            </td>
+                //            <td></td>
+                //            <td style="border-left:2px solid lightgray;width:83%;vertical-align:top;">
+                //                <table>
+                //                    <tr>
+                //                        <td id="tdFilePath">[tdFilePath]</td>
+                //                    </tr>
+                //                    <tr>
+                //                        <td>[AGPL-3.0]</td>
+                //                    </tr>
+                //                    <tr>
+                //                        <td>
+                //                            <table style="border:2px solid olive;">
+                //                                <tr>
+                //                                    <td style="border-bottom:1px solid gray;">top row</td>
+                //                                </tr>
+                //                                <tr>
+                //                                    <td>
 
+                //                                        <div id="javascriptCodeWindow"></div>
 
+                //                                    </td>
+                //                                </tr>
+                //                            </table>
+                //                        </td>
+                //                    </tr>
+                //                </table>
+                //            </td>
+                //        </tr>
 
 
 
 
+                //    </table>
 
 
 
@@ -4867,21 +5069,33 @@ I am working to have the source code and documentation available here in the nex
 
 
 
-//    <br />
 
-//    <br />
 
 
-//`;
 
-//                    document.getElementById('divPageContent1').innerHTML = html;
 
 
-//                    //hljs.highlightAll();
 
-//                    this.unshrinkLeftMenu();
 
-//                    break;
+
+
+
+
+                //    <br />
+
+                //    <br />
+
+
+                //`;
+
+                //                    document.getElementById('divPageContent1').innerHTML = html;
+
+
+                //                    //hljs.highlightAll();
+
+                //                    this.unshrinkLeftMenu();
+
+                //                    break;
 
                 //case 'USE_CASES':
 
@@ -4917,7 +5131,7 @@ I am working to have the source code and documentation available here in the nex
                     //
                     //var workflowAppTheme = $('.bwAuthentication').bwAuthentication('option', 'workflowAppTheme');
                     //if (!workflowAppTheme) { // Need to do this for the home page when not logged in.
-                        var workflowAppTheme = 'brushedAluminum_green';
+                    var workflowAppTheme = 'brushedAluminum_green';
                     //}
                     var workflowAppTheme_SelectedButton = workflowAppTheme + '_SelectedButton';
 

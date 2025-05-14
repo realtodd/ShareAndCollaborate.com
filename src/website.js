@@ -19,6 +19,13 @@ console.log('Getting ready to attach listener. If you get an error run as super 
 //var routes = require('./routes/start');
 //var users = require('./routes/users');
 
+var uris = JSON.parse(fs.readFileSync(path.join(__dirname, 'uris.json'))); // Read the operating port from uris.json file.
+
+console.log('##########################');
+console.log('uris: ' + JSON.stringify(uris));
+console.log('##########################');
+
+
 var app = express();
 
 app.use(compression());
@@ -53,9 +60,18 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: cacheTime }));
 //app.use('/', routes);
 //app.use('/users', users);
 
-app.set('port', process.env.PORT || 6060);
+
+//app.set('port', process.env.PORT || 6060);
+app.set('port', uris.websiteUri.port); // Port read from uris.json file, above.
+
 var server = app.listen(app.get('port'), function () {
-    console.log('Express server listening and serving content from the public folder on port ' + server.address().port + '. Yay!');
+    console.log('WEBSITE::::Express server listening and serving content from the public folder on port ' + server.address().port + '. Yay!');
+
+    //console.log('WE NEED TO READ THE uris.json FILE HERE AND SOMEHOW MAKE IT AVAILABLE TO THE WEBSITE. THIS WILL ALLOW US TO DYNAMICALLY DETERMINE THE PORTS THAT WEBSERVICES AND FILESERVICES IS RUNNING ON.');
+
+
+
+
 });
 
 

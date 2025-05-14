@@ -1,76 +1,130 @@
-const { app, BrowserWindow, utilityProcess, MessageChannelMain } = require('electron');
+const { app, BrowserWindow, utilityProcess, ipcMain, MessageChannelMain } = require('electron'); 
 const path = require('node:path');
+var fs = require('fs'); 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
-  app.quit();
+    app.quit();
 }
 
 //
 // THIS DOESN'T APPLY BUT LEAVING IT FOR NOW. communication between 2 browser windows in electron: https://stackoverflow.com/questions/40251411/communication-between-2-browser-windows-in-electron
 //
 
+// begin: Our inter-process methods.
+
+// Receive async message from renderer
+// See file renderer.js on line 3
+var webservices_ping_good_event;
+ipcMain.on('ping-good', event => {
+    // It's so good because below have a delay 5s to execute, and this don't lock rendereder :)
+    webservices_ping_good_event = event;
+    setTimeout(() => {
+        console.log('GOOD finshed!')
+        // Send reply to a renderer
+        event.sender.send('ping-good-reply', 'pong')
+    }, 1000)
+})
+
+
+//retrieve-current-values
+var webservices_retrieve_current_values;
+ipcMain.on('retrieve-current-values', event => {
+    // It's so good because below have a delay 5s to execute, and this don't lock rendereder :)
+    webservices_retrieve_current_values = event;
+    setTimeout(() => {
+        console.log('retrieve-current-values finshed!');
+
+
+        var uris = JSON.parse(fs.readFileSync(path.join(__dirname, 'uris.json'))); // Read the operating urls and ports from uris.json file.
+
+
+        // Send reply to a renderer
+        event.sender.send('retrieve-current-values-reply', uris);
+
+
+    }, 1000)
+})
+
+
+
+// Receive sync message from renderer
+// See file renderer.js on line 18
+//ipcMain.on('ping-bad', event => {
+//    // It's so bad because below have a delay 5s to execute, meanwhile the renderer stay locked :(
+//    setTimeout(() => {
+//        console.log('BAD finshed!')
+//        event.returnValue = 'pong'
+//    }, 1000)
+//})
+
+// end: Our inter-process methods.
+
+
+
 const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 960,
-    height: 800,
-    //titleBarStyle: 'hidden', 
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
-  });
+    // Create the browser window.
+    const mainWindow = new BrowserWindow({
+        width: 2000, //960,
+        height: 800,
+        //titleBarStyle: 'hidden', 
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: true, // Allows use of require in renderer.js.
+            contextIsolation: false, // Allows use of require in renderer.js.
+        }
+    });
 
-  //mainWindow.maximize();
+    //mainWindow.maximize();
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+    // and load the index.html of the app.
+    mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
 
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    require('electron').shell.openExternal(url);
-    return { action: 'deny' };
-  });
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        require('electron').shell.openExternal(url);
+        return { action: 'deny' };
+    });
 
-  // utilityProcess.fork: https://www.electronjs.org/docs/latest/api/utility-process
+    // utilityProcess.fork: https://www.electronjs.org/docs/latest/api/utility-process
 
-  const process_webservices = utilityProcess.fork(path.join(__dirname, 'webservices.js')); 
-  process_webservices.on('message', (msg) => {
-      console.log('Message from child', msg);
-  });
-  const { port1, port2 } = new MessageChannelMain();
-  process_webservices.postMessage({ message: 'hello' }, [port1])
+    const process_webservices = utilityProcess.fork(path.join(__dirname, 'webservices.js'));
+    process_webservices.on('message', (msg) => {
+        console.log('Message from child [webservices.js]', msg);
+    });
+    const { port1, port2 } = new MessageChannelMain();
+    process_webservices.postMessage({ message: 'hello' }, [port1])
 
-  process_webservices.on('message', function (message) {
-      console.log('Message from Child process : ' + message);
+    process_webservices.on('message', function (message) {
+        console.log('Message from Child process : ' + message);
 
-      // This doesn't work: document.getElementById('divConsoleLogs').innerHTML = message; //append(message);
+        // This doesn't work: document.getElementById('divConsoleLogs').innerHTML = message; //append(message);
 
 
-  });
+    });
 
-  const process_fileservices = utilityProcess.fork(path.join(__dirname, 'fileservices.js')); 
-  process_fileservices.on('message', (msg) => {
-      console.log('Message from child', msg);
-  });
-  //const { port1, port2 } = new MessageChannelMain();
-  //process_fileservices.postMessage({ message: 'hello' }, [port1])
+    const process_fileservices = utilityProcess.fork(path.join(__dirname, 'fileservices.js'));
+    process_fileservices.on('message', (msg) => {
+        console.log('Message from child', msg);
+    });
+    //const { port1, port2 } = new MessageChannelMain();
+    //process_fileservices.postMessage({ message: 'hello' }, [port1])
 
-  const process_website = utilityProcess.fork(path.join(__dirname, 'website.js')); 
-  process_website.on('message', (msg) => {
-      console.log('Message from child', msg);
-  });
-  //const { port1, port2 } = new MessageChannelMain();
-  //process_website.postMessage({ message: 'hello' }, [port1])
+    const process_website = utilityProcess.fork(path.join(__dirname, 'website.js'));
+    process_website.on('message', (msg) => {
+        console.log('Message from child', msg);
+    });
+    //const { port1, port2 } = new MessageChannelMain();
+    //process_website.postMessage({ message: 'hello' }, [port1])
 
-  //const process_timerservices = utilityProcess.fork(path.join(__dirname, 'timerservices.js')); 
-  //process_timerservices.on('message', (msg) => {
-  //    console.log('Message from child', msg);
-  //});
-  //const { port1, port2 } = new MessageChannelMain();
-  //process_timerservices.postMessage({ message: 'hello' }, [port1])
+    //const process_timerservices = utilityProcess.fork(path.join(__dirname, 'timerservices.js')); 
+    //process_timerservices.on('message', (msg) => {
+    //    console.log('Message from child', msg);
+    //});
+    //const { port1, port2 } = new MessageChannelMain();
+    //process_timerservices.postMessage({ message: 'hello' }, [port1])
 
 };
 
@@ -78,15 +132,18 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createWindow();
 
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
+    //ipcMain.handle('dialog:openFile', openFile)
+
+    createWindow();
+
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow();
+        }
+    });
 
 });
 
@@ -94,9 +151,9 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
 });
 
 // In this file you can include the rest of your app's specific main process

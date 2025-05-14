@@ -80,7 +80,7 @@ var mongoosePaginate = require('mongoose-paginate-v2');
 
 var fs = require('fs-extra');
 
-
+var sendgrid = {};
 
 const multer = require('multer');
 

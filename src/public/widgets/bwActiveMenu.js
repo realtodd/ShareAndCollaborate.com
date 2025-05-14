@@ -84,6 +84,9 @@
         this.element.addClass("bwActiveMenu");
         var thiz = this; // Need this because of the asynchronous operations below.
         try {
+
+
+
             if (this.options.operationUriPrefix == null) {
                 // This formulates the operationUri, which is used throughout.
                 var url1;
@@ -97,6 +100,10 @@
                 var url2 = url1.split('/')[0];
                 this.options.operationUriPrefix += url2 + '/';
             }
+
+
+
+
 
             var developerModeEnabled = $('.bwAuthentication').bwAuthentication('option', 'developerModeEnabled');
 
@@ -3727,7 +3734,7 @@
 
                         } else {
 
-                            console.log('In bwActiveMenu.js.renderHomePageContent.error(). results: ' + JSON.stringify(results));
+                            console.log('In bwActiveMenu.js.renderHomePageContent.error(). thiz.options.operationUriPrefix: ' + thiz.options.operationUriPrefix + ', results: ' + JSON.stringify(results));
 
                             // Display the Service Unavailable message on the home screen.
                             displayAlertDialog_Persistent('xcx2296324126-3. ' + thiz.options.ServiceUnavailableMessage); // 5-16-2024.

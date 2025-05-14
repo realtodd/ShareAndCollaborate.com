@@ -1,0 +1,15 @@
+{
+  "websiteUri": {
+    "url": "http://localhost",
+    "port": "6161"
+  },
+  "webservicesUri": {
+    "url": "http://localhost",
+    "port": "3000"
+  },
+  "fileservicesUri": {
+    "url": "http://localhost",
+    "port": "3001"
+  },
+  "databaseConnectionString": "mongodb://localhost:27017/shareandcollaboratelocal"
+}

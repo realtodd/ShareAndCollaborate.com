@@ -1,7 +1,17 @@
 
 console.log('Starting webservices xcx998546.');
 
+
+var fs = require('fs-extra');
 const path = require('node:path');
+
+var uris = JSON.parse(fs.readFileSync(path.join(__dirname, 'uris.json'))); // Read the operating port from uris.json file.
+
+console.log('##########################');
+console.log('uris: ' + JSON.stringify(uris));
+console.log('##########################');
+
+
 var express = require('express');
 var router = express.Router();
 
@@ -9,7 +19,9 @@ var app_webservices = express();
 //var routes = require('./start'); // path.join(__dirname, 'preload.js')
 var routes = require(path.join(__dirname, 'webservices/routes/start'));
 app_webservices.use('/', routes);
-app_webservices.set('port', process.env.PORT || 3000);
+//app_webservices.set('port', process.env.PORT || 3000);
+//app_webservices.set('port', process.env.PORT || uris.webservicesUri.port); // Port read from uris.json file, above.
+app_webservices.set('port', uris.webservicesUri.port); // Port read from uris.json file, above.
 var server = app_webservices.listen(app_webservices.get('port'), function () {
     console.log('Web services listening on port ' + server.address().port);
 });
