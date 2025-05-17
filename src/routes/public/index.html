@@ -1,0 +1,1784 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ShareAndCollaborate.com</title>
+
+    <meta name="description" content="Self-hosted network software, with email, collaboration, and more. Share and Collaborate." />
+    <meta name="WebPartPageExpansion" content="full" />
+    <meta name="viewport" id="bwViewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="canonical" href="https://shareandcollaborate.com" />
+
+    <script>
+        /*
+        @licstart  The following is the entire license notice for the
+        JavaScript code in this page.
+
+        Welcome to this software. BudgetWorkflow.com, ShareAndCollaborate.com.
+        Copyright (C) 2011-2023  Todd N. Hiltz
+        Contact todd@budgetworkflow.com, todd@shareandcollaborate.com. Todd Hiltz, 61 Crescent Avenue, Kentville, Nova Scotia, Canada B4N 1R1.
+
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU Affero General Public License as
+        published by the Free Software Foundation, either version 3 of the
+        License, or (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU Affero General Public License for more details.
+
+        You should have received a copy of the GNU Affero General Public License
+        along with this program.  If not, see https://www.gnu.org/licenses.
+
+        @licend  The above is the entire license notice
+        for the JavaScript code in this page.
+        */
+    </script>
+
+    <!-- the heaight attribute may screw things up, so perhaps that one should not be included. -->
+    <!--<meta name="viewport" content="width=device-width, height=device-height, initial-scale=0.72, maximum-scale=2.0, minimum-scale=0.38, user-scalable=1" />--> <!-- This scaling has been very carefully thought out on the iPad 2 in Portrait orientation. 4-24-2023. -->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=0.333" />--> <!-- initial-scale=0.333 looks goog on THE SAMSUNG S23.-->
+    <!-- -->
+    <!--<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />-->
+    <!-- 2-10-2022 You can prevent Safari from automatically zooming in on text fields during user input without disabling the user’s ability to pinch zoom. Just add maximum-scale=1 but leave out the user-scale attribute suggested in other answers. It is a worthwhile option if you have a form in a layer that “floats” around if zoomed, which can cause important UI elements to move off screen. -->
+
+    <link id="corecolors" rel="stylesheet" type="text/css" href="css/bw.core.colors.css" />
+    <link rel="stylesheet" type="text/css" href="css/my.css?v=xcx02252023-45" />
+
+    <link rel="Stylesheet" type="text/css" href="css/jquery/1.11.1/jquery-ui.min.css?v=2" />
+    <!-- THIS ONE HAS MORE WHITE IN IT. WHICH IS EASIER TO READ?? <link rel="stylesheet" type="text/css" href="css/jquery/1.11.1/themes/smoothness/jquery-ui.min.css?v=0" />-->
+    <!-- Upgraded to latest version of jQuery 7-1-2024. -->
+    <!--<link rel="Stylesheet" type="text/css" href="css/jqueryui/1.13/jquery-ui.min.css?v=1" />-->
+
+
+    <link rel="stylesheet" href="css/contextMenu/jquery.contextMenu.css">
+    <link type="text/css" rel="stylesheet" href="css/jsgrid/jsgrid.css" />
+    <link type="text/css" rel="stylesheet" href="css/jsgrid/jsgrid-theme.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/chartjs/chart.min.css" />
+    <!--<link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css" />-->
+
+
+    <link rel="stylesheet" type="text/css" href="css/summernote/summernote-lite.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.min.css" />
+
+
+    <!--
+        <link rel="Stylesheet" type="text/css" href="css/jquery/1.11.1/jquery-ui.min.css?v=0" />
+
+    <link rel="stylesheet" type="text/css" href="css/quill.snow.css" />
+    <link rel="stylesheet" type="text/css" href="css/quill.core.css" />
+    <link rel="Stylesheet" type="text/css" href="css/qtip/jquery.qtip.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css" />
+    <link rel="stylesheet" href="css/contextMenu/jquery.contextMenu.css">
+    <link type="text/css" rel="stylesheet" href="css/jsgrid/jsgrid.css" />
+    <link type="text/css" rel="stylesheet" href="css/jsgrid/jsgrid-theme.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />-->
+    <!-- THIS ICON SHOULD BE A CURRENCY INDICATOR!!!! Keep theese both commentsed out if using the page load event for this!! -->
+    <!--<link rel="shortcut icon" href="https://budgetworkflow.com/favicon-new.ico?v=2" />-->
+    <!--<link id="bwFavicon" rel="shortcut icon" href="https://budgetworkflow.com/favicon.ico" />-->
+    <link id="bwFavicon" rel="shortcut icon" href="https://budgetworkflow.com/favicon-euro.ico" />
+
+    <link rel="apple-touch-icon" href="apple-touch-iphone.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-ipad.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-iphone4.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-ipad-retina.png" />
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-iphone.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-ipad.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-iphone4.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-ipad-retina.png" />
+
+    <script type="text/javascript" src="uris.js"></script>
+
+
+    <!-- Not async, these need to be available right away on page load -->
+    <!--<script type="text/javascript" src="scripts/jquery/3.4.1/jquery-3.4.1.js"></script>-->
+    <!--<script type="text/javascript" src="scripts/jquery/1.11.1/jquery-ui.js"></script>-->
+    <!--<script type="text/javascript" src="scripts/jquery/jquery-migrate-3.0.0.js"></script>--><!-- need this for all our ajax success functions!! maybe other things, tbd. 3-2-2022 -->
+    <!-- MOVING TO THE NEW VERSION OF jQuery 7-1-2024. -->
+    <script type="text/javascript" src="scripts/jquery/3.7.0/jquery-3.7.0.js"></script>
+    <script type="text/javascript" src="scripts/jqueryui/1.13/jquery-ui.js"></script>
+
+    <script id="myjavascript" type="text/javascript" src="index.js?v=xcx06142024-275"></script>
+
+    <script id="authenticationjavascript" type="text/javascript" src="widgets/bwAuthentication.js?v=xcx06142024-275"></script>
+    <script id="bwpagescrollinghandlerjavascript" type="text/javascript" src="widgets/bwPageScrollingHandler.js?v=xcx06142024-275"></script>
+    <script id="bwkeypressandmouseeventhandlerjavascript" type="text/javascript" src="widgets/bwKeypressAndMouseEventHandler.js?v=xcx06142024-275"></script>
+
+    <script id="activemenuwidget" type="text/javascript" src="widgets/bwActiveMenu.js?v=xcx06142024-275"></script>
+
+    <!-- TRYING AN UPDATE TO THE CIRCLE DIALOG. 7-26-2024. -->
+    <script id="circledialogjavascript" type="text/javascript" src="widgets/bwCircleDialog.js?v=xcx06142024-275"></script>
+    <script id="circledialogjavascript2" type="text/javascript" src="widgets/bwCircleDialog2.js?v=xcx06142024-275"></script>
+
+    <script id="corecomponentwidget" type="text/javascript" src="widgets/bwCoreComponent.js?v=xcx06142024-275"></script>
+
+    <script id="emailmonitorjavascript" type="text/javascript" src="backendwidgets/bwEmailMonitor_Admin.js?v=xcx06142024-275"></script>
+    <script id="monitoringtoolswidget" type="text/javascript" src="backendwidgets/bwMonitoringTools2.js?v=xcx06142024-275"></script>
+
+    <script id="howdoesitworkcarouselwidget" type="text/javascript" src="widgets/bwHowDoesItWorkCarousel3.js?v=xcx06142024-275"></script>
+    <script id="productcarouselwidget" type="text/javascript" src="widgets/bwProductCarousel.js?v=xcx06142024-275"></script>
+
+    <script id="printbuttonjavascript" type="text/javascript" src="widgets/bwPrintButton.js?v=xcx06142024-275"></script>
+    <script id="bwnotificationsoundjavascript" type="text/javascript" src="widgets/bwNotificationSound.js?v=xcx06142024-275"></script>
+    <script id="bwprioritygroupjavascript" type="text/javascript" src="widgets/bwPriorityGroup.js?v=xcx06142024-275"></script>
+    <script id="bwpersonalerroradministrationjavascript" type="text/javascript" src="widgets/bwPersonalErrorAdministration.js?v=xcx06142024-275"></script>
+    <script id="bwonetimerequestremindersjavascript" type="text/javascript" src="widgets/bwOneTimeRequestReminders.js?v=xcx06142024-275"></script>
+
+
+
+    <!--<script type="text/javascript" src="scripts/jqplot/jquery.min.js"></script>-->
+    <!-- needed for the spending report. -->
+    <!--<script type="text/javascript" src="scripts/jqplot/jqplot.cursor.min.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.dateAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.canvasAxisLabelRenderer.min.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.canvasAxisTickRenderer.min.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.pointLabels.min.js"></script>-->
+    <!-- -->
+
+    <script src="scripts/contextMenu/jquery.contextMenu.js" async></script>
+    <script src="scripts/contextMenu/jquery.ui.position.js" async></script>
+    <!--<script src="scripts/contextMenu/jquery.contextMenu.js"></script>
+    <script src="scripts/contextMenu/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="scripts/quill.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jquery.jqplot.min.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.pieRenderer.min.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.canvasTextRenderer.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.dateAxisRenderer.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.canvasAxisLabelRenderer.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.canvasAxisTickRenderer.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.pointLabels.js"></script>
+    <script type="text/javascript" src="scripts/jqplot/jqplot.cursor.js"></script>
+    <script type="text/javascript" src="scripts/bw.offline.core.min.js?v=xcx06142024-275"></script>-->
+
+
+
+
+
+    <script type="text/javascript" src="scripts/switchbutton/jquery.switchButton.min.js" async></script>
+    <script type="text/javascript" src="scripts/qtip/jquery.qtip.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script id="myjavascript" type="text/javascript" src="sharedclientandserverscripts/bwCommonScripts.js?v=xcx06142024-275" async></script>
+
+
+
+    <!--<script id="myjavascript" type="text/javascript" src="scripts/msal.min.js?v=xcx06142024-275" async></script>--><!-- Removed 12-26-2023. -->
+    <!--<script src="https://apis.google.com/js/client:platform.js" type="text/javascript"></script>-->
+    <!-- DEBUGGING FILES -->
+    <!--<script type="text/javascript" src="scripts/bw.core.js"></script>
+    <script type="text/javascript" src="scripts/bwm.core.js"></script>
+    <script type="text/javascript" src="scripts/bwm.js"></script>
+    <script type="text/javascript" src="scripts/my.js"></script>
+    <script type="text/javascript" src="scripts/bw.assignbudget.core.js"></script>
+    <script type="text/javascript" src="scripts/bw.createar.core.js"></script>
+    <script type="text/javascript" src="scripts/bw.approvear.core.js"></script>
+    <script type="text/javascript" src="scripts/bw.issuepo.core.js"></script>
+    <script type="text/javascript" src="scripts/bw.resubmit.core.js"></script>-->
+    <!-- PRODUCTION FILES -->
+    <!-- This is first because we need the indexDB variables initialized. -->
+    <!-- scripts -->
+
+
+    <script type="text/javascript" src="scripts/bw.core.js?v=xcx06142024-275" async></script>
+
+
+    <script type="text/javascript" src="scripts/bw.utility.core.js?v=xcx06142024-275" async></script>
+    <script id="jsgridjavascript" type="text/javascript" src="scripts/jsgrid/jsgrid.1.5.3.js?v=xcx06142024-275" async></script>
+    <!--<script type="text/javascript" src="scripts/bw.core.min.js?v=782" defer></script>
+    <script type="text/javascript" src="scripts/bw.utility.core.min.js?v=82" defer></script>
+    <script type="text/javascript" src="scripts/bwm.core.min.js?v=2" defer></script>
+    <script type="text/javascript" src="scripts/bwm.min.js?v=0" defer></script>
+    <script type="text/javascript" src="scripts/snap/snap.svg.min.js" defer></script>
+    <script id="jsgridjavascript" type="text/javascript" src="scripts/jsgrid/jsgrid.1.5.3.js?v=xcx06142024-275"></script>-->
+    <!-- widgets -->
+
+
+
+
+
+    <script id="xxxcx" type="text/javascript" src="widgets/bwAppThemeColorPicker.js?v=xcx06142024-275" async></script>
+
+
+
+    <script id="invitationwidget" type="text/javascript" src="widgets/bwInvitation.js?v=xcx06142024-275" async></script>
+
+    <!--<script id="authenticationjavascript" type="text/javascript" src="widgets/bwAuthentication.js?v=xcx06142024-275"></script>-->
+    <!--<script id="tipscarouselwidget" type="text/javascript" src="widgets/bwTipsCarousel.min.js?v=xcx06142024-275"></script>-->
+
+
+
+    <script id="attachmentdialogwidget" type="text/javascript" src="widgets/bwAttachmentDialog.js?v=xcx06142024-275"></script>
+    <!--<script id="attachmentdialogforemailwidget" type="text/javascript" src="widgets/bwAttachmentDialog_ForEmail.js?v=xcx06142024-275"></script>-->
+
+
+
+    <script id="requestwidget" type="text/javascript" src="widgets/bwRequest.js?v=xcx06142024-275"></script><!-- 8-15-2022 removed async to make popout window work Ok. -->
+
+
+
+    <script id="orgroleseditorwidget" type="text/javascript" src="widgets/bwOrganizationEditor.js?v=xcx06142024-275" async></script>
+
+    <script id="orgrolesviewerwidget" type="text/javascript" src="widgets/bwOrganizationViewer.js?v=xcx06142024-275" async></script>
+
+    <script id="datagridjavascript" type="text/javascript" src="widgets/bwDataGrid.js?v=xcx06142024-275" async></script>
+
+    <script id="datagridjavascript" type="text/javascript" src="widgets/bwOrganizationPicker.js?v=xcx06142024-275" async></script>
+    <script id="datagridjavascript2" type="text/javascript" src="widgets/bwOrganizationPicker2.js?v=xcx06142024-275" async></script>
+
+    <script id="visualizationswidget" type="text/javascript" src="widgets/bwTrackSpending.js?v=xcx06142024-275" async></script>
+
+    <script id="yearlybudgetwidget" type="text/javascript" src="widgets/bwYearlyBudget.js?v=xcx06142024-275" async></script>
+
+    <script id="emailclientwidgetharaka" type="text/javascript" src="widgets/bwEmailClient_Haraka.js?v=xcx06142024-275" async></script>
+    <script id="calendarwidget" type="text/javascript" src="widgets/bwCalendar.js?v=xcx06142024-275" async></script>
+
+    <script id="doucmentationwidget" type="text/javascript" src="widgets/bwDocumentation.js?v=xcx06142024-275" async></script>
+
+    <script id="configurationwidget" type="text/javascript" src="widgets/bwConfiguration.js?v=xcx06142024-275" async></script>
+
+    <script id="trackwidget" type="text/javascript" src="widgets/bwTrack.js?v=xcx06142024-275" async></script>
+
+    <script id="emailclientwidget" type="text/javascript" src="widgets/bwEmailClient.js?v=xcx06142024-275" async></script>
+
+
+
+    <script id="tardyparticipantswidget" type="text/javascript" src="widgets/bwTardyParticipants.js?v=xcx06142024-275" async></script>
+    <script id="timelineaggregatorwidget" type="text/javascript" src="widgets/bwTimelineAggregator.js?v=xcx06142024-275" async></script>
+    <script id="invitationsadminwidget" type="text/javascript" src="widgets/bwInvitationsAdmin.js?v=xcx06142024-275" async></script>
+
+    <script id="organizationeventswidget" type="text/javascript" src="widgets/bwOrganizationEvents.js?v=xcx06142024-275" async></script>
+    <script id="externallysharedfileswidget" type="text/javascript" src="widgets/bwExternallySharedFiles.js?v=xcx06142024-275" async></script>
+
+
+    <script id="timerservicesmanagerwidget" type="text/javascript" src="backendwidgets/bwTimerServicesManager.js?v=xcx06142024-275" async></script>
+
+    <script id="executivesummariescarouselwidget" type="text/javascript" src="widgets/bwExecutiveSummariesCarousel.js?v=xcx06142024-275" async></script>
+    <script id="executivesummariescarousel2widget" type="text/javascript" src="widgets/bwExecutiveSummariesCarousel2.js?v=xcx06142024-275" async></script>
+
+    <script id="customersummariescarouselwidget" type="text/javascript" src="widgets/bwCustomerSummariesCarousel.js?v=xcx06142024-275" async></script>
+
+
+    <script id="homepagewidget" type="text/javascript" src="widgets/bwHomePage.js?v=xcx06142024-275" async></script>
+    <script id="workfloweditorwidget" type="text/javascript" src="widgets/bwWorkflowEditor.js?v=xcx06142024-275" async></script>
+    <script id="checklistseditorwidget" type="text/javascript" src="widgets/bwChecklistsEditor.js?v=xcx06142024-275" async></script>
+    <script id="formseditorwidget" type="text/javascript" src="widgets/bwFormsEditor.js?v=xcx06142024-275" async></script>
+    <!--<script id="locationeditorwidget" type="text/javascript" src="widgets/bwLocationEditor.min.js?v=xcx06142024-275" async></script>-->
+    <script id="orgroleseditoradminwidget" type="text/javascript" src="widgets/bwOrganizationEditorAdmin.js?v=xcx06142024-275" async></script>
+
+
+
+    <script id="monitoringtoolswidget" type="text/javascript" src="widgets/bwMonitoringTools.js?v=xcx06142024-275" async></script>
+
+    <!--<script id="monitoringtoolswidget" type="text/javascript" src="backendwidgets/bwMonitoringTools2.js?v=xcx06142024-275" async></script>-->
+
+
+
+
+    <script id="participantseditorwidget" type="text/javascript" src="widgets/bwParticipantsEditor.js?v=xcx06142024-275" async></script>
+    <script id="projecttypeeditorjavascript" type="text/javascript" src="widgets/bwProjectTypeEditor.js?v=xcx06142024-275" async></script>
+    <script id="requesttypeeditorjavascript" type="text/javascript" src="widgets/bwRequestTypeEditor.js?v=xcx06142024-275" async></script>
+    <script id="financialareaseditorjavascript" type="text/javascript" src="widgets/bwFinancialAreasEditor.js?v=xcx06142024-275" async></script>
+
+    <script id="pillartypeeditorjavascript" type="text/javascript" src="widgets/bwPillarTypeEditor.js?v=xcx06142024-275" async></script>
+
+    <script id="deletedrequestemaileditorjavascript" type="text/javascript" src="widgets/bwEmailEditor_DeletedRequest.js?v=xcx06142024-275" async></script>
+    <script id="deletedrequestemaileditorjavascript" type="text/javascript" src="widgets/bwEmailEditor_RevertedRequest.js?v=xcx06142024-275" async></script>
+
+    <script id="donatejavascript" type="text/javascript" src="widgets/bwDonate.js?v=xcx06142024-275" async></script>
+    <script id="homepageclockjavascript" type="text/javascript" src="widgets/bwHomepageClock.js?v=xcx06142024-275" async></script>
+
+    <script id="emailmonitorjavascript" type="text/javascript" src="widgets/bwEmailMonitor.js?v=xcx06142024-275" async></script>
+    <script id="activityspinnerjavascript" type="text/javascript" src="widgets/bwActivitySpinner.js?v=xcx06142024-275" async></script>
+
+    <script id="activityspinnerfileuploadjavascript" type="text/javascript" src="widgets/bwActivitySpinner_FileUpload.js?v=xcx06142024-275" async></script>
+
+    <script id="advancedproductsearchjavascript" type="text/javascript" src="widgets/bwAdvancedProductSearch.js?v=xcx06142024-275" async></script>
+    <script id="advancedproductsearchjavascript" type="text/javascript" src="widgets/bwDistributorBundling.js?v=xcx06142024-275" async></script>
+
+    <script id="advancedproductsearchjavascript" type="text/javascript" src="widgets/bwOperationalHours.js?v=xcx06142024-275" async></script>
+
+
+    <script id="authenticatedwindowsjavascript" type="text/javascript" src="widgets/bwAuthenticatedWindows.js?v=xcx06142024-275" async></script>
+
+
+
+
+    <!-- SPEECH -->
+    <!--<script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vosk-browser@0.0.5/dist/vosk.js"></script>-->
+    <script type="application/javascript" src="vosk/vanilla/vosk.js?v=xcx06142024-275"></script>
+
+    <script id="speechjavascript" type="text/javascript" src="widgets/bwSpeech.js?v=xcx06142024-275" async></script>
+
+    <!--<script type="application/javascript" src="vosk/VoskJS.js?v=xcx06142024-275"></script>-->
+
+
+
+
+
+
+    <script src="//mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
+
+
+
+
+
+
+    <script type="text/javascript" src="scripts/jquery.timepicker.min.js?v=xcx06142024-275" async></script>
+
+
+
+
+
+
+
+
+
+
+    <!--<script id="xxxcx" type="text/javascript" src="widgets/bwAppThemeColorPicker.js?v=xcx06142024-275" async></script>-->
+    <!-- form widgets -->
+    <script id="attachmentswidgetjavascript" type="text/javascript" src="formwidgets/bwAttachments.js?v=xcx06142024-275" async></script>
+
+    <script id="attachmentsmusicplaylistwidgetjavascript" type="text/javascript" src="formwidgets/bwAttachments_MusicPlaylist.js?v=xcx06142024-275" async></script>
+
+    <script id="attachmentsforemailwidgetjavascript" type="text/javascript" src="widgets/bwAttachments_ForEmail_ATTACHMENTS.js?v=xcx06142024-275" async></script>
+    <script id="attachmentsforemailwidgetjavascript" type="text/javascript" src="widgets/bwAttachments_ForEmail_INLINE.js?v=xcx06142024-275" async></script>
+
+    <script id="documentscanwidgetjavascript" type="text/javascript" src="formwidgets/bwDocumentScan.js?v=xcx06142024-275" async></script>
+
+    <script id="recordaudiowidgetjavascript" type="text/javascript" src="formwidgets/bwRecordAudio.js?v=xcx06142024-275" async></script>
+
+    <script id="commentsfieldjavascript" type="text/javascript" src="formwidgets/bwCommentsField.js?v=xcx06142024-275" async></script>
+    <script id="commentsfieldeventsjavascript" type="text/javascript" src="formwidgets/bwCommentsField_Events.js?v=xcx06142024-275" async></script>
+    <script id="costsgridwidget" type="text/javascript" src="formwidgets/bwCostsGrid.js?v=xcx06142024-275" async></script>
+
+    <script id="invoicegridwidget" type="text/javascript" src="formwidgets/bwInvoiceGrid.js?v=xcx06142024-275" async></script>
+
+    <script id="descriptionfieldjavascript" type="text/javascript" src="formwidgets/ProjectTitle.js?v=xcx06142024-275" async></script><!-- Something weird going on with this widget. It is used but where is it??? 12-26-2023. -->
+
+    <script id="durationinmonthscalculatedfieldwidget" type="text/javascript" src="formwidgets/bwDurationInMonthsCalculatedField.js?v=xcx06142024-275" async></script>
+    <script id="enddatepickerwidget" type="text/javascript" src="formwidgets/bwEndDatePicker.js?v=xcx06142024-275" async></script>
+    <script id="descriptiondetailsfieldwidget" type="text/javascript" src="formwidgets/bwDescriptionDetailsField.js?v=xcx06142024-275" async></script>
+    <script id="justificationdetailsfieldwidget" type="text/javascript" src="formwidgets/bwJustificationDetailsField.js?v=xcx06142024-275" async></script>
+    <script id="reasondetailsfieldwidget" type="text/javascript" src="formwidgets/bwReasonDetailsField.js?v=xcx06142024-275" async></script>
+    <script id="capitalinternalordernumberfieldwidget" type="text/javascript" src="formwidgets/bwCapitalInternalOrderNumberField.js?v=xcx06142024-275" async></script>
+    <script id="expenseinternalordernumberfieldwidget" type="text/javascript" src="formwidgets/bwExpenseInternalOrderNumberField.js?v=xcx06142024-275" async></script>
+    <script id="costcenternumberfieldwidget" type="text/javascript" src="formwidgets/bwCostCenterNumberField.js?v=xcx06142024-275" async></script>
+    <script id="costcenterdescriptionfieldwidget" type="text/javascript" src="formwidgets/bwCostCenterDescriptionField.js?v=xcx06142024-275" async></script>
+    <script id="projectclassfieldwidget" type="text/javascript" src="formwidgets/bwProjectClassField.js?v=xcx06142024-275" async></script>
+    <script id="paybacktypefieldwidget" type="text/javascript" src="formwidgets/bwPaybackTypeField.js?v=xcx06142024-275" async></script>
+    <script id="locationpickerwidget" type="text/javascript" src="formwidgets/bwLocationPicker.js?v=xcx06142024-275" async></script>
+    <script id="paybackgridwidget" type="text/javascript" src="formwidgets/bwPaybackGrid.js?v=xcx06142024-275" async></script>
+    <script id="peoplepickerwidget" type="text/javascript" src="formwidgets/bwPeoplePicker.js?v=xcx06142024-275" async></script>
+
+    <script id="peoplepickerwidgetcustomer" type="text/javascript" src="formwidgets/bwPeoplePicker_Customer.js?v=xcx06142024-275" async></script>
+    <script id="peoplepickerwidgetemailrecipients" type="text/javascript" src="formwidgets/bwPeoplePicker_EmailRecipients.js?v=xcx06142024-275" async></script>
+
+
+    <script id="requestedcapitalfieldwidget" type="text/javascript" src="formwidgets/bwRequestedCapitalField.js?v=xcx06142024-275" async></script>
+    <script id="selectquoteitemswidget" type="text/javascript" src="formwidgets/bwSelectQuoteItems.js?v=xcx06142024-275" async></script>
+    <script id="selectinventoryitemswidget" type="text/javascript" src="formwidgets/bwSelectInventoryItems.js?v=xcx06142024-275" async></script>
+
+    <script id="closeoutassetswidget" type="text/javascript" src="formwidgets/bwCloseoutAssets.js?v=xcx06142024-275" async></script>
+
+    <script id="spendgridwidget" type="text/javascript" src="formwidgets/bwSpendGrid.js?v=xcx06142024-275" async></script>
+    <script id="startdatepickerwidget" type="text/javascript" src="formwidgets/bwStartDatePicker.js?v=xcx06142024-275" async></script>
+    <script id="yeardropdownwidget" type="text/javascript" src="formwidgets/bwYearDropDown.js?v=xcx06142024-275" async></script>
+    <script id="projecttypedropdownwidget" type="text/javascript" src="formwidgets/bwProjectTypeDropDown.js?v=xcx06142024-275" async></script>
+    <script id="pillartypedropdownwidget" type="text/javascript" src="formwidgets/bwPillarTypeDropDown.js?v=xcx06142024-275" async></script>
+    <script id="requesttypedropdownjavascript" type="text/javascript" src="formwidgets/bwRequestTypeDropDown.js?v=xcx06142024-275" async></script>
+    <script id="projecttypecheckboxgroupwidget" type="text/javascript" src="formwidgets/bwProjectTypeCheckboxGroup.js?v=xcx06142024-275" async></script>
+    <script id="pillartypecheckboxgroupwidget" type="text/javascript" src="formwidgets/bwPillarTypeCheckboxGroup.js?v=xcx06142024-275" async></script>
+
+    <!--<script type="text/javascript" src="scripts/html2canvas.min.js?v=xcx06142024-275" async></script>-->
+    <!-- Changed 4-12-2023. -->
+    <!--<script type="text/javascript" src="scripts/html2canvas/1-4-1/html2canvas.esm.js?v=xcx06142024-275" async></script>-->
+    <!-- THIS IS THE ESM FOR THIS. Is there an advantage? Is there a WASM? -->
+    <script type="text/javascript" src="scripts/html2canvas/1-4-1/html2canvas.js?v=xcx06142024-275" async></script>
+
+
+
+    <link rel="stylesheet" href="scripts/calendar_js/dist/calendar.js.css">
+    <script type="text/javascript" src="scripts/calendar_js/src/calendar.js?v=xcx06142024-275"></script>
+
+
+    <script type="text/javascript" src="scripts/chartjs/chart.js" async></script>
+
+
+
+    <!-- Getting the full version 7-1-2024, so commented out this old one. -->
+    <script type="text/javascript" src="scripts/summernote-lite.js?v=xcx06142024-275" async></script>
+
+    <!-- new 7-1-2024. -->
+    <!-- <script type="text/javascript" src="scripts/summernote/src/js/summernote.js?v=xcx06142024-275" async></script>-->
+
+
+
+
+    <script src="wasm/wasmzip/umd/main.js" async></script>
+    <!--<script>
+        const { WasmZip } = Module;
+    </script>-->
+    <!-- This is highlight.js. A library used here for dislaying the source code. -->
+    <link rel="stylesheet" href="scripts/highlight.js/11.9.0/vs.css">
+    <script src="scripts/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+
+
+
+    <!-- v4 After including the script the Tesseract variable will be globally available. -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+
+    <!--<script src="scripts/tesseract/src/Tesseract.js"></script>-->
+
+
+
+
+
+
+
+
+    <script src="https://shareandcollaborate.com/wasm/ffmpeg/umd/ffmpeg.js"></script>
+    <script src="https://shareandcollaborate.com/wasm/ffmpeg/umd/index.js"></script>
+    <script>
+        const { FFmpeg } = FFmpegWASM;
+        // const { fetchFile } = FFmpegUtil;
+        const { fetchFile, toBlobURL } = FFmpegUtil; // Changed to this 1-21-2024.
+    </script>
+
+
+
+
+
+    <style type="text/css">
+        .bwmasterdiv-scrollbar {
+            height: 100%;
+            overflow: auto;
+        }
+
+            .bwmasterdiv-scrollbar::-webkit-scrollbar {
+                width: 40px;
+                height: 20px;
+                background: white;
+                border: 1px solid black;
+            }
+
+            .bwmasterdiv-scrollbar::-webkit-scrollbar {
+                background-color: #23a6d5; /* Search for this color in thsi file. For example, search for ".brushedAluminum_blue". */
+                border: 1px solid black;
+            }
+    </style>
+
+
+</head>
+
+<body style="background-color: #f5f6fa; margin: 0 0 0 0;">  <!-- space white background. -->
+<!--<body style="background-color: #000000;margin:0 0 0 0;">--><!-- black background, vs space white background. 6-25-2024. -->
+
+
+
+
+
+    <!--<div id="bwMasterDiv" class="bwmasterdiv-scrollbar">-->
+    <div id="divBwActivitySpinner"></div>
+    <div id="divBwActivitySpinner_FileUpload"></div>
+
+    <!--<div style="float:right;" xcx="xcx223677-1"><a href="/about/javascript.html" rel="jslicense">JavaScript license information</a></div>-->
+
+    <div style="display:none;" id="divExcelFileViewerDialog">
+        <table style="">
+            <tr>
+                <td style="">
+                    <!--<span id="spanAttachmentsOfflineDialogTitle" style="color: #3f3f3f;font-size: 60pt;font-weight:bold;"></span>-->
+                    <!--<span id="divCreateRequestFormDialogContent" style="font-size:40pt;"></span>-->
+                    <span id="divExcelFileViewerDialogDialogContent">[divExcelFileViewerDialogDialogContent]</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: \'Segoe UI Light\',\'Segoe UI\',\'Segoe\',Tahoma,Helvetica,Arial,sans-serif;font-size: 120pt;font-weight:bold;" onclick="$('#divExcelFileViewerDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <!--<span id="spanErrorMessage" style="font-size:40pt;"></span><br /><br />-->
+        <!--<div id="divCreateRequestFormDialogCloseButton" class="divSignInButton" style="width:90%;text-align:center;line-height:1.1em;font-weight:bold;" onclick="$(\'#divUploadANewSmallCircleImageDialog\').dialog(\'close\');">
+            Close
+        </div>
+        <br /><br />-->
+    </div>
+
+
+
+    <div id="divBwActiveMenu"></div>
+
+
+    <!--<style>
+        .leftButton {
+            width: 100%;
+            float: left;
+            height: 50px;
+            background-color: darkgray;
+            color: white;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            display: flex !important;
+            justify-content: flex-end !important;
+            align-items: flex-end !important;
+            margin-right: -1px;
+        }
+
+            .leftButton:hover {
+                /*background-color: gray !important;*/
+                /*color: goldenrod !important;*/
+                color: tomato;
+                cursor: pointer !important;
+            }
+
+        .leftButton_inactive {
+            width: 100%;
+            float: left;
+            height: 50px;
+            background-color: darkgray;
+            color: white;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            display: flex !important;
+            justify-content: flex-end !important;
+            align-items: flex-end !important;
+            margin-right: -1px;
+        }
+
+        .leftButtonText {
+            padding-bottom: 5px;
+            margin-right: 10px;
+        }
+
+        .leftButtonText2 {
+            padding-bottom: 5px;
+            margin-right: 10px;
+        }
+
+
+        /* Linear ------------------------- */
+
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* THEME: brushedAluminum*/
+        .brushedAluminum {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_noanimation {
+            background-color: #23a6d5 !important;
+        }
+
+        .brushedAluminum_SelectedButton {
+            background-color: #f5f6fa !important;
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_InnerLeftButton {
+            background-color: #23a6d5 !important;
+            font-size: 20pt;
+        }
+        /* THEME: brushedAluminum_blue*/
+        .brushedAluminum_blue {
+            background: linear-gradient(-45deg, skyblue, #23a6d5, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_blue_noanimation {
+            background-color: #23a6d5 !important;
+        }
+
+        .brushedAluminum_blue_SelectedButton {
+            background-color: #f5f6fa !important;
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_blue_InnerLeftButton {
+            background-color: #23a6d5 !important;
+            font-size: 20pt;
+        }
+        /* THEME: brushedAluminum_purple*/
+        .brushedAluminum_purple {
+            background: linear-gradient(-45deg, #e2cdf1, #bc75f0, #8c23d5, #c399de);
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_purple_noanimation {
+            background-color: #8c23d5 !important;
+        }
+
+        .brushedAluminum_purple_SelectedButton {
+            background-color: #f5f6fa !important;
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_purple_InnerLeftButton {
+            background-color: #23a6d5 !important;
+            font-size: 20pt;
+        }
+        /* THEME: brushedAluminum_green*/
+        .brushedAluminum_green {
+            background: linear-gradient(-45deg, #5ec74d, #72e272, #09781f, #9ade99);
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_green_noanimation {
+            background-color: #09781f !important;
+        }
+
+        .brushedAluminum_green_SelectedButton {
+            background-color: #f5f6fa !important;
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_green_InnerLeftButton {
+            background-color: #23a6d5 !important;
+            font-size: 20pt;
+        }
+
+        /* THEME: brushedAluminum_yellow*/
+        .brushedAluminum_yellow {
+            background: linear-gradient(-45deg, #eeee2a, #f5f51c, #d9d914, #f5f51c);
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_yellow_noanimation {
+            background-color: #d9d914 !important;
+        }
+
+        .brushedAluminum_yellow_SelectedButton {
+            background-color: #f5f6fa !important;
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_yellow_InnerLeftButton {
+            background-color: #23a6d5 !important;
+            font-size: 20pt;
+        }
+
+        /* THEME: brushedAluminum_skyblue*/
+        .brushedAluminum_skyblue {
+            background: linear-gradient(-45deg, rgba(211, 211, 211, 0.60), rgba(211, 211, 211, 0.80), #d3d3d3, rgba(211, 211, 211, 0.80));
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_skyblue_noanimation {
+            background-color: lightgray !important;
+        }
+
+        .brushedAluminum_skyblue_SelectedButton {
+            background-color: #f5f6fa !important; /* space white */
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_skyblue_InnerLeftButton {
+            background-color: rgba(128, 128, 128, 0.18) !important;
+            font-size: 20pt;
+        }
+
+        /* THEME: brushedAluminum_gray2  // This class is so that we can change Goldenrod text to black for better visibility. 10-26-2022 */
+        .brushedAluminum_gray2 {
+            background: linear-gradient(-45deg, rgba(211, 211, 211, 0.60), rgba(211, 211, 211, 0.80), #d3d3d3, rgba(211, 211, 211, 0.80));
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_gray2_noanimation {
+            background-color: lightgray !important;
+        }
+
+        .brushedAluminum_gray2_SelectedButton {
+            background-color: #f5f6fa !important; /* space white */
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_gray2_InnerLeftButton {
+            background-color: rgba(128, 128, 128, 0.18) !important;
+            font-size: 20pt;
+        }
+
+
+
+
+        /* THEME: brushedAluminum_orange This was _admin to begin with... pretty bright, and orange is not calming to look at... */
+        .brushedAluminum_orange {
+            background: linear-gradient(-45deg, #FE5000, #FF9E0D, #E64900, #FF9E0D);
+            background-size: 400% 400%;
+            -moz-animation: gradient 15s ease infinite;
+            -o-animation: gradient 15s ease infinite;
+            -webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+        }
+
+        .brushedAluminum_orange_noanimation {
+            background-color: #FF9E0D !important;
+        }
+
+        .brushedAluminum_orange_SelectedButton {
+            background-color: #f5f6fa !important;
+            /*font-size:20pt;*/
+            color: black;
+        }
+
+        .brushedAluminum_orange_InnerLeftButton {
+            background-color: #23a6d5 !important;
+            font-size: 20pt;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>-->
+    <!--<script>
+        function getStyle(el, styleProp) {
+            try {
+                console.log('In getStyle().');
+                var x = document.getElementById(el);
+
+                if (window.getComputedStyle) {
+                    var y = document.defaultView.getComputedStyle(x, null).getPropertyValue(styleProp);
+                }
+                else if (x.currentStyle) {
+                    var y = x.currentStyle[styleProp];
+                }
+
+                return y;
+            } catch (e) {
+                console.log('Exception in xx(): ' + e.message + ', ' + e.stack);
+            }
+        }
+
+        getZIndex = function (e) {
+            var z = getComputedStyle(e).getPropertyValue('z-index');
+            if (isNaN(z)) return getZIndex(e.parentNode);
+            return z;
+        };
+
+
+    </script>-->
+    <!--<div style="display:none;" id="connectToWorkflowAppDialog">
+        <table>
+            <tr>
+                <td>
+                    Enter the Budget Workflow URL from the address bar in your web browser:
+                </td>
+            </tr>
+            <tr>
+                <td class="bwDataEntryTableCellComponent">
+                    <input type="text" id="BudgetWorkflowAppUrl" size="88" />
+                </td>
+            </tr>
+        </table>
+    </div>-->
+
+    <div style="display:none;" id="ArDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanArDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;font-weight:bold;"></span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#ArDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+        <span id="spanArDialogTaskAuditTrail" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 18pt;font-weight:bold;"></span>
+        <br />
+
+
+        <svg id="svg"></svg>
+
+        <br />
+
+
+        <span id="spanArDialogViewBudgetRequestLink" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 25pt;font-weight:bold;"></span>
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="$('#ArDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+    </div>
+
+    <div style="display:none;" id="bwOrganizationEditor_divUndoOrgRolesActivationDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanUndoOrgRolesActivationTitle" style="color: #3f3f3f;font-size:30pt;font-weight:bold;">Organization UPDATED</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: \'Segoe UI Light\',\'Segoe UI\',\'Segoe\',Tahoma,Helvetica,Arial,sans-serif;font-size:30pt;font-weight:bold;" onclick="$('#bwOrganizationEditor_divUndoOrgRolesActivationDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+        <span id="spanUndoOrgRolesActivationContent" style="font-family: \'Segoe UI Light\',\'Segoe UI\',\'Segoe\',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size:20pt;">
+            The organization has been updated. The changes will immediately impact the future workflow processes.
+            <br />
+            <br />
+            <br />
+            <br /><br />
+        </span>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- WE NEED TO GET RID OF THIS AND PUT IN bwAttachmentDialog.js widget. 2-16-2024. -->
+    <!--<div style="display:none;" id="AttachmentsDialog1">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanAttachmentsDialog1Title" style="color: #3f3f3f;font-size:30pt;font-weight:bold;">xcx34348</span>
+                </td>-->
+    <!--<td style="width:9%;"></td>
+    <td style="width:1%;cursor:pointer;vertical-align:top;">
+        <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size:60pt;font-weight:bold;" onclick="$('#AttachmentsDialog1').dialog('close');">X</span>
+    </td>-->
+    <!--</tr>
+    </table>
+    <br /><br />
+    <input type="text" autofocus="true" style="display:none;" />-->
+    <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+    <!--<div id="divAttachmentsDialog1Contents" class="divDialogAttachment" ondblclick="$('.bwRequest').bwRequest('zoomAndCenter', 'AttachmentsDialog1');"></div>
+    <br /><br />-->
+    <!--[x] Viewable by Participants
+    <br />
+    [x] Viewable by Participants and Customers
+    <br />
+    [x] Viewable by Participants and Vendors
+    <br />
+    [x] Viewable by Participants, Customers, and Vendors
+    <br />
+    [x] Viewable by Everyone (public) *beta Share this link with anyone, and they will be able to view this file without logging in.
+    <br /><br />-->
+    <!--<table>
+        <tr>
+            <td><span style="font-style:italic;color:gray;font-size:18pt;">file name:</span></td>
+            <td>
+                <input type="text" id="txtAttachmentsDialog1Filename" style="width:290px;font-size:18pt;" />
+                &nbsp;<span id="spanAttachmentsDialog1FileExtension" style="font-style:italic;font-size:16pt;color:gray;"></span>-->
+    <!--<br /><span style="font-style:italic;font-size:22pt;color:gray;">(don't include a file extension)</span>-->
+    <!--</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top;"><span style="font-style:italic;font-size:18pt;color:gray;">description:</span></td>
+        <td><textarea id="txtAttachmentsDialog1FileDescription" style="overflow:hidden;font-size:12pt;" rows="4" cols="55"></textarea></td>
+    </tr>-->
+    <!--<tr>
+        <td colspan="2" style="text-align:right;font-size:40pt;">
+            <button name="btnUploadTheFileNowxxxx" title="Click here to upload the attachment." class="BwButton" id="btnUploadTheFileNow">Save</button>
+            <button name="btnDeleteTheFileNowxxxx" title="Click here to delete the attachment." class="BwButton" id="btnDeleteTheFileNow">Delete</button>
+            <button name="btnCancelUploadTheFileNowxxxx" title="" class="BwButton" id="btnCancelUploadTheFileNow">Close</button>
+        </td>
+    </tr>-->
+    <!--</table>
+
+    <span id="spanAttachmentsDialog1SaveMetadataButton"></span>
+    <br /><br />-->
+    <!--<div id="btnAttachmentsDialog1SaveMetadata" class="divDialogButton">
+        Save
+    </div>-->
+    <!--<span id="spanAttachmentsDialog1DeleteAttachmentButton"></span>
+    <br /><br />-->
+    <!--<div id="btnAttachmentsDialog1DeleteAttachment" class="divDialogButton">
+        Delete
+    </div>-->
+    <!--<br /><br />
+        <div id="xxxx" class="divDialogButton" onclick="alert('This functionality allows you to easily copy an attachment to another request. This functionality is incomplete. Coming soon!');">
+            Copy to request...
+        </div>
+
+
+
+
+
+
+
+        <br /><br />
+        <div id="spanAttachmentsDialog1_LaunchFileConversionButton">[spanAttachmentsDialog1_LaunchFileConversionButton]</div>
+
+        <br /><br />
+        <div id="spanAttachmentsDialog1_LaunchFileConversionButton2">[spanAttachmentsDialog1_LaunchFileConversionButton2]</div>
+
+        <br /><br />
+        <div id="spanAttachmentsDialog1_GetExifDataButton">[spanAttachmentsDialog1_GetExifDataButton]</div>
+
+        <br /><br />
+        <div id="spanAttachmentsDialog1_PerformOCRButton">[spanAttachmentsDialog1_PerformOCRButton]</div>
+
+        <br /><br />
+        <div id="spanAttachmentsDialog1_RepairFileTypeButton">[spanAttachmentsDialog1_RepairFileTypeButton]</div>
+
+
+
+        <br /><br />
+        <div id="xxxx" class="divDialogButton" onclick="$('#AttachmentsDialog1').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+    </div>-->
+
+
+    <div style="display:none;" id="divDeleteAnAttachmentOfflineDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanDeleteAnAttachmentOfflineDialogTitle" style="color: #3f3f3f;font-size: 60pt;font-weight:bold;">Delete Budget Request</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 120pt;font-weight:bold;" onclick="$('#divDeleteAnAttachmentOfflineDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+
+
+        <!--<span id="spanDeleteAnAttachmentOfflineDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 40pt;font-weight:bold;">Delete Budget Request</span>
+        <br /><br />-->
+        <span id="spanDeleteAnAttachmentOfflineDialogDependencyDetails" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;"></span>
+        <br />
+        <span id="spanDeleteAnAttachmentOfflineDialogTopMessage"></span>
+        <br />
+        <div id="divDeleteAnAttachmentOfflineDialogDeleteRequestButton" class="divDialogButton">
+            Delete
+        </div>
+
+        <br /><br />
+        <div class="divDialogButton" onclick="$('#divDeleteAnAttachmentOfflineDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+
+
+
+        <br /><br />
+    </div>
+
+    <div style="display:none;" id="divFunctionalAreaTemplate">
+        <h2></h2>
+
+        <span class="printButton" title="print" onclick="cmdPrintForm();">&#x1f5a8;</span>
+
+        <table class="bwComForm">
+            <tr>
+                <td class="bwComTitleCell">Title</td>
+                <td class="bwChartCalculatorLightCurrencyTableCell">
+                    <input id="txtFunctionalAreaTitle" style="cursor:text;padding:5px 5px 5px 5px;" size="40" />
+                    <input id="txtFunctionalAreaId" style="display:none;" size="40" value="" />
+                </td>
+                <td class="bwComTitleCell">Year</td>
+                <td class="bwChartCalculatorLightCurrencyTableCell">
+                    <span id="spanFunctionalAreaYear"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="bwComTitleCell" style="white-space:nowrap;">Yearly budget</td>
+                <td class="bwChartCalculatorLightCurrencyTableCell">
+                    <input id="txtFunctionalAreaYearlyBudget" style="text-align:right;padding:5px 5px 5px 5px;" />
+                </td>
+                <td class="bwComTitleCell">Quote</td>
+                <td class="bwChartCalculatorLightCurrencyTableCell">
+                    <input type="checkbox" id="cbFunctionalAreaQuote" />
+                </td>
+            </tr>
+        </table>
+
+        <table class="bwComForm">
+            <tr>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="bwComTitleCell">Budget Assignment</td>
+                            <td class="bwChartCalculatorLightCurrencyTableCell" style="white-space:nowrap;">
+                                <input style="padding:5px 5px 5px 5px;" id="txtApprover1FriendlyName" onfocus="this.blur();" contenteditable="false" onclick="cmdDisplayPeoplePickerDialog('txtApprover1FriendlyName', 'txtApprover1Id', 'txtApprover1Email');" title="" />
+                                <input id="txtApprover1Id" style="display:none;" />
+                                <input id="txtApprover1Email" style="display:none;" />
+                                <img src="images/addressbook-icon18x18.png" onclick="cmdDisplayPeoplePickerDialog('txtApprover1FriendlyName', 'txtApprover1Id', 'txtApprover1Email');" style="width:18px;height:18px;cursor:pointer;vertical-align:text-bottom;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bwComTitleCell">Approver #1</td>
+                            <td class="bwChartCalculatorLightCurrencyTableCell" style="white-space:nowrap;">
+                                <input style="padding:5px 5px 5px 5px;" id="txtApprover2FriendlyName" onfocus="this.blur();" contenteditable="false" onclick="cmdDisplayPeoplePickerDialog('txtApprover2FriendlyName', 'txtApprover2Id', 'txtApprover2Email');" title="" />
+                                <input id="txtApprover2Id" style="display:none;" />
+                                <input id="txtApprover2Email" style="display:none;" />
+                                <img src="images/addressbook-icon18x18.png" onclick="cmdDisplayPeoplePickerDialog('txtApprover2FriendlyName', 'txtApprover2Id', 'txtApprover2Email');" style="width:18px;height:18px;cursor:pointer;vertical-align:text-bottom;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div id="divFunctionalAreasApproverDataEntryFields"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div id="divCreateFunctionalAreaAdditionalApproversSection"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><span id="spanAddAnApproverLink"><a href="javascript:cmdAddAnApprover();">+  Add an approver</a></span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:right;">
+                    <span id="spanFunctionalAreaDetailsBottomButtonSection">
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><i>Budget thresholds equal to or more than the budget amount involve the approver in the approval process.</i></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="display:none;" id="CheckForAlertsDialog">
+        <table>
+            <tr>
+                <td>
+                    Select OK to check for alerts...
+                </td>
+            </tr>
+            <tr>
+                <td class="bwDataEntryTableCellComponent">
+                    <input type="checkbox" title="Don't ask me this again." />Don't ask me this again.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    [i]<em>Go to the main menu, and choose "Configuration" > "Alerts" to make changes to your alerts settings.</em>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="display:none;" id="trialVersionHasExpired">
+        <p id="licensewarning"></p>
+    </div>
+
+    <div style="display:none;" id="bwAlert"></div>
+
+    <div style="display:none;" id="bwLoggedInUserDropDown">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanLoggedInUserDropDownDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;font-weight:bold;"></span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#bwLoggedInUserDropDown').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <!--<br />-->
+        <!--<div id="divLogonProvider"></div>-->
+        <!--<hr />-->
+        <!--<div id="divUserDropdownTenantMembershipLink"></div>-->
+        <!--<a href="javascript:cmdUserOptions();">Account Details</a>
+        <hr />
+        <a href="javascript:cmdSignOut();">Sign out</a>-->
+
+
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="cmdUserOptions();">
+            View account details
+        </div>
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="cmdSignOut();">
+            Sign out
+        </div>
+        <br /><br />
+        <!--<div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="$('#bwLoggedInUserDropDown').dialog('close');">
+            Close
+        </div>
+        <br /><br />-->
+
+
+        <div id="divForestAdministratorLinks">
+        </div>
+        <div id="divUserDropdownTenantPackageType"></div>
+
+    </div>
+
+    <div style="display:none;" id="divFacebookLogonButton">
+        <fb:login-button scope="public_profile,email" onlogin="checkFbLoginState();"></fb:login-button>
+        <div style="display:none;" id="divFacebookLogonButtonUnsubscribeOptions"></div>
+    </div>
+
+    <div style="display:none;" id="divGoogleLogonButton">
+        <div id="renderMe"></div>
+        <div style="display:none;" id="divGoogleLogonButtonUnsubscribeOptions"></div>
+    </div>
+
+    <div style="display:none;" id="LogoutDialog">
+        <a href="index.html">Click here to sign out.</a><br /><br />
+        <!--<a href="index.html">Click here to sign out of <span id="spanLogoutDialogLogonProvider"></span></a><br /><br />-->
+    </div>
+
+    <div style="display:none;" id="earlyAdopterCodeDialog">
+        <span style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #262626;font-size: 2.77em;">Enter your early adopter code:&nbsp;<input id="txtEarlyAdopterCode" name="txtEarlyAdopterCode" pattern="\d*" autofocus size="12" /></span>
+    </div>
+
+    <div style="display:none;" id="PeoplePickerDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanPeoplePickerDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;font-weight:bold;"></span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#PeoplePickerDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <input id="txtPeoplePickerDialogSearchBox" title="Type the first name and select from the list below..." style="WIDTH: 85%;font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #262626;font-size: 20pt;TEXT-ALIGN: left;" /><input id="txtPeoplePickerDialogParticipantId" style="display:none;" /><input id="txtPeoplePickerDialogParticipantEmail" style="display:none;" />
+        <img src="images/magnifying-glass.jpg" style="width:25px;height:25px;" />
+        <hr />
+        <span id="spanPeoplePickerParticipantsList"></span>
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="$('#PeoplePickerDialog').dialog('close');">
+            Close
+        </div>
+        <br />
+    </div>
+
+
+
+
+
+    <div style="display:none;" id="AccountDetailsDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanAccountDetailsDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;font-weight:bold;"></span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#AccountDetailsDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <!--<span id="spanAccountDetailsDialogDetails"></span>-->
+        <!--<input id="txtPeoplePickerDialogSearchBox" title="Type the first name and select from the list below..." style="WIDTH: 85%;font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #262626;font-size: 20pt;TEXT-ALIGN: left;" /><input id="txtPeoplePickerDialogParticipantId" style="display:none;" /><input id="txtPeoplePickerDialogParticipantEmail" style="display:none;" />
+        <img src="images/magnifying-glass.jpg" style="width:25px;height:25px;" />
+        <hr />
+        <span id="spanPeoplePickerParticipantsList"></span>-->
+
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+        <span style="font-family: calibri;">Name</span>
+        <br />
+        <input type="text" id="txtUserOptionsFriendlyName" style="WIDTH: 93%;font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #262626;font-size: 20pt;" />
+        <br /><br />
+        <span style="font-family: calibri;">Email</span>
+        <br />
+        <input type="text" id="txtUserOptionsEmail" style="WIDTH: 93%;font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #262626;font-size: 20pt;" />
+
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="$('.bwCoreComponent').bwCoreComponent('cmdSaveUserOptions');">
+            Save
+        </div>
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="$('#AccountDetailsDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+    </div>
+
+
+
+
+
+
+
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 140px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                position: absolute;
+                z-index: 1;
+                bottom: 150%;
+                left: 50%;
+                margin-left: -75px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+                .tooltip .tooltiptext::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #555 transparent transparent transparent;
+                }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="display:none;" id="DeleteAParticipantDialog">
+        <!--DEV: The replace function is not doing the Manager for a Budget Request yet!!!-->
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanDeleteAParticipantDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;font-weight:bold;">Remove user from this workflow.</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#DeleteAParticipantDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+        <br /><br />
+        <span id="spanDeleteAParticipantDialogUserDependencyDetails"></span>
+        <br />
+        <span id="spanDeleteAParticipantDialogChooseAUserSection">
+            <span id="spanDeleteAParticipantDialogUserToDeleteFriendlyName"></span>:
+            <span style="white-space:nowrap;"><input contenteditable="false" id="txtDeleteAParticipantDialogUserToReplaceFriendyName" onclick="cmdDisplayPeoplePickerDialog('txtDeleteAParticipantDialogUserToReplaceFriendyName', 'txtDeleteAParticipantDialogUserToReplaceId', 'txtDeleteAParticipantDialogUserToReplaceEmail');" title="" />&nbsp;<img src="images/addressbook-icon18x18.png" id="txtDeleteAParticipantDialogUserToReplacePeoplePicker" onclick="cmdDisplayPeoplePickerDialog('txtDeleteAParticipantDialogUserToReplaceFriendyName', 'txtDeleteAParticipantDialogUserToReplaceId', 'txtDeleteAParticipantDialogUserToReplaceEmail');" style="width:18px;height:18px;cursor:pointer;vertical-align:text-bottom;" /></span>
+            <input id="txtDeleteAParticipantDialogUserToReplaceId" style="display:none;" />
+            <input id="txtDeleteAParticipantDialogUserToReplaceEmail" style="display:none;" />
+        </span>
+        <span id="spanReassignUserTasksDialogEmailMessage">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="checkbox" id="cbReassignUserTasksDialogEmailMessage" />&nbsp;
+            <span id="spanReassignUserTasksDialogEmailMessageText" style="font-size:small;">
+                Email me the details for my records.
+            </span>
+        </span>
+        <br /><br />
+        <div id="divDeleteAParticipantDialogReassignTasks" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;">
+            Remove
+        </div>
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="$('#DeleteAParticipantDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+    </div>
+
+
+
+
+    <div style="display:none;" id="DeleteABudgetRequestDialog">
+        <span id="spanDeleteABudgetRequestDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 22pt;font-weight:bold;">Delete Budget Request</span><br /><br />
+        <span id="spanDeleteABudgetRequestDialogDependencyDetails"></span>
+        <br />
+        <span id="spanDeleteABudgetRequestDialogTopMessage"></span>
+        <br />
+        <!--<input type="checkbox" id="cbDeleteABudgetRequestDialogEmailMessage" />&nbsp;
+        <span id="spanDeleteABudgetRequestDialogEmailMessageText">Send an email notification to all participants. You can include an additional message as well:</span>
+        <textarea id="txtDeleteABudgetRequestDialogEmailMessage" rows="4" cols="55"></textarea>
+        <br />-->
+    </div>
+
+    <div style="display:none;" id="DeleteARecurringExpenseDialog">
+        <span id="spanDeleteARecurringExpenseDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 22pt;font-weight:bold;">Delete Recurring Expense</span><br /><br />
+        <span id="spanDeleteARecurringExpenseDialogDependencyDetails"></span>
+        <br />
+        <span id="spanDeleteARecurringExpenseDialogTopMessage"></span>
+        <br />
+        <input type="checkbox" id="cbDeleteARecurringExpenseDialogEmailMessage" />&nbsp;
+        <span id="spanDeleteARecurringExpenseDialogEmailMessageText">Send an email notification to all participants. You can include an additional message as well:</span>
+        <textarea id="txtDeleteARecurringExpenseDialogEmailMessage" rows="4" cols="55"></textarea>
+        <br />
+    </div>
+
+    <!--<div style="display:none;" id="divConfirmFileUploadDialog">
+        <span id="spanConfirmFileUploadDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 22pt;font-weight:bold;">Select the 'Upload' button...</span><br /><br />
+        <span style="font-style:italic;font-size:small;color:gray;">The file name and description are not required because they can be changed later on.</span>
+        <br /><br />
+        <table>
+            <tr>
+                <td><span style="font-style:italic;font-size:small;color:gray;">file name:</span></td>
+                <td><input type="text" id="txtConfirmFileUploadDialogFilename" style="width:290px;" />&nbsp;<span style="font-style:italic;font-size:x-small;color:gray;">(don't include a file extension)</span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;"><span style="font-style:italic;font-size:small;color:gray;">description:</span></td>
+                <td><textarea id="txtConfirmFileUploadDialogFileDescription" style="overflow:hidden;" rows="4" cols="55"></textarea></td>
+            </tr>
+        </table>
+    </div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="display:none;" id="divClientRequestsNotYetSubmittedDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanClientRequestsNotYetSubmittedDialogTitle" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;font-weight:bold;">Un-submitted Request(s)</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#divClientRequestsNotYetSubmittedDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+        <div id="divClientRequestsNotYetSubmittedContent"></div>
+
+
+        <!--<br /><br /><br /><br /><br /><br />
+        <span id="spanClientRequestsNotYetSubmittedDetails"></span>
+        <br />
+        <span style="font-style:italic">If this device runs low on storage, your web browser may delete these without asking you.</span>
+
+        <br /><br />
+        <input type="radio" name="rbgSelectRequest" />&nbsp;One at a time
+        <input type="radio" name="rbgSelectRequest" />&nbsp;All at once
+
+
+
+        <br /><br />
+        Select then click the button below: <select><option>xxPizza ($10.00)</option></select>
+        <br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;">
+            Review the selected one now
+        </div>
+
+
+
+
+
+        <hr />
+        Choose the network to submit these to: <select><option>xxBudgetWorkflow1</option></select>
+        <br /><br />
+        Choose the financial area to submit these to: <select><option>xxMiscellaneous</option></select>
+        <br /><br />
+        Choose the Manager who will be assigned to these requests: <select><option>xxTodd Hiltz</option></select>
+        <br /><br />
+        <input type="checkbox" />&nbsp;Do the same for all xx requests
+        <br /><br />
+        <div id="xx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;">
+            Process them all now
+        </div>
+        <hr />
+
+
+
+        Not now. Remind me in <select><option>1 hour</option><option selected>1 day</option><option>1 week</option></select>
+            -->
+
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:0.8em;font-weight:bold;" onclick="$('#divClientRequestsNotYetSubmittedDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+    </div>
+
+
+
+
+
+
+
+
+
+    <div style="display:none;" id="divDeleteABudgetRequestOfflineDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanDeleteABudgetRequestOfflineDialogTitle" style="color: #3f3f3f;font-size: 60pt;font-weight:bold;">xxdeleterequest</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 120pt;font-weight:bold;" onclick="$('#divDeleteABudgetRequestOfflineDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <span id="spanDeleteABudgetRequestOfflineDialogDependencyDetails" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;"></span>
+        <br />
+        <span id="spanDeleteABudgetRequestOfflineDialogTopMessage"></span>
+        <br />
+        <div id="divDeleteABudgetRequestOfflineDialogDeleteRequestButton" class="divDialogButton">
+            Remove
+        </div>
+        <br /><br />
+        <div class="divDialogButton" onclick="$('#divDeleteABudgetRequestOfflineDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+
+
+
+        <br /><br />
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="display:none;vertical-align:middle;cursor:progress;" id="divWorkingOnItDialog">
+        <!-- cursor:progress; is the hand with spinning wheel. Can use in other places as well probably! -->
+        <span style="white-space:nowrap;color: rgb(38, 38, 38); font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif; font-size: 2.77em;">Working on it...</span><br />
+    </div>
+
+    <div style="display:none;" id="RecurringExpenseDialog">
+        <!--<span style="cursor:help;" title="Created by todd_hiltz@hotmail.comx on Augustx, 2016x at 7am.">Recurring Expense created by Toddx Hiltzx on Augustx 9, 2016.</span><br />
+        <br />-->
+        <!--Since then, the following new budget requests have been created:<br />
+                <span title="Marked 'Active' by todd_hiltz@hotmail.comx on Augustx, 2016x at 7am.
+
+        Click now to view the AR.
+                      ">
+                    <a href="" style="cursor:pointer;">October 9, 2016 - xxxx (approved/active/in progress {ARStatus})</a><br />
+                </span>
+                <span style="cursor:help;" title="Marked 'Active' by todd_hiltz@hotmail.comx on Augustx, 2016x at 7am.
+
+        Click now to view the AR.
+                      ">
+                    <a href="" style="cursor:pointer;">November 9, 2016 - xxxx (approved/active/in progress {ARStatus})</a><br />
+                </span>-->
+
+        <span id="spanRecurringExpenseDialogBudgetRequestsList"></span>
+
+
+        <br /><br />
+        The next reminder date:&nbsp;&nbsp;
+        <input id="dtEstimatedStartDatex" type="text" />
+        <br />
+    </div>
+
+
+
+    <div style="display:none;" id="YouOnlyHaveOneFinancialAreaCopyPreviousYearDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 30pt;font-weight:bold;">Financial Areas for the New Year!</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#YouOnlyHaveOneFinancialAreaCopyPreviousYearDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+
+        <span id="spanYouOnlyHaveOneFinancialAreaCopyPreviousYearDialogContent"></span>
+
+    </div>
+
+
+    <div style="display:none;" id="divAlertDialog_QuickNotice" onkeydown="return carriagereturnpress(event, 'cmdClose_divAlertDialog_QuickNotice');">
+        <span id="spanErrorMessage_QuickNotice" style="font-size:40pt;"></span>
+        <!--<br /><br />-->
+    </div>
+
+    <div style="display:none;" id="divUnsubscribeDialog">
+        <div id="divUnsubscribeDialog_Content"></div>
+    </div>
+
+    <div style="display:none;" id="divAcceptInvitationDialog">
+        <div id="divAcceptInvitationDialog_Content"></div>
+    </div>
+
+    <div style="display:none;" id="PrintDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanPrintDialogTitle" style="color: #3f3f3f;font-size: 60pt;font-weight:bold;"></span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 120pt;font-weight:bold;" onclick="$('#PrintDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+        <br /><br />
+        <span id="spanPrintDialogContents" style="font-size:30pt;"></span><br /><br />
+        <div class="divDialogButton" onclick="PrintRequest();">
+            Print
+        </div>
+        <br /><br />
+        <div class="divDialogButton" onclick="$('#PrintDialog').dialog('close');">
+            Close
+        </div>
+    </div>
+
+
+
+
+
+    <div style="display:none;" id="divCreateRequestFormDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <!--<span id="spanAttachmentsOfflineDialogTitle" style="color: #3f3f3f;font-size: 60pt;font-weight:bold;"></span>-->
+                    <!--<span id="divCreateRequestFormDialogContent" style="font-size:40pt;"></span>-->
+                    <span id="divCreateRequestFormDialogContent"></span>
+                </td>
+                <!--<td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;font-size: 120pt;font-weight:bold;" onclick="$('#divCreateRequestFormDialog').dialog('close');">X</span>
+                </td>-->
+            </tr>
+        </table>
+        <br /><br />
+        <!--<span id="spanErrorMessage" style="font-size:40pt;"></span><br /><br />-->
+        <!--<div id="divCreateRequestFormDialogCloseButton" class="divSignInButton" style="width:90%;text-align:center;line-height:1.1em;font-weight:bold;" onclick="$('#divCreateRequestFormDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />-->
+    </div>
+
+    <div style="display:none;" id="divRequestFormDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="divRequestFormDialogContent"></span>
+                </td>
+            </tr>
+        </table>
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and zooming in on the iPhone. -->
+        <br /><br />
+    </div>
+
+
+    <!--<div style="display:none;border:3px outset #066B8B;cursor:pointer;" id="divQuickRequestButton" onclick="javascript:alert('This feature is not complete. Coming soon!');">
+        <span id="xxxx" style="font-size:20pt;text-align:center;vertical-align:middle;">Quick Request Button</span><br /><br />
+    </div>-->
+    <!--<div style="display:none;" id="divChecklistFormDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="divChecklistFormDialogContent"></span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <div id="divChecklistFormDialogSaveButton" class="divSignInButton" style="width:90%;text-align:center;line-height:1.1em;font-weight:bold;">
+            Save Completed Checklist
+        </div>
+        <br />
+        <div class="divSignInButton" style="width:90%;text-align:center;line-height:1.1em;font-weight:bold;" onclick="$('#divChecklistFormDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+    </div>-->
+
+    <div style="display:none;" id="divChecklistFormReadOnlyDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="divChecklistFormReadOnlyDialogContent"></span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <div id="divChecklistFormReadOnlyDialogSaveButton" class="divSignInButton" style="width:90%;text-align:center;line-height:1.1em;font-weight:bold;">
+            Request a Revision
+        </div>
+        <br />
+        <div class="divSignInButton" style="width:90%;text-align:center;line-height:1.1em;font-weight:bold;" onclick="$('#divChecklistFormReadOnlyDialog').dialog('close');">
+            Close
+        </div>
+        <br /><br />
+    </div>
+
+
+
+
+
+    <div style="display:none;" id="divRoleMultiPickerDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:90%;">
+                    <span id="spanRoleMultiPickerDialogTitle" style="color: #3f3f3f;font-size: 30pt;font-weight:bold;">Role(s)</span>
+                </td>
+                <td style="width:9%;"></td>
+                <td style="width:1%;cursor:pointer;vertical-align:top;">
+                    <span class="dialogXButton" style="font-family: \'Segoe UI Light\',\'Segoe UI\',\'Segoe\',Tahoma,Helvetica,Arial,sans-serif;font-size: 30pt;font-weight:bold;" onclick="$('#divRoleMultiPickerDialog').dialog('close');">X</span>
+                </td>
+            </tr>
+        </table>
+        <br /><br />
+        <input type="text" autofocus="autofocus" style="display:none;" /> <!-- This is here to prevent the first visible field from getting the cursor and showing the keyboard. -->
+        <span id="spanRoleMultiPickerDialogContent" style="font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;color: #3f3f3f;font-size: 20pt;"></span><br />
+        <br /><br />
+        <div id="xxxx" class="divSignInButton" style="width:90%;text-align:center;line-height:1.1em;font-weight:bold;" onclick="alert('This functionality is incomplete. Coming soon!This will allow a user org/roles to be edited from here, but it will have to clean up the org/roles json in order to keep the BwWorkflowUserRole table synchronized.');">
+            Save
+        </div>
+        <!--<br />
+        <input type="button" value="SAVE" onclick="$('.bwWorkflowEditor').bwWorkflowEditor('roleMultiPickerDialog_RenderResults');" />-->
+        <br /><br />
+    </div>
+    <!--</div>-->
+</body>
+</html>

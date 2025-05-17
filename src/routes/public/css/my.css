@@ -1,0 +1,2595 @@
+﻿
+
+.budgetrequestform {
+    margin-top:15px; /* This adds space from the top of the New Request form. */
+}
+/*
+
+.module {
+    cursor: url('neon_pointer.cur');
+}
+*/
+.bwMoveDialogToTop {
+    z-index: 100000 !important;
+}
+
+/*.ui-dialog > .ui-widget-header {background: red;}*/ /* dialog */
+/* THIS MAKES SURE displayAlertDialog() always displays on top of everything. It works! 6-16-2024. <<<<< NO IT DOESN'T!!!!!!!!!! GOT RID OF IT> 7-1-024. */
+/*.ui-dialog {
+    z-index: 1000 !important;
+}*/
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+
+body {
+    cursor: url(neon_pointer.cur);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    overflow: scroll;
+    overscroll-behavior-y: contain; /* I want to prevent pull-down-to-refresh of mobile chrome:  https://stackoverflow.com/questions/36212722/how-to-prevent-pull-down-to-refresh-of-mobile-chrome#42509310 <<< NOT SURE IF THIS WORKS:todd 5-22-2024 */
+}
+
+
+
+/* This should fix the print issues where there is a large blank space at the bottom of a page. */
+@media print {
+    /*table { page-break-after:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  td    { page-break-inside:avoid; page-break-after:auto }
+  thead { display:table-header-group }
+  tfoot { display:table-footer-group }*/
+
+    table {
+        break-before: avoid;
+        break-after: avoid;
+        break-inside: avoid;
+    }
+
+    tr {
+        break-before: avoid;
+        break-after: avoid;
+        break-inside: avoid;
+    }
+
+    td {
+        break-before: avoid;
+        break-after: avoid;
+        break-inside: avoid;
+    }
+
+    div {
+        break-before: avoid;
+        break-after: avoid;
+        break-inside: avoid;
+    }
+}
+
+
+.xdFormLayout {
+    /*width: 755px;*/ /* THIS ENSURES THE FORM IS THE CORRECT WIDTH */
+    width: 100%;
+    break-before: avoid;
+    break-after: avoid;
+    break-inside: avoid;
+}
+
+
+
+
+.autologonButton {
+    /*position: absolute;*/
+   /* top: 0;
+    left: 0;*/
+    color: yellow;
+}
+
+    .autologonButton:hover {
+        opacity: 0.2;
+        color: yellow;
+    }
+
+
+
+
+
+
+
+
+.datasetNavigationButton {
+    /* These are the move_to_start, move_to_left, move_to_right, move_to_end buttons. */
+    display: inline-block;
+    border: 1px solid black;
+    width: 30px;
+    height: 20px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .datasetNavigationButton:hover {
+        /* These are the move_to_start, move_to_left, move_to_right, move_to_end buttons. */
+        border-color: tomato;
+        color: tomato;
+    }
+
+/* TEXT ANIMATION. 11-6-2023. See: https://codepen.io/alvarotrigo/pen/PoKMyNO */
+.ai_conversation_icon {
+    position: absolute;
+    font-size: 25pt;
+    cursor: pointer;
+    text-align: left;
+    z-index: 1000000;
+    /*text-transform: uppercase;
+    background-image: linear-gradient( -225deg, #231557 0%, #44107a 29%, #ff1361 67%, #fff800 100% );
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 2s linear infinite;
+    display: inline-block;
+    font-size: 25pt;*/
+    /* background: linear-gradient(-45deg, #e2cdf1, #bc75f0, #8c23d5, #c399de);
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;*/
+}
+
+    .ai_conversation_icon:hover {
+        font-size: 150pt;
+    }
+
+.emailEditor_topbarbutton {
+    /*border:1px solid gainsboro;*/
+    color: gray;
+    font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 15pt;
+    cursor: pointer !important;
+    height: 50px;
+    width: 92%;
+    border-radius: 5px 5px 5px 5px; /* 1-28-2022 these are nicely rounded corners. */
+    padding: 5px 5px 5px 5px;
+    margin: 0 auto;
+    white-space: nowrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .emailEditor_topbarbutton:hover {
+        /*background-color:lightgoldenrodyellow;*/
+        /*border:1px solid skyblue;*/
+        background-color: gainsboro;
+        color: black;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* THIS USED TO BE IN index.html 6-15-2024.*/
+
+.leftButton {
+    cursor:pointer;
+    width: 100%;
+    float: left;
+    height: 50px;
+    background-color: darkgray;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: flex-end !important;
+    margin-right: -1px;
+    white-space: nowrap;
+}
+
+    .leftButton:not(.bwMenuButton_Selected):hover {
+        /*background-color: gray !important;*/
+        /*color: goldenrod !important;*/
+        color: yellow;
+        cursor: pointer !important;
+        opacity: 1.0 !important;
+    }
+
+.leftButton_inactive {
+    width: 100%;
+    float: left;
+    height: 50px;
+    background-color: darkgray;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: flex-end !important;
+    margin-right: -1px;
+}
+
+.leftButtonText {
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+
+.leftButtonText2 {
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+
+
+/* Linear ------------------------- */
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* THEME: brushedAluminum*/
+.brushedAluminum {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_noanimation {
+    background-color: #23a6d5 !important;
+}
+
+.brushedAluminum_SelectedButton {
+    background-color: #f5f6fa !important;
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_InnerLeftButton {
+    background-color: #23a6d5 !important;
+    font-size: 20pt;
+}
+/* THEME: brushedAluminum_blue*/
+.brushedAluminum_blue {
+    background: linear-gradient(-45deg, skyblue, #23a6d5, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_blue_noanimation {
+    background-color: #23a6d5 !important;
+}
+
+.brushedAluminum_blue_SelectedButton {
+    background-color: #f5f6fa !important;
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_blue_InnerLeftButton {
+    background-color: #23a6d5 !important;
+    font-size: 20pt;
+}
+/* THEME: brushedAluminum_purple*/
+.brushedAluminum_purple {
+    background: linear-gradient(-45deg, #e2cdf1, #bc75f0, #8c23d5, #c399de);
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_purple_noanimation {
+    background-color: #8c23d5 !important;
+}
+
+.brushedAluminum_purple_SelectedButton {
+    background-color: #f5f6fa !important;
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_purple_InnerLeftButton {
+    background-color: #23a6d5 !important;
+    font-size: 20pt;
+}
+/* THEME: brushedAluminum_green*/
+.brushedAluminum_green {
+    background: linear-gradient(-45deg, #5ec74d, #72e272, #09781f, #9ade99);
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_green_noanimation {
+    background-color: #09781f !important;
+}
+
+.brushedAluminum_green_SelectedButton {
+    background-color: #f5f6fa !important;
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_green_InnerLeftButton {
+    background-color: #23a6d5 !important;
+    font-size: 20pt;
+}
+
+/* THEME: brushedAluminum_yellow*/
+.brushedAluminum_yellow {
+    background: linear-gradient(-45deg, #eeee2a, #f5f51c, #d9d914, #f5f51c);
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_yellow_noanimation {
+    background-color: #d9d914 !important;
+}
+
+.brushedAluminum_yellow_SelectedButton {
+    background-color: #f5f6fa !important;
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_yellow_InnerLeftButton {
+    background-color: #23a6d5 !important;
+    font-size: 20pt;
+}
+
+/* THEME: brushedAluminum_skyblue*/
+.brushedAluminum_skyblue {
+    background: linear-gradient(-45deg, rgba(211, 211, 211, 0.60), rgba(211, 211, 211, 0.80), #d3d3d3, rgba(211, 211, 211, 0.80));
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_skyblue_noanimation {
+    background-color: lightgray !important;
+}
+
+.brushedAluminum_skyblue_SelectedButton {
+    background-color: #f5f6fa !important; /* space white */
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_skyblue_InnerLeftButton {
+    background-color: rgba(128, 128, 128, 0.18) !important;
+    font-size: 20pt;
+}
+
+/* THEME: brushedAluminum_gray2  // This class is so that we can change Goldenrod text to black for better visibility. 10-26-2022 */
+.brushedAluminum_gray2 {
+    background: linear-gradient(-45deg, rgba(190, 157, 112, 0.60), rgba(190, 157, 112, 0.80), #d3d3d3, rgba(190, 157, 112, 0.80));
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_gray2_noanimation {
+    background-color: rgb(190, 157, 112) !important;
+}
+
+.brushedAluminum_gray2_SelectedButton {
+    background-color: #f5f6fa !important; /* space white */
+    /*background-color: #000000 !important;*/ /* black */
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_gray2_InnerLeftButton {
+    background-color: rgba(128, 128, 128, 0.18) !important;
+    font-size: 20pt;
+}
+
+
+
+
+/* THEME: brushedAluminum_orange This was _admin to begin with... pretty bright, and orange is not calming to look at... */
+.brushedAluminum_orange {
+    background: linear-gradient(-45deg, #FE5000, #FF9E0D, #E64900, #FF9E0D);
+    background-size: 400% 400%;
+    -moz-animation: gradient 15s ease infinite;
+    -o-animation: gradient 15s ease infinite;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+}
+
+.brushedAluminum_orange_noanimation {
+    background-color: #FF9E0D !important;
+}
+
+.brushedAluminum_orange_SelectedButton {
+    background-color: #f5f6fa !important;
+    /*font-size:20pt;*/
+    color: black;
+}
+
+.brushedAluminum_orange_InnerLeftButton {
+    background-color: #23a6d5 !important;
+    font-size: 20pt;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.emailEditor_newMessageButton {
+    background-color: #6682b5;
+    color: white;
+    border: 1px solid gainsboro;
+    font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 15pt;
+    cursor: pointer !important;
+    height: 50px;
+    width: 92%;
+    border-radius: 5px 5px 5px 5px; /* 1-28-2022 these are nicely rounded corners. */
+    padding: 5px 5px 5px 5px;
+    margin: 0 auto;
+    white-space: nowrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .emailEditor_newMessageButton:hover {
+        border: 1px solid skyblue;
+        background-color: aliceblue;
+        color: black;
+    }
+
+
+
+.workflowEmailTemplateEditButton {
+}
+
+    .workflowEmailTemplateEditButton:hover {
+        color: darkorange;
+        /*font-weight:bold;*/
+    }
+
+.bwLink {
+    color: #007fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .bwLink:hover {
+        color: deepskyblue;
+        text-decoration: underline;
+    }
+
+.bwLinkRed {
+    color: tomato;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .bwLinkRed:hover {
+        color: red;
+        text-decoration: underline;
+    }
+
+/*.bwLink2 {
+    color: orange;
+    text-decoration:none;
+    cursor: pointer;
+}
+.bwLink2:hover {
+    color: darkorange;
+}*/
+
+.total-row {
+    font-weight: bold;
+    background: #f5f5f5;
+}
+
+    .total-row td {
+        border-top: 2px solid #efefef;
+    }
+
+
+
+
+#jsGridCosts_small .jsgrid-row .jsgrid-cell {
+    font-size: 9pt;
+    white-space: nowrap;
+}
+
+#jsGridCosts_small .jsgrid-alt-row .jsgrid-cell {
+    font-size: 9pt;
+    white-space: nowrap;
+}
+
+#jsGridCosts_large .jsgrid-row .jsgrid-cell {
+    font-size: 15pt;
+    white-space: nowrap;
+}
+
+#jsGridCosts_large .jsgrid-alt-row .jsgrid-cell {
+    font-size: 15pt;
+    white-space: nowrap;
+}
+
+
+#jsGridSpend_small .jsgrid-row .jsgrid-cell {
+    font-size: 9pt;
+    white-space: nowrap;
+}
+
+#jsGridSpend_small .jsgrid-alt-row .jsgrid-cell {
+    font-size: 9pt;
+    white-space: nowrap;
+}
+
+#jsGridSpend_large .jsgrid-row .jsgrid-cell {
+    font-size: 15pt;
+    white-space: nowrap;
+}
+
+#jsGridSpend_large .jsgrid-alt-row .jsgrid-cell {
+    font-size: 15pt;
+    white-space: nowrap;
+}
+
+
+
+.gridMagnifyingGlass {
+    opacity: .5;
+}
+
+    .gridMagnifyingGlass:hover {
+        opacity: 1;
+    }
+
+
+.ToggleRequiredAsteriskPlaceholder {
+    font-size: 20pt;
+    color: darkgray;
+}
+
+.ToggleRequiredAsterisk {
+    font-size: 20pt;
+    color: darkgray;
+    cursor: pointer;
+}
+
+    .ToggleRequiredAsterisk:hover {
+        font-size: 30pt;
+        color: white;
+    }
+
+.ToggleRequiredAsterisk-On {
+    font-size: 30pt;
+    color: red;
+    cursor: pointer;
+}
+
+.ToggleRequiredAsterisk-Off {
+    font-size: 30pt;
+    color: darkgray;
+    cursor: pointer;
+}
+
+/*.jsgrid-grid-header,
+.jsgrid-grid-body{
+                overflow: auto;
+            }*/
+
+
+
+/* This makes the cursor a hand so that people know they can click on the background of a dialog box! */
+.ui-widget-overlay {
+    cursor: pointer;
+}
+
+/*.testDialogClass {*/
+/*THIS WAS A FAILED ATTEMPT to get the zoomed dialogs to drag the full width of the browser.*/
+/*position: relative !important;*/
+/*display: inline-block !important;*/
+/*}*/
+
+/*#dialog {
+    display: inline-block;
+}*/
+
+
+
+
+
+
+.carouselLeftNavigationArrow {
+    transform: scale(1,2.5);
+    -webkit-transform: scale(1,2.5); /* Safari and Chrome */
+    -moz-transform: scale(1,2.5); /* Firefox */
+    -ms-transform: scale(1,2.5); /* IE 9+ */
+    -o-transform: scale(1,2.5); /* Opera */
+    background-color: rgba(0,0,0,.2);
+    font-size: 72pt;
+    font-family: 'Times New Roman', Times, serif;
+    color: whitesmoke;
+    vertical-align: middle;
+    padding: 0 8px 0 5px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+.carouselLeftNavigationArrowActive {
+    /*background-color:#066B8B;*/
+    background-color: #6682b5;
+    transform: scale(1,2.5);
+    -webkit-transform: scale(1,2.5); /* Safari and Chrome */
+    -moz-transform: scale(1,2.5); /* Firefox */
+    -ms-transform: scale(1,2.5); /* IE 9+ */
+    -o-transform: scale(1,2.5); /* Opera */
+    /*background-color: rgba(0,0,0,.2);*/
+    font-size: 72pt;
+    font-family: 'Times New Roman', Times, serif;
+    color: whitesmoke;
+    vertical-align: middle;
+    padding: 0 8px 0 5px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .carouselLeftNavigationArrowActive:hover {
+        background-color: #066B8B;
+    }
+
+.carouselLeftNavigationArrow:hover {
+    background-color: #066B8B;
+}
+
+.carouselRightNavigationArrow {
+    transform: scale(1,2.5);
+    -webkit-transform: scale(1,2.5); /* Safari and Chrome */
+    -moz-transform: scale(1,2.5); /* Firefox */
+    -ms-transform: scale(1,2.5); /* IE 9+ */
+    -o-transform: scale(1,2.5); /* Opera */
+    background-color: rgba(0,0,0,.2);
+    font-size: 72pt;
+    font-family: 'Times New Roman', Times, serif;
+    color: whitesmoke;
+    vertical-align: middle;
+    padding: 0 5px 0 8px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+.carouselRightNavigationArrowActive {
+    /*background-color:#066B8B;*/
+    background-color: #6682b5;
+    transform: scale(1,2.5);
+    -webkit-transform: scale(1,2.5); /* Safari and Chrome */
+    -moz-transform: scale(1,2.5); /* Firefox */
+    -ms-transform: scale(1,2.5); /* IE 9+ */
+    -o-transform: scale(1,2.5); /* Opera */
+    /*background-color: rgba(0,0,0,.2);*/
+    font-size: 72pt;
+    font-family: 'Times New Roman', Times, serif;
+    color: whitesmoke;
+    vertical-align: middle;
+    padding: 0 5px 0 8px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .carouselRightNavigationArrowActive:hover {
+        background-color: #066B8B;
+    }
+
+.carouselRightNavigationArrow:hover {
+    background-color: #066B8B;
+}
+
+.carouselPausePlay {
+    /*background-color:#6682b5;*/
+    height: 30px;
+    width: 140px;
+    background-color: rgba(0,0,0,.2);
+    color: whitesmoke;
+    vertical-align: middle;
+    padding: 8px 5px 0 8px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .carouselPausePlay:hover {
+        background-color: #066B8B;
+    }
+
+.carouselPausePlayActive {
+    height: 30px;
+    width: 140px;
+    /*background-color: rgba(0,0,0,.2);*/
+    color: whitesmoke;
+    background-color: #6682b5;
+    vertical-align: middle;
+    padding: 8px 5px 0 8px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .carouselPausePlayActive:hover {
+        background-color: #066B8B;
+    }
+
+.spanCarouselImageIndicatorEnabled {
+    cursor: default;
+    font-size: 16pt;
+    color: #066B8B;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .spanCarouselImageIndicatorEnabled:hover {
+        font-weight: bold;
+    }
+
+.spanCarouselImageIndicatorDisabled {
+    cursor: pointer;
+    font-size: 16pt;
+    color: white;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .spanCarouselImageIndicatorDisabled:hover {
+        font-weight: bold;
+    }
+
+
+
+
+
+
+
+
+
+
+.spanButton {
+    cursor: pointer;
+    /*color:tomato;*/
+    color: black;
+    font-size: smaller;
+    font-weight: normal;
+    /*border:1px solid goldenrod;*/
+    border: 1px solid gray;
+    padding: 8px 13px 7px 9px;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.spanButton2 {
+    cursor: pointer;
+    /*color:tomato;*/
+    color: black;
+    font-size: smaller;
+    font-weight: normal;
+    /*border:1px solid goldenrod;*/
+    border: 1px solid gray;
+    padding: 3px 8px 2px 4px;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.spanButton:hover {
+    /*background-color:lightskyblue;*/
+    background-color: lightcyan;
+    border: 1px solid lightskyblue;
+    cursor: pointer;
+}
+
+.spanButton2:hover {
+    /*background-color:lightskyblue;*/
+    background-color: lightcyan;
+    border: 1px solid lightskyblue;
+    cursor: pointer;
+}
+
+.printButton {
+    font-size: 30pt;
+    font-family: arial;
+    padding-top: 0;
+    cursor: pointer;
+}
+
+    .printButton:hover {
+        /*font-size:60pt;*/
+    }
+
+.dialogXButton {
+    color: lightgray;
+    cursor: pointer;
+}
+
+    .dialogXButton:hover {
+        color: black;
+        cursor: pointer;
+    }
+
+
+.spanH1 {
+    font-size: 20pt;
+}
+
+.spanH2 {
+    font-size: 15pt;
+}
+
+.spanH3 {
+    color: rgb(63, 63, 63);
+    font-family: "Segoe UI Light","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 11pt;
+}
+
+
+.imgRedDot {
+    width: 12px;
+    height: 12px;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.attachmentsSectionFileLink {
+    width: 100%;
+    cursor: pointer;
+}
+
+.attachmentsSectionDescription {
+    font-size: x-small;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.divTopBarTextContents {
+    /*border-radius:20px 0 0 20px;
+    height:28px;
+    width:98%;
+    padding:4px 5px 7px 22px;
+    border-width:0 0 0 0;
+    display:inline-block;*/
+    display: inline-block;
+    /*background-color:#066B8B;
+    color:#FFFFFF; These colors are specified in bw.core.colors.css. */
+}
+
+
+
+
+
+.divSelectLogonTypeButton {
+    /*border:1px solid skyblue;*/
+    /* Check this out! It is the perfect button! https://designmodo.com/3d-css3-button/ */
+    /*display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #538fbe;
+    padding: 20px 70px;
+    font-size: 24px;
+    border: 1px solid #2d6898;*/
+    /*display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #538fbe;
+    padding: 20px 70px;
+    font-size: 24px;
+    border: 1px solid #2d6898;
+    background-image: linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+ 
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(73,132,180)),
+        color-stop(1, rgb(97,155,203))
+    );
+
+    text-shadow: 0px  -1px 0px rgba(0,0,0,.5);
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    -webkit-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    -moz-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);*/
+    font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 22pt;
+    cursor: pointer;
+    height: 50px;
+    width: 92%;
+    /*border-radius:10px 10px 10px 10px;*/
+    /*border-radius:1px 1px 1px 1px;*/
+    border-radius: 3px 3px 3px 3px;
+    padding: 20px 0 0 20px;
+    margin: 0 auto;
+    border-width: 0 0 0 0;
+    white-space: nowrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divSelectLogonTypeButton:hover {
+        /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+        border: 1px solid skyblue;
+        background-color: aliceblue;
+        color: black;
+    }
+
+
+
+.divPeoplePicker_Participant {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+.divPeoplePicker_Participant_Delete {
+    color: tomato;
+}
+
+    .divPeoplePicker_Participant_Delete:hover {
+        font-weight: bold;
+    }
+
+
+.dataItemInDropDown {
+    cursor: pointer !important;
+    padding: 5px 5px 5px 5px;
+}
+
+    .dataItemInDropDown:hover {
+        color: red;
+        background-color: lightgoldenrodyellow;
+    }
+
+
+
+
+
+.divPurchaseNowButton {
+    display: inline-block;
+    border: 1px solid orange;
+    background-color: orange;
+    color: black;
+    padding: 10px 20px 10px 20px;
+    border-radius: 30px;
+    font-size: 15pt;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+}
+
+    .divPurchaseNowButton:hover {
+        background-color: darkorange;
+        cursor: pointer;
+        border: 1px solid skyblue !important;
+        background-color: aliceblue !important;
+        color: yellow !important;
+    }
+
+.spanPurchaseNowDescription {
+    font-size: 15pt;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+}
+
+
+
+
+
+.divSignInButton {
+    border: 1px solid gainsboro;
+    /* Check this out! It is the perfect button! https://designmodo.com/3d-css3-button/ */
+    /*display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #538fbe;
+    padding: 20px 70px;
+    font-size: 24px;
+    border: 1px solid #2d6898;*/
+    /*display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #538fbe;
+    padding: 20px 70px;
+    font-size: 24px;
+    border: 1px solid #2d6898;
+    background-image: linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+ 
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(73,132,180)),
+        color-stop(1, rgb(97,155,203))
+    );
+
+    text-shadow: 0px  -1px 0px rgba(0,0,0,.5);
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    -webkit-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    -moz-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);*/
+    font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 22pt;
+    cursor: pointer !important;
+    height: 50px;
+    width: 92%;
+    /*border-radius:10px 10px 10px 10px;*/
+    /*border-radius:1px 1px 1px 1px;*/
+    border-radius: 5px 5px 5px 5px; /* 1-28-2022 these are nicely rounded corners. */
+    padding: 20px 0 0 20px;
+    margin: 0 auto;
+    /*border-width: 0 0 0 0;*/
+    white-space: nowrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divSignInButton:hover {
+        /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+        border: 1px solid skyblue;
+        background-color: aliceblue;
+        color: black;
+    }
+
+    .divSignInButton label {
+        border: 1px solid gainsboro;
+    }
+
+        .divSignInButton label:hover {
+            border: 1px solid skyblue;
+            background-color: aliceblue;
+            color: black;
+            /*background-color:#066B8B; There are defined in bw.core.colors.css. */
+            /*background-image: linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+ 
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(79,142,191)),
+        color-stop(1, rgb(102,166,214))
+    );*/
+        }
+
+
+.divSignInButton_startrek1 {
+    color: white;
+    border: 1px solid gainsboro;
+    font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 22pt;
+    cursor: pointer !important;
+    height: 50px;
+    width: 92%;
+    /*border-radius:10px 10px 10px 10px;*/
+    /*border-radius:1px 1px 1px 1px;*/
+    border-radius: 5px 5px 5px 5px; /* 1-28-2022 these are nicely rounded corners. */
+    padding: 20px 0 0 20px;
+    margin: 0 auto;
+    /*border-width: 0 0 0 0;*/
+    white-space: nowrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divSignInButton_startrek1:hover {
+        /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+        border: 1px solid skyblue;
+        background-color: aliceblue !important;
+        color: black;
+        background: linear-gradient(-45deg,aliceblue, aliceblue, skyblue, aliceblue);
+        background-size: 400% 400%;
+        -moz-animation: gradient 15s ease infinite;
+        -o-animation: gradient 15s ease infinite;
+        -webkit-animation: gradient 15s ease infinite;
+        animation: gradient 15s ease infinite;
+    }
+
+
+
+.divSignInButton_Disabled {
+    border: 1px solid gainsboro;
+    background-color: lightgray;
+    color: white;
+    /* Check this out! It is the perfect button! https://designmodo.com/3d-css3-button/ */
+    font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 22pt;
+    cursor: pointer !important;
+    height: 50px;
+    width: 92%;
+    /*border-radius:10px 10px 10px 10px;*/
+    /*border-radius:1px 1px 1px 1px;*/
+    border-radius: 5px 5px 5px 5px; /* 1-28-2022 these are nicely rounded corners. */
+    padding: 20px 0 0 20px;
+    margin: 0 auto;
+    /*border-width: 0 0 0 0;*/
+    white-space: nowrap;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.divTopBarHeader {
+    border-radius: 20px 0 0 20px;
+    height: 28px;
+    width: 98%;
+    padding: 6px 5px 5px 22px;
+    border-width: 0 0 0 0;
+    display: inline-block;
+    /*background-color:#066B8B;
+    color:#FFFFFF; These colors are specified in bw.core.colors.css. */
+}
+
+.spanLoggedInUserDropdown {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    /*font-size:20pt;*/
+}
+
+
+
+
+
+
+/* These are the previous and next arrows on the datepicker. */
+.ui-datepicker-next {
+    background-image: url("https://budgetworkflow.com/images/metro-icon-right-white.png");
+    background-repeat: no-repeat;
+}
+
+.ui-datepicker-prev {
+    background-image: url("https://budgetworkflow.com/images/metro-icon-left-white.png");
+    background-repeat: no-repeat;
+}
+
+.tdPurchaseBronzePackage {
+    background-color: #bd9956;
+    text-align: left;
+    cursor: pointer;
+    color: whitesmoke;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .tdPurchaseBronzePackage:hover {
+        background-color: #c18f32;
+    }
+
+.tdPurchaseSilverPackage {
+    background-color: #E6E8FA;
+    text-align: left;
+    cursor: pointer;
+    color: #2c3839;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .tdPurchaseSilverPackage:hover {
+        background-color: #d6dafa;
+    }
+
+.tdPurchaseGoldPackage {
+    background-color: #CFB53B;
+    text-align: left;
+    cursor: pointer;
+    color: #553d11;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .tdPurchaseGoldPackage:hover {
+        background-color: #e6c942;
+    }
+
+
+
+
+.bwForm {
+    width: 654px;
+}
+
+.bwFormTitleColumn {
+    width: 24px;
+}
+
+.bwFormDataEntryColumn {
+    width: 553px;
+}
+
+.FormDetailsButton {
+    cursor: pointer;
+    font-size: 32pt;
+    width: 110px;
+    white-space: nowrap;
+}
+
+.FormAdditionalInfoButton {
+    cursor: pointer;
+    font-size: 32pt;
+    width: 162px;
+    white-space: nowrap;
+}
+
+.FormRejectButton {
+    cursor: pointer;
+    font-size: 32pt;
+    width: 110px;
+    white-space: nowrap;
+}
+
+.FormSaveAndApproveButton {
+    cursor: pointer;
+    font-size: 32pt;
+    width: 130px;
+    white-space: nowrap;
+}
+
+.FormCloseButton {
+    cursor: pointer;
+    font-size: 32pt;
+    width: 110px;
+    white-space: nowrap;
+}
+
+.FormViewCloseoutButton {
+    cursor: pointer;
+    /*font-size:32pt;*/
+    width: 130px;
+    white-space: nowrap;
+}
+
+.FormCreateASupplementalRequestButton {
+    cursor: pointer;
+    /*font-size:32pt;*/
+    width: 230px;
+    white-space: nowrap;
+}
+
+
+
+
+
+.BwSmallButton {
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+    font-size: 12pt;
+    white-space: nowrap;
+}
+
+.BwButton {
+    cursor: pointer;
+    font-size: 16pt;
+    white-space: nowrap;
+}
+
+.BwButton200 {
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+    font-size: 16pt;
+    width: 200px;
+    white-space: nowrap;
+}
+
+.button-blue {
+    color: black;
+    background: #EFEFEF;
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+    font-size: 16pt;
+    width: 100px;
+    white-space: nowrap;
+}
+
+.BwButton200ForRequestForm {
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+    font-size: 16pt; /* !important  Not sure why we had to use important here 8-18-2022 */
+    width: 200px;
+    white-space: nowrap;
+}
+
+.BwButton250ForRequestForm {
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+    font-size: 16pt;
+    width: 250px;
+    white-space: nowrap;
+}
+
+.BwButton300ForRequestForm {
+    padding: 5px 5px 5px 5px;
+    cursor: pointer;
+    font-size: 16pt;
+    width: 300px;
+    white-space: nowrap;
+}
+
+.BwButton350 {
+    cursor: pointer;
+    font-size: 16pt;
+    width: 350px;
+    white-space: nowrap;
+}
+
+.archivePageFilterBox {
+    color: black;
+    border-color: lightblue;
+}
+
+.archivePageFilterDropDown {
+    color: GrayText;
+    border-color: lightblue;
+    cursor: pointer;
+}
+
+.archivePageFilterOptionDropDown {
+    cursor: pointer;
+}
+
+.myStuffTable {
+    border: 1px dotted gray;
+    color: rgb(38, 38, 38);
+    font-family: "Segoe UI Light","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 1.77em;
+}
+
+    .myStuffTable td {
+        border: 0 none white;
+        padding: 0 15px 0 15px;
+    }
+
+    .myStuffTable tr {
+        background-color: #d8d8d8; /*whitesmoke;*/
+    }
+
+.selectHomePageWorkflowAppDropDown {
+    /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+    border: 1px solid whitesmoke;
+}
+
+    .selectHomePageWorkflowAppDropDown:hover {
+        /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+        border: 1px solid skyblue;
+        background-color: aliceblue;
+        color: black;
+    }
+
+
+
+
+
+/*
+
+cursor:pointer;font-weight:bold;font-family: 'Segoe UI Light', 'Segoe UI', 'Segoe', Tahoma, Helvetica, Arial, sans-serif;color: #262626;font-size: 1.25em;*/
+
+.selectHomePageWorkflowAppDropDown2 {
+    /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+    border: 0px solid whitesmoke;
+    background-color: #f5f6fa !important; /* space white */
+    /* max-width:50%;*/
+
+    cursor: pointer;
+    font-size: 49px;
+    color: goldenrod;
+    white-space: nowrap;
+    margin-top: -5px;
+    font-weight: bold !important;
+    /*  font-family: "Segoe UI Light","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;*/
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+    /*
+    .selectHomePageWorkflowAppDropDown2 option {
+     
+    }
+*/
+    .selectHomePageWorkflowAppDropDown2:hover {
+        /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+        border: 1px solid skyblue;
+        background-color: aliceblue !important;
+        /*  color: black;*/
+        cursor: pointer;
+    }
+
+/*input.selectHomePageWorkflowAppDropDown2:hover {
+
+    background-color: aliceblue !important;
+}*/
+
+
+
+.divDialogButton {
+    border: 1px solid gainsboro;
+    font-family: 'Segoe UI Light','Segoe UI','Segoe',Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 40pt;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    /*height:28px;*/
+    width: 92%;
+    margin: 0 auto; /* a width less than 100% and this line make sure the button is centered. */
+    border-radius: 0 0 0 0;
+    padding: 12px 0 15px 20px;
+    /*margin:0 0 0 0;*/
+    /*border-width:0 0 0 0;*/
+    white-space: nowrap;
+    /*color: #FFFFFF;
+    background-color:#6682b5; This is defined in bw.core.colors.css. */
+    /*background-color:rgba(0,0,0,.2);*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divDialogButton:hover {
+        /*background-color:#066B8B; This is defined in bw.core.colors.css. */
+        border: 1px solid skyblue;
+        background-color: aliceblue;
+        color: black;
+    }
+
+
+
+
+
+.divLeftButton {
+    /*color: #FFFFFF;
+    background-color:#6682b5; These colors are specified in bw.core.colors.css. */
+    border: 1px solid gainsboro !important;
+    cursor: pointer;
+    height: 28px;
+    width: 92%;
+    /*border-radius:0 0 0 0;*/
+    padding: 12px 0 0 20px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    white-space: nowrap;
+    border-radius: 2px 2px 2px 2px;
+    /*background-color:rgba(0,0,0,.2);*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+
+    .divLeftButton:hover {
+        border: 1px solid skyblue !important;
+        background-color: aliceblue;
+        color: black;
+    }
+
+
+
+
+
+
+
+.divLeftButtonSelected {
+    height: 28px;
+    width: 92%;
+    border-radius: 0 0 0 0;
+    padding: 12px 0 0 20px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    white-space: nowrap;
+    /*outline: 1px dashed #066B8B; These colors are specified in bw.core.colors.css.*/
+    /*color: rgb(220, 220, 220);*/
+    color: cornflowerblue;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divLeftButtonSelected:hover {
+        color: black;
+    }
+
+/* Inner left buttons. */
+.divInnerLeftButton {
+    border: 1px solid gainsboro !important;
+    cursor: pointer;
+    height: 28px;
+    width: 82%;
+    border-radius: 2px 2px 2px 2px;
+    padding: 12px 0 0 20px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    white-space: nowrap;
+    /*color: #FFFFFF;
+    background-color:#6682b5;  These colors are defined in bw.core.colors.css.*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divInnerLeftButton:hover {
+        border: 1px solid skyblue !important;
+        background-color: aliceblue;
+        color: black;
+        /*background-color:#066B8B;  These colors are defined in bw.core.colors.css. */
+        /*background-image: linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+ 
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(79,142,191)),
+        color-stop(1, rgb(102,166,214))
+    );*/
+    }
+
+.divInnerLeftButtonSelected {
+    height: 28px;
+    width: 82%;
+    border-radius: 3px 3px 3px 3px;
+    padding: 12px 0 0 20px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    white-space: nowrap;
+    /*outline: 1px dashed #066B8B;
+    color: rgb(220, 220, 220); These colors are defined in bw.core.colors.css. */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divInnerLeftButtonSelected:hover {
+        color: black;
+    }
+
+/*.evaluationChecklistAccordionLink {
+    width: 1150px;
+    background-color: #066B8B;
+    color: #FFFFFF;
+    display: inline-block;
+    cursor: pointer;
+    padding-top: 12px;
+    padding-right: 10px;
+    padding-bottom: 14px;
+    padding-left: 22px;
+    border: 1px solid black;
+
+    padding:12px 10px 14px 22px;
+
+}*/
+
+/*border-radius:20px 0 0 20px;height:28px;width:99%;white-space:nowrap;padding:9px 0 2px 20px;margin:0 0 0 0;border-width:0 0 0 0;*/
+
+
+
+
+TR.xdTableContentRow {
+    MIN-HEIGHT: 140px;
+}
+
+TD.xdTableContentCellWithVerticalOffset {
+    BORDER-RIGHT: #d8d8d8 1pt solid;
+    BORDER-BOTTOM: #d8d8d8 1pt solid;
+    PADDING-BOTTOM: 0px;
+    PADDING-TOP: 12px;
+    PADDING-LEFT: 85px;
+    BORDER-LEFT: #d8d8d8 1pt solid;
+    PADDING-RIGHT: 10px;
+    BACKGROUND-COLOR: #ffffff;
+}
+
+TD.xdTableContentCell {
+    BORDER-RIGHT: #d8d8d8 1pt solid;
+    BORDER-BOTTOM: #d8d8d8 1pt solid;
+    PADDING-BOTTOM: 0px;
+    PADDING-TOP: 0px;
+    PADDING-LEFT: 0px;
+    BORDER-LEFT: #d8d8d8 1pt solid;
+    PADDING-RIGHT: 0px;
+    BACKGROUND-COLOR: #ffffff;
+}
+
+TD.xdTableContentCellWithVerticalFill {
+    BORDER-RIGHT: #d8d8d8 1pt solid;
+    BORDER-BOTTOM: #d8d8d8 1pt solid;
+    PADDING-BOTTOM: 0px;
+    PADDING-TOP: 0px;
+    PADDING-LEFT: 1px;
+    BORDER-LEFT: #d8d8d8 1pt solid;
+    PADDING-RIGHT: 1px;
+    BACKGROUND-COLOR: #ffffff;
+}
+
+.xdLayoutRegion {
+    display: inline-block;
+}
+
+TABLE.xdLayout TD {
+    BORDER-TOP: medium none;
+    BORDER-RIGHT: medium none;
+    BORDER-BOTTOM: medium none;
+    BORDER-LEFT: medium none;
+}
+
+.langFont {
+    FONT-SIZE: 10pt;
+    FONT-FAMILY: Calibri;
+    WIDTH: 150px;
+}
+
+.xdlabel {
+    /* These are the form labels */
+    FONT-SIZE: 11pt;
+    FONT-FAMILY: Calibri;
+    font-style: normal;
+}
+
+TR.xdTableOffsetRow {
+    MIN-HEIGHT: 30px;
+    /*display:table;*/
+}
+
+TR.xdTableOffsetRow2 {
+    MIN-HEIGHT: 30px;
+    /*display:table;*/
+}
+
+.xdTableOffsetRow-editor:hover {
+    background-color: orange;
+    opacity: .2;
+    border: 5px dashed purple;
+    cursor: grab;
+}
+
+
+TD.xdTableOffsetCellLabel {
+    BORDER-TOP: #d8d8d8 1pt solid;
+    BORDER-BOTTOM: #d8d8d8 1pt solid;
+    PADDING-BOTTOM: 4px;
+    PADDING-TOP: 4px;
+    PADDING-LEFT: 22px;
+    PADDING-RIGHT: 5px;
+}
+
+TD.xdTableOffsetCellComponent {
+    BORDER-TOP: #d8d8d8 1pt solid;
+    BORDER-BOTTOM: #d8d8d8 1pt solid;
+    PADDING-BOTTOM: 4px;
+    PADDING-TOP: 4px;
+    PADDING-LEFT: 5px;
+    PADDING-RIGHT: 22px;
+    BACKGROUND-COLOR: #f6f6f6;
+}
+
+TD.xdTableOffsetCellComponent2 {
+    BORDER-TOP: #d8d8d8 1pt solid;
+    BORDER-BOTTOM: #d8d8d8 1pt solid;
+    PADDING-TOP: 4px;
+    PADDING-LEFT: 5px;
+    PADDING-RIGHT: 22px;
+    BACKGROUND-COLOR: #f6f6f6;
+}
+
+.xdTextBoxRTL {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 1px;
+    margin: 1px;
+    border: 1pt solid #dcdcdc;
+    color: windowtext;
+    background-color: window;
+    overflow: hidden;
+    text-align: right;
+    word-wrap: normal;
+}
+
+
+.xdTextBox {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+    padding: 1px;
+    margin: 1px;
+    border: 1pt solid #dcdcdc;
+    color: windowtext;
+    background-color: window;
+    overflow: hidden;
+    text-align: left;
+    word-wrap: normal;
+}
+
+.xdTextBoxRequired {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 1px;
+    margin: 1px;
+    border: 1pt solid #939393;
+    color: windowtext;
+    background-color: window;
+    overflow: hidden;
+    text-align: left;
+    word-wrap: normal;
+}
+
+    .xdTextBoxRequired:hover {
+        border: 1pt solid lightskyblue;
+    }
+
+.xdBehavior_Formatting {
+    BEHAVIOR: url(#default#urn::controls/Binder) url(#default#Formatting);
+}
+
+.xdBehavior_FormattingNoBUI {
+    BEHAVIOR: url(#default#CalPopup) url(#default#urn::controls/Binder) url(#default#Formatting);
+}
+
+
+
+
+
+
+.codeSnippetContainer {
+    min-width: 260px;
+    clear: both;
+}
+
+.codeSnippetContainerTabs {
+    vertical-align: middle;
+    height: 23px;
+    position: relative;
+    z-index: 1;
+}
+
+    .codeSnippetContainerTabs > div:first-child.codeSnippetContainerTabActive, .codeSnippetContainerTabs > div.codeSnippetContainerTabSingle, .codeSnippetContainerTabs > div.codeSnippetContainerTabPhantom {
+        border-left: solid 1px #939393;
+    }
+
+
+
+.codeSnippetContainerTabSingle {
+    font-family: "Segoe UI","Lucida Grande",Verdana,Arial,Helvetica,sans-serif !important;
+    font-size: 13px;
+    line-height: 17px;
+    font-style: normal !important;
+    height: 23px;
+    float: left;
+    width: auto;
+    vertical-align: baseline;
+    color: #707070;
+    position: relative;
+    background-color: #fff;
+    border-top: 1px solid #939393;
+    border-bottom: 1px solid #fff;
+    border-left: 1px solid #939393;
+    border-top-left-radius: 4px;
+    border-right: 1px solid #939393;
+    border-top-right-radius: 4px;
+}
+
+.codeSnippetContainerCodeContainer {
+    border-left: solid 1px #939393;
+    border-bottom: solid 1px #939393;
+    border-right: solid 1px #939393;
+    border-top: solid 1px #939393;
+    clear: both;
+    margin-bottom: 12px;
+    position: relative;
+    top: -1px;
+}
+
+.codeSnippetToolBar {
+    width: auto;
+    height: auto;
+}
+
+.codeSnippetToolBarText {
+    float: right;
+    top: -8px;
+    position: relative;
+    background-color: #fff;
+    width: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+    height: 0px;
+    vertical-align: top;
+}
+
+    .codeSnippetToolBarText a, .codeSnippetToolBarText a:link {
+        text-decoration: none;
+        color: #1364c4;
+    }
+
+        .codeSnippetToolBarText a:link, .codeSnippetToolBarText a:visited, .codeSnippetToolBarText a:active {
+            margin-left: 15px;
+            margin-right: 15px;
+            font-family: "Segoe UI","Lucida Grande",Verdana,Arial,Helvetica,sans-serif !important;
+            font-size: 10px;
+            font-style: normal !important;
+            color: #2a2a2a;
+            text-decoration: none;
+            background-color: #fff;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+
+.codeSnippetContainerCode {
+    width: auto;
+    margin: 0;
+    padding-right: 21px;
+    padding-left: 21px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+.bwCurrencyTextBox {
+    /* This is used for single line currency text boxes. The main difference is right hand justification. */
+    width: 140px;
+    height: 18px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 1px;
+    margin: 1px;
+    border: 1pt solid #dcdcdc;
+    color: windowtext;
+    background-color: window;
+    overflow: hidden;
+    text-align: right;
+    word-wrap: normal;
+}
+
+.bwDataEntryTextBox {
+    /* This is used for single line currency text boxes. The main difference is right hand justification. */
+    width: 140px;
+    height: 18px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 1px;
+    margin: 1px;
+    border: 1pt solid #dcdcdc;
+    color: windowtext;
+    background-color: window;
+    overflow: hidden;
+    text-align: left;
+    word-wrap: normal;
+}
+
+.bwDataEntryTextBoxSmall {
+    /* This is used for single line currency text boxes. The main difference is right hand justification. */
+    width: 40px;
+    height: 18px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 1px;
+    margin: 1px;
+    border: 1pt solid #dcdcdc;
+    color: windowtext;
+    background-color: window;
+    overflow: hidden;
+    text-align: left;
+    word-wrap: normal;
+}
+
+.bwComForm {
+    font-size: 10pt;
+}
+
+.bwComTitleCell {
+    /*These are the Functional Area TD tags used or drill down.*/
+    vertical-align: middle;
+    text-align: left;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    padding-left: 22px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+
+
+span[contentEditable=false] {
+    /* If a field is not editable, make the font a shade of grey to indicate it is not editable. */
+    font-weight: normal;
+    color: GrayText;
+}
+
+/* SwitchButton [begin] */
+.switch-button-label {
+    float: left;
+    font-size: 10pt;
+    cursor: pointer;
+}
+
+    .switch-button-label.off {
+        color: #adadad;
+    }
+
+    .switch-button-label.on {
+        color: #0088CC;
+    }
+
+.switch-button-background {
+    float: left;
+    position: relative;
+    background: #ccc;
+    border: 1px solid #aaa;
+    margin: 1px 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.switch-button-button {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    background: #FAFAFA;
+    border: 1px solid #aaa;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+/* SwitchButton [end] */
+
+.bwSliderTitleCell {
+    /*These are the Functional Area TD tags used or drill down.*/
+    vertical-align: middle;
+    text-align: right;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    padding-left: 22px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+.bwFADrillDownLinkCell {
+    /*These are the Functional Area TD tags used or drill down.*/
+    vertical-align: middle;
+    text-align: right;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    padding-left: 22px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+    .bwFADrillDownLinkCell:hover {
+        /*These are the Functional Area TD tags used or drill down.*/
+        background-color: white;
+        color: #FFFFFF;
+        cursor: pointer;
+    }
+
+.bwHPNDrillDownLinkCell {
+    /*These are the Functional Area TD tags used or drill down.*/
+    vertical-align: middle;
+    text-align: right;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    /*padding-bottom:4px; 
+    padding-top:4px; 
+    padding-left:22px; 
+    padding-right:10px;*/
+    padding: 4px 5px 7px 22px;
+    height: 28px;
+    background-color: white;
+}
+
+    .bwHPNDrillDownLinkCell:hover {
+        /*These are the Functional Area TD tags used or drill down.*/
+        /*background-color: rgb(102, 130, 181);*/
+        background-color: gainsboro;
+        color: black;
+        cursor: pointer;
+    }
+
+.bwHPNDrillDownLinkCell2 {
+    /*These are the Functional Area TD tags used or drill down.*/
+    vertical-align: middle;
+    text-align: left;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    /*padding-bottom:4px; 
+    padding-top:4px; 
+    padding-left:22px; 
+    padding-right:10px;*/
+    padding: 4px 5px 7px 22px;
+    height: 28px;
+    background-color: white;
+}
+
+    .bwHPNDrillDownLinkCell2:hover {
+        /*These are the Functional Area TD tags used or drill down.*/
+        /*background-color: rgb(102, 130, 181);*/
+        background-color: gainsboro;
+        color: black;
+        cursor: pointer;
+    }
+
+
+
+
+
+
+
+
+.bwChartCalculatorWorkflowInstanceTitle {
+    height: 28px;
+    padding: 6px 20px 6px 20px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    width: 90%;
+    /*font-size:40pt;*/
+}
+
+.divBurnRateButton {
+    /*style="height:28px;padding:6px 20px 6px 20px;margin:0 0 0 0;border-width:0 0 0 0;"*/
+    height: 28px;
+    /*font-size:50pt;*/
+    color: #FFFFFF;
+    cursor: pointer;
+    /*height:128px;*/
+    width: 92%;
+    border-radius: 0 0 0 0;
+    padding: 6px 20px 6px 20px;
+    margin: 0 0 0 0;
+    border-width: 0 0 0 0;
+    white-space: nowrap;
+    background-color: #6682b5;
+    /*background-color:rgba(0,0,0,.2);*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+    .divBurnRateButton:hover {
+        background-color: #066B8B;
+    }
+
+.tdPendingUserTaskTable {
+    height: 28px;
+    /*font-size:30pt;*/
+}
+
+.tdPendingUserTaskTableSingleTask {
+    /*style="background-color:#d8d8d8;padding:10px 10px 10px 10px;"*/
+    background-color: #d8d8d8;
+    padding: 10px 10px 10px 10px;
+    /*font-size:30pt;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Use this to make the border of the whole row highlight and look like its clickable */
+/*.bwFunctionalAreaRow:hover td{
+    border-width:2px;
+    border-color:#066B8B;
+    cursor:pointer;
+}*/
+
+span.ms-core-siteTitle {
+    font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 13px;
+}
+
+/* Sets the font characteristics of the chart labels. */
+#drillDownReport1 {
+    color: gray;
+    /* font-weight: bold; */
+}
+
+.bwCalculatedTextbox {
+    width: 105px;
+    height: 18px;
+    background-color: window;
+    border-bottom: #dcdcdc 1px solid;
+    border-left: #dcdcdc 1px solid;
+    border-right: #dcdcdc 1px solid;
+    border-spacing: 0px;
+    border-top: #dcdcdc 1px solid;
+    color: windowtext;
+    font-family: inherit;
+    font-size: inherit;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    text-align: right;
+    vertical-align: middle;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 1px;
+    overflow: hidden;
+    word-wrap: normal;
+}
+
+.bwCalculatedNegativeTextbox {
+    width: 105px;
+    height: 18px;
+    background-color: window;
+    border-bottom: #dcdcdc 1px solid;
+    border-left: #dcdcdc 1px solid;
+    border-right: #dcdcdc 1px solid;
+    border-spacing: 0px;
+    border-top: #dcdcdc 1px solid;
+    color: indianred;
+    font-family: inherit;
+    font-size: inherit;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    text-align: right;
+    vertical-align: middle;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 1px;
+    overflow: hidden;
+    word-wrap: normal;
+}
+
+.bwCalculatedTextboxTableCell {
+    text-align: left;
+    vertical-align: top;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 3px;
+    padding-top: 4px;
+    padding-left: 5px;
+    padding-right: 12px;
+    background-color: #D4DBEE; /* new blue color */
+}
+
+.bwChartCalculatorTableCellLabel {
+    /* These are the calculator box titles on the summary page for budget analysis. */
+    vertical-align: middle;
+    text-align: right;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    padding-left: 22px;
+    padding-right: 10px;
+}
+
+.bwChartCalculatorLightCurrencyTableCell {
+    /* This is the textbox, for example. */
+    vertical-align: top;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 3px;
+    padding-top: 4px;
+    padding-left: 5px;
+    padding-right: 12px;
+    background-color: #f5f6f7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bwChartCalculatorDarkCurrencyTableCell {
+    text-align: left;
+    vertical-align: top;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 3px;
+    padding-top: 4px;
+    padding-left: 5px;
+    padding-right: 12px;
+    background-color: #D4DBEE; /* new blue color */
+}
+
+.bwDataEntryTableCellComponent {
+    /* This is the textbox, for example. */
+    vertical-align: top;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 3px;
+    padding-top: 4px;
+    padding-left: 5px;
+    padding-right: 12px;
+    background-color: #f5f6f7;
+}
+
+
+
+.menuSelectedLink {
+    width: 1150px;
+    color: #dcdcdc;
+    border-width: medium;
+    border-color: black;
+    display: inline-block;
+    cursor: default;
+    padding-bottom: 14px;
+    padding-top: 12px;
+    padding-left: 22px;
+    padding-right: 10px;
+    border: 1px solid black;
+}
+
+
+
+.bwChartCalculatorTableCellLabel {
+    /* These are the calculator box titles on the summary page for budget analysis. */
+    vertical-align: middle;
+    text-align: right;
+    border-top: #d8d8d8 1pt solid;
+    border-bottom: #d8d8d8 1pt solid;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    padding-left: 22px;
+    padding-right: 10px;
+}
+
+
+
+
+
+
+.ms-navedit-editLinksText {
+    display: none;
+}
+
+/* get rid of oslo top navigation under the title so that the title lines up ok. */
+#zz14_RootAspMenu {
+    display: none;
+}
+
+div.ms-breadcrumb-box.ms-tableCell.ms-verticalAlignTop {
+    vertical-align: bottom;
+}
+
+div.ms-core-navigation.ms-belltown-quicklaunch {
+    height: 5px;
+}
+
+
+div.ui-widget-header {
+    /* This sets the style of the titlebar div tag for $('#CheckForAlertsDialog') on the start.aspx page. */
+    border: 1px solid #066B8B;
+    background: #066B8B; /*url("images/ui-bg_gloss-wave_35_3b678e_500x100.png") 50% 50% repeat-x;*/
+    color: #ffffff;
+    font-weight: normal;
+    font-family: Verdana;
+    font-size: small;
+    border-radius: 0 0 0 0;
+}
+/*.ui-button {
+	display:none;
+	
+}*/
+/* This is used in conjunction with dialogClass setting to hide the top-right close button on the modal dialog. */
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+/*.ui-dialog-title {
+
+}*/
+.ui-dialog-buttonset {
+    /*border: 1px solid #066B8B;*/
+    /*background: #066B8B; */ /*url("images/ui-bg_gloss-wave_35_3b678e_500x100.png") 50% 50% repeat-x;*/
+    /*color: #ffffff;*/
+    font-weight: normal;
+    font-family: Verdana;
+    font-size: small;
+}
+
+
+
+
+
+
+
+.menu-item-text {
+    display: none;
+}

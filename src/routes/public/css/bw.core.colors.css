@@ -1,0 +1,613 @@
+﻿/* 
+    This file is the core css that should be included on every page.
+*/
+
+
+
+.divTopBarTextContentsIos82{
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+
+
+
+.divTopBarHeader {
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarHeaderIos8 {
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarHeaderIos8hp {
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarTextContents{
+    background-color:#066B8B;
+    color:#FFFFFF;
+} 
+.divTopBarTextContentsIos8{
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarTextContentsIos8hp{
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+
+.divLeftButton {
+    border:1px solid black;
+    background-color:#6682b5;
+    color: #FFFFFF;
+}
+.divLeftButton:hover {
+    border:1px solid skyblue;
+    background-color: aliceblue;
+    color:black;
+}
+
+
+.divLeftButtonIos8 {
+    background-color:#6682b5;
+    color: #FFFFFF;
+}
+.divLeftButton:hover {
+    background-color:#066B8B;
+}
+.divLeftButtonIos8:hover {
+    background-color:#066B8B;
+}
+.divLeftButtonSelected {
+    outline: 1px dashed #066B8B;
+}
+.divLeftButtonSelectedIos8 {
+    outline: 1px dashed #066B8B;
+    color:yellow;
+    font-weight:bold;
+}
+.divInnerLeftButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divInnerLeftButton:hover {
+    background-color:#066B8B;
+}
+.divInnerLeftButtonIos8 {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divInnerLeftButtonIos8:hover {
+    background-color:#066B8B;
+}
+.divInnerLeftButtonSelected {
+    outline: 1px dashed #066B8B;
+    color: rgb(220, 220, 220); 
+}
+.divInnerLeftButtonSelectedIos8 {
+    outline: 1px dashed #066B8B;
+    color:yellow;
+    font-weight:bold;
+}
+.divSignInButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divSignInButton:hover {
+    background-color:#066B8B;
+}
+.divDialogButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divDialogButton:hover {
+    background-color:#066B8B;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* NEW COLORS: Red, Orange. */
+
+/*.divTopBarTextContentsIos82{
+    background-color:red;
+    color:#FFFFFF;
+}
+
+.divTopBarHeader {
+    background-color:red;
+    color:#FFFFFF;
+}
+.divTopBarHeaderIos8 {
+    background-color:red;
+    color:#FFFFFF;
+}
+.divTopBarTextContents{
+    background-color:#ff0000;
+    color:#FFFFFF;
+} 
+.divTopBarTextContentsIos8{
+    background-color:#ff0000;
+    color:#FFFFFF;
+}
+.divLeftButton {
+    background-color:#ff6a00;
+    color: #FFFFFF;
+}
+.divLeftButtonIos8 {
+    background-color:#ff6a00;
+    color: #FFFFFF;
+}
+.divLeftButton:hover {
+    background-color:#ff0000;
+}
+.divLeftButtonIos8:hover {
+    background-color:#ff0000;
+}
+.divLeftButtonSelected {
+    outline: 1px dashed #ff0000;
+}
+.divLeftButtonSelectedIos8 {
+    outline: 1px dashed #ff0000;
+    color:yellow;
+    font-weight:bold;
+}
+.divInnerLeftButton {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divInnerLeftButton:hover {
+    background-color:#ff0000;
+}
+.divInnerLeftButtonIos8 {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divInnerLeftButtonIos8:hover {
+    background-color:#ff0000;
+}
+.divInnerLeftButtonSelected {
+    outline: 1px dashed #ff0000;
+    color: rgb(220, 220, 220); 
+}
+.divInnerLeftButtonSelectedIos8 {
+    outline: 1px dashed #ff0000;
+    color: rgb(220, 220, 220); 
+}
+.divSignInButton {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divSignInButton:hover {
+    background-color:#ff0000;
+}
+.divDialogButton {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divDialogButton:hover {
+    background-color:#ff0000;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Standard colors. */
+
+/*.divTopBarTextContentsIos82{
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+
+.divTopBarHeader {
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarHeaderIos8 {
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarTextContents{
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarTextContentsIos8{
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divLeftButton {
+    background-color:#6682b5;
+    color: #FFFFFF;
+}
+.divLeftButton:hover {
+    background-color:#066B8B;
+}
+.divLeftButtonIos8 {
+    background-color:#066B8B;
+    color: #FFFFFF;
+}
+.divLeftButtonSelected {
+    outline: 1px dashed #066B8B;
+}
+.divLeftButtonSelectedIos8 {
+    outline: 1px dashed #066B8B; 
+    color:yellow;
+    font-weight:bold;
+}
+.divInnerLeftButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divInnerLeftButton:hover {
+    background-color:#066B8B;
+}
+.divInnerLeftButtonIos8 {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divInnerLeftButtonIos8:hover {
+    background-color:#066B8B;
+}
+.divInnerLeftButtonSelected {
+    outline: 1px dashed #066B8B;
+    color: rgb(220, 220, 220); 
+}
+.divInnerLeftButtonSelectedIos8 {
+    outline: 1px dashed #066B8B;
+    color: rgb(220, 220, 220); 
+}
+.divSignInButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divSignInButton:hover {
+    background-color:#066B8B;
+}
+.divDialogButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divDialogButton:hover {
+    background-color:#066B8B;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Ochre: C06014, ff6a00 */
+/*.divTopBarTextContentsIos82{
+    background-color:#ff6a00;
+    color:#FFFFFF;
+}
+
+.divTopBarHeader {
+    background-color:#ff6a00;
+    color:#FFFFFF;
+}
+.divTopBarHeaderIos8 {
+    background-color:#ff6a00;
+    color:#FFFFFF;
+}
+.divTopBarTextContents{
+    background-color:#ff6a00;
+    color:#FFFFFF;
+}
+.divTopBarTextContentsIos8{
+    background-color:#ff6a00;
+    color:#FFFFFF;
+}
+.divLeftButton {
+    background-color:#ff6a00;
+    color: #FFFFFF;
+}
+.divLeftButton:hover {
+    background-color:#C06014;
+}
+.divLeftButtonIos8 {
+    background-color:#ff6a00;
+    color: #FFFFFF;
+}
+.divLeftButtonSelected {
+    outline: 1px dashed #C06014;
+}
+.divLeftButtonSelectedIos8 {
+    outline: 1px dashed #C06014; 
+    color:yellow;
+    font-weight:bold;
+}
+.divInnerLeftButton {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divInnerLeftButton:hover {
+    background-color:#C06014;
+}
+.divInnerLeftButtonIos8 {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divInnerLeftButtonIos8:hover {
+    background-color:#C06014;
+}
+.divInnerLeftButtonSelected {
+    outline: 1px dashed #C06014;
+    color: rgb(220, 220, 220); 
+}
+.divInnerLeftButtonSelectedIos8 {
+    outline: 1px dashed #C06014;
+    color: rgb(220, 220, 220); 
+}
+.divSignInButton {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divSignInButton:hover {
+    background-color:#C06014;
+}
+.divDialogButton {
+    color: #FFFFFF;
+    background-color:#ff6a00;
+}
+.divDialogButton:hover {
+    background-color:#C06014;
+}*/
+    
+
+/* Vermillion #333A56, Sunshine #52658F*/
+/*.divTopBarTextContentsIos82{
+    background-color:#333A56;
+    color:#FFFFFF;
+}
+
+.divTopBarHeader {
+    background-color:#333A56;
+    color:#FFFFFF;
+}
+.divTopBarHeaderIos8 {
+    background-color:#333A56;
+    color:#FFFFFF;
+}
+.divTopBarTextContents{
+    background-color:#333A56;
+    color:#FFFFFF;
+}
+.divTopBarTextContentsIos8{
+    background-color:#333A56;
+    color:#FFFFFF;
+}
+.divLeftButton {
+    background-color:#52658F;
+    color: #FFFFFF;
+}
+.divLeftButton:hover {
+    background-color:#333A56;
+}
+.divLeftButtonIos8 {
+    background-color:#52658F;
+    color: #FFFFFF;
+}
+.divLeftButtonSelected {
+    outline: 1px dashed #333A56;
+}
+.divLeftButtonSelectedIos8 {
+    outline: 1px dashed #333A56; 
+    color:yellow;
+    font-weight:bold;
+}
+.divInnerLeftButton {
+    color: #FFFFFF;
+    background-color:#52658F;
+}
+.divInnerLeftButton:hover {
+    background-color:#333A56;
+}
+.divInnerLeftButtonIos8 {
+    color: #FFFFFF;
+    background-color:#52658F;
+}
+.divInnerLeftButtonIos8:hover {
+    background-color:#333A56;
+}
+.divInnerLeftButtonSelected {
+    outline: 1px dashed #333A56;
+    color: rgb(220, 220, 220); 
+}
+.divInnerLeftButtonSelectedIos8 {
+    outline: 1px dashed #333A56;
+    color: rgb(220, 220, 220); 
+}
+.divSignInButton {
+    color: #FFFFFF;
+    background-color:#52658F;
+}
+.divSignInButton:hover {
+    background-color:#333A56;
+}
+.divDialogButton {
+    color: #FFFFFF;
+    background-color:#52658F;
+}
+.divDialogButton:hover {
+    background-color:#333A56;
+}*/
+
+
+
+
+
+
+
+
+/* NEW COLORS: Heirloom Lilac, lighter lilac. */
+
+/* Pantone 16-3812 Heirloom Lilac background-color: #9993B3; October 23 color fo the day. This is the light color. */
+/* light color is wine rgb(220, 220, 220) */
+/*.divTopBarTextContentsIos82{
+    background-color:#9993B3;
+    color:#FFFFFF;
+}
+
+.divTopBarHeader {
+    background-color:#9993B3;
+    color:#FFFFFF;
+}
+.divTopBarHeaderIos8 {
+    background-color:#9993B3;
+    color:#FFFFFF;
+}
+.divTopBarTextContents{
+    background-color:#9993B3;
+    color:#FFFFFF;
+} 
+.divTopBarTextContentsIos8{
+    background-color:#9993B3;
+    color:#FFFFFF;
+}
+.divLeftButton {
+    background-color:rgb(220, 220, 220);
+    color: #FFFFFF;
+}
+.divLeftButtonIos8 {
+    background-color:rgb(220, 220, 220);
+    color: #FFFFFF;
+}
+.divLeftButton:hover {
+    background-color:#9993B3;
+}
+.divLeftButtonIos8:hover {
+    background-color:#9993B3;
+}
+.divLeftButtonSelected {
+    outline: 1px dashed #9993B3;
+}
+.divLeftButtonSelectedIos8 {
+    outline: 1px dashed #9993B3;
+    color:yellow;
+    font-weight:bold;
+}
+.divInnerLeftButton {
+    color: #FFFFFF;
+    background-color:rgb(220, 220, 220);
+}
+.divInnerLeftButton:hover {
+    background-color:#9993B3;
+}
+.divInnerLeftButtonIos8 {
+    color: #FFFFFF;
+    background-color:rgb(220, 220, 220);
+}
+.divInnerLeftButtonIos8:hover {
+    background-color:#9993B3;
+}
+.divInnerLeftButtonSelected {
+    outline: 1px dashed #9993B3;
+    color: rgb(220, 220, 220); 
+}
+.divInnerLeftButtonSelectedIos8 {
+    outline: 1px dashed #9993B3;
+    color: rgb(220, 220, 220); 
+}
+.divSignInButton {
+    color: #FFFFFF;
+    background-color:rgb(220, 220, 220);
+}
+.divSignInButton:hover {
+    background-color:#9993B3;
+}
+.divDialogButton {
+    color: #FFFFFF;
+    background-color:rgb(220, 220, 220);
+}
+.divDialogButton:hover {
+    background-color:#9993B3;
+}*/
+
+
+
+
+
+
+
+
+
+/*   */
+/* DARK COLOR */
+/*.divTopBarHeader {
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divTopBarTextContents{
+    background-color:#066B8B;
+    color:#FFFFFF;
+}
+.divLeftButton:hover {
+    background-color:#066B8B;
+}
+.divLeftButtonSelected {
+    outline: 1px dashed #066B8B;
+}
+.divInnerLeftButton:hover {
+    background-color:#066B8B;
+}
+.divInnerLeftButtonSelected {
+    outline: 1px dashed #066B8B;
+    color: rgb(220, 220, 220); 
+}
+.divSignInButton:hover {
+    background-color:#066B8B;
+}
+.divDialogButton:hover {
+    background-color:#066B8B;
+}
+
+.divInnerLeftButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divSignInButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divDialogButton {
+    color: #FFFFFF;
+    background-color:#6682b5;
+}
+.divLeftButton {
+    background-color:#6682b5;
+    color: #FFFFFF;
+}*/

@@ -1,0 +1,7 @@
+﻿
+/* This is used in the .xsl views to hide the fields which carry data, but which we do not want to display. 
+    We can change these values to display hidden items for troubleshooting!!! :D */
+.bwHiddenField {
+    display:none;
+    visibility:hidden;
+}

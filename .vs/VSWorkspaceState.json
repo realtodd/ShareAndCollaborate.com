@@ -2,13 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\fileservices",
-    "\\src\\fileservices\\routes",
-    "\\src\\public",
-    "\\src\\public\\scripts",
-    "\\src\\webservices",
-    "\\src\\webservices\\routes"
+    "\\src\\routes",
+    "\\src\\routes\\public",
+    "\\src\\routes\\public\\css\\jquery\\1.11.1",
+    "\\src\\_old_fileservices\\routes",
+    "\\src\\_old_webservices\\routes"
   ],
-  "SelectedNode": "\\src\\fileservices\\routes\\start.js",
+  "SelectedNode": "\\src\\routes\\public\\uris.json",
   "PreviewInSolutionExplorer": false
 }

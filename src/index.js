@@ -29,14 +29,14 @@ ipcMain.on('ping-good', event => {
 
 //retrieve-current-values
 var webservices_retrieve_current_values;
-ipcMain.on('retrieve-current-values', event => {
+ipcMain.on('retrieve-current-values', function(event) {
     // It's so good because below have a delay 5s to execute, and this don't lock rendereder :)
-    webservices_retrieve_current_values = event;
+    //webservices_retrieve_current_values = event;
     setTimeout(() => {
         console.log('retrieve-current-values finshed!');
 
 
-        var uris = JSON.parse(fs.readFileSync(path.join(__dirname, 'uris.json'))); // Read the operating urls and ports from uris.json file.
+        var uris = JSON.parse(fs.readFileSync(path.join(__dirname, 'routes/uris.json'))); // Read the operating urls and ports from uris.json file.
 
 
         // Send reply to a renderer
@@ -81,50 +81,66 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools(); // When this is running, it can cause an error "Request Autofill.enable failed."
 
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         require('electron').shell.openExternal(url);
         return { action: 'deny' };
     });
 
-    // utilityProcess.fork: https://www.electronjs.org/docs/latest/api/utility-process
+    var website = require('./routes/website');
+    //app.use(compression());
+    //app.set('views', path.join(__dirname, 'views'));
+    //app.use(favicon(__dirname + '/public/favicon.ico'));
+    //app.use(favicon(__dirname + '/public/apple-touch-ipad-retina.png'));
+    //app.use(favicon(__dirname + '/public/apple-touch-ipad.png'));
+    //app.use(favicon(__dirname + '/public/apple-touch-iphone.png'));
+    //app.use(favicon(__dirname + '/public/apple-touch-iphone4.png'));
+    //app.use(bodyParser.json());
+    //app.use(bodyParser.urlencoded({ extended: false }));
+    //var cacheTime = 86400000; // 1 day.
+    //app.use(express.static(path.join(__dirname, 'public'), { maxAge: cacheTime }));
+    //app.set('port', uris.websiteUri.port); // Port read from uris.json file, above.
+    //var server = app.listen(app.get('port'), function () {
+    //    console.log('WEBSITE::::Express server listening and serving content from the public folder on port ' + server.address().port + '. Yay!');
+    //});
+ 
 
-    const process_webservices = utilityProcess.fork(path.join(__dirname, 'webservices.js'));
-    process_webservices.on('message', (msg) => {
-        console.log('Message from child [webservices.js]', msg);
-    });
-    const { port1, port2 } = new MessageChannelMain();
-    process_webservices.postMessage({ message: 'hello' }, [port1])
-
-    process_webservices.on('message', function (message) {
-        console.log('Message from Child process : ' + message);
-
-        // This doesn't work: document.getElementById('divConsoleLogs').innerHTML = message; //append(message);
 
 
-    });
 
-    const process_fileservices = utilityProcess.fork(path.join(__dirname, 'fileservices.js'));
-    process_fileservices.on('message', (msg) => {
-        console.log('Message from child', msg);
-    });
-    //const { port1, port2 } = new MessageChannelMain();
-    //process_fileservices.postMessage({ message: 'hello' }, [port1])
+    //
+    // THIS IS OUR ORIGINAL FORK CODE. KEEP FOR POSTERITY!!
+    //
 
-    const process_website = utilityProcess.fork(path.join(__dirname, 'website.js'));
-    process_website.on('message', (msg) => {
-        console.log('Message from child', msg);
-    });
-    //const { port1, port2 } = new MessageChannelMain();
-    //process_website.postMessage({ message: 'hello' }, [port1])
+    //// utilityProcess.fork: https://www.electronjs.org/docs/latest/api/utility-process
 
-    //const process_timerservices = utilityProcess.fork(path.join(__dirname, 'timerservices.js')); 
-    //process_timerservices.on('message', (msg) => {
-    //    console.log('Message from child', msg);
+    //const process_webservices = utilityProcess.fork(path.join(__dirname, 'webservices.js'));
+    //process_webservices.on('message', (msg) => {
+    //    console.log('Message from child [webservices.js]', msg);
     //});
     //const { port1, port2 } = new MessageChannelMain();
-    //process_timerservices.postMessage({ message: 'hello' }, [port1])
+    //process_webservices.postMessage({ message: 'hello' }, [port1])
+
+    //process_webservices.on('message', function (message) {
+    //    console.log('Message from Child process : ' + message);
+
+    //    // This doesn't work: document.getElementById('divConsoleLogs').innerHTML = message; //append(message);
+
+
+    //});
+
+    //const process_fileservices = utilityProcess.fork(path.join(__dirname, 'fileservices.js'));
+    //process_fileservices.on('message', (msg) => {
+    //    console.log('Message from child', msg);
+    //});
+    ////const { port1, port2 } = new MessageChannelMain();
+    ////process_fileservices.postMessage({ message: 'hello' }, [port1])
+
+    //const process_website = utilityProcess.fork(path.join(__dirname, 'website.js'));
+    //process_website.on('message', (msg) => {
+    //    console.log('Message from child', msg);
+    //});
 
 };
 

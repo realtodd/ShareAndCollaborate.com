@@ -1,0 +1,487 @@
+﻿
+
+/*.ui-dialog.licensewarning-dialog {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: .8em;
+    background-color:aqua;
+}
+
+.ui-dialog-title {
+    background-color:blueviolet;
+    color:darkgreen;
+}
+
+.ui-dialog.ui-id-1 {
+    background-color:blueviolet;
+    color:darkgreen;
+}
+
+.ui-widget-header{
+    background-color:blueviolet;
+    color:darkgreen;
+}*/
+
+.no-close .ui-dialog-titlebar-close {
+
+  display: none;
+
+}
+
+.ui-dialog-titlebar {
+
+  display: none;
+
+}
+
+span.ms-core-siteTitle {
+    font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 13px;
+}
+				
+/* Sets the font characteristics of the chart labels. */
+#drillDownReport1 {
+    color: white;
+    /* font-weight: bold; */
+}
+
+.bwCalculatedTextbox {
+    width:140px;
+    height:18px;
+    background-color: window;
+    border-bottom: #dcdcdc 1px solid;
+    border-left: #dcdcdc 1px solid;
+    border-right: #dcdcdc 1px solid;
+    border-spacing: 0px;
+    border-top: #dcdcdc 1px solid;
+    color: windowtext;
+    font-family: inherit;
+    font-size: inherit;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    text-align: right;
+    vertical-align: middle;
+    display:inline-block;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    margin:1px;
+    overflow:hidden;
+    word-wrap:normal;
+}
+
+.bwCalculatedNegativeTextbox {
+    width:140px;
+    height:18px;
+    background-color: window;
+    border-bottom: #dcdcdc 1px solid;
+    border-left: #dcdcdc 1px solid;
+    border-right: #dcdcdc 1px solid;
+    border-spacing: 0px;
+    border-top: #dcdcdc 1px solid;
+    color:indianred;
+    font-family: inherit;
+    font-size: inherit;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    text-align: right;
+    vertical-align: middle;
+    display:inline-block;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    margin:1px;
+    overflow:hidden;
+    word-wrap:normal;
+}
+
+.bwCalculatedTextboxTableCell {
+    /* blue */
+    text-align:left;
+    /*width: 180px;*/
+    vertical-align:top;
+    border-top:#d8d8d8 1pt solid; 
+    border-bottom:#d8d8d8 1pt solid; 
+    padding-bottom:3px; 
+    padding-top:4px; 
+    padding-left:5px; 
+    padding-right:12px; 
+    /*background-color:#f5f6f7; subdued color*/
+    /*background-color:#33CCCC;*/ /* pale robin egg blue - websafe */ 
+    /*background-color:#066B8B;*/
+    /*background-color:#c6ecd0;*/ /* green removed 3-9-15 */
+    background-color:#D4DBEE; /* new blue color */
+}
+
+
+
+.bwChartCalculatorTableCellLabel {
+/* These are the calculator box titles on the summary page for budget analysis. */
+    vertical-align:middle;
+    text-align:right;
+    border-top:#d8d8d8 1pt solid; 
+    border-bottom:#d8d8d8 1pt solid; 
+    padding-bottom:4px; 
+    padding-top:4px; 
+    padding-left:22px; 
+    padding-right:10px;
+}
+
+
+
+.bwChartCalculatorLightCurrencyTableCell {
+    /* This is the textbox, for example. */
+    vertical-align:top;
+    border-top:#d8d8d8 1pt solid; 
+    border-bottom:#d8d8d8 1pt solid; 
+    padding-bottom:3px; 
+    padding-top:4px; 
+    padding-left:5px; 
+    padding-right:12px; 
+    background-color:#f5f6f7;
+}
+
+.bwChartCalculatorDarkCurrencyTableCell {
+    /* blue */
+    text-align:left;
+    /*width: 180px;*/
+    vertical-align:top;
+    border-top:#d8d8d8 1pt solid; 
+    border-bottom:#d8d8d8 1pt solid; 
+    padding-bottom:3px; 
+    padding-top:4px; 
+    padding-left:5px; 
+    padding-right:12px; 
+    /*background-color:#f5f6f7; subdued color*/
+    /*background-color:#33CCCC;*/ /* pale robin egg blue - websafe */ 
+    /*background-color:#066B8B;*/
+    /*background-color:#c6ecd0;*/ /* green removed 3-9-15 */
+    background-color:#D4DBEE; /* new blue color */
+}
+
+
+
+
+
+
+.bwDataEntryTableCellComponent {
+    /* This is the textbox, for example. */
+    vertical-align:top;
+    border-top:#d8d8d8 1pt solid; 
+    border-bottom:#d8d8d8 1pt solid; 
+    padding-bottom:3px; 
+    padding-top:4px; 
+    padding-left:5px; 
+    padding-right:12px; 
+    background-color:#f5f6f7;
+}
+
+.bwCurrencyTextBox {
+    /* This is used for single line currency text boxes. The main difference is right hand justification. */
+    width:140px;
+    height:18px;
+    display:inline-block;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    padding:1px;
+    margin:1px;
+    border: 1pt solid #dcdcdc;
+    color:windowtext;
+    background-color:window;
+    overflow:hidden;
+    text-align:right;
+    word-wrap:normal;
+}              
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Place custom styles below */
+input.cw_iphone_submitbtn {
+    color: #050;
+    font: bold 250% 'trebuchet ms',helvetica,sans-serif;
+    background-color: #fed;
+    border: 1px solid;
+    border-color: #696 #363 #363 #696;
+    filter: progid:DXImageTransform.Microsoft.Gradient (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+    width: 170px;
+    height: 70px;
+}
+
+input.cw_iphone_cancelbtn {
+    color: #050;
+    font: bold 250% 'trebuchet ms',helvetica,sans-serif;
+    background-color: #fed;
+    border: 1px solid;
+    border-color: #696 #363 #363 #696;
+    filter: progid:DXImageTransform.Microsoft.Gradient (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+    width: 170px;
+    height: 70px;
+}
+
+input.cw_iphone_widebtn1 {
+    color: #050;
+    font: bold 250% 'trebuchet ms',helvetica,sans-serif;
+    background-color: #fed;
+    border: 1px solid;
+    border-color: #696 #363 #363 #696;
+    width: 550px;
+    height: 130px;
+}
+
+span.cw_iphone_xdlabel {
+    font: bold 200% 'trebuchet ms',helvetica,sans-serif;
+}
+
+textarea.cw_iphone_textarea {
+    font: normal 200% 'trebuchet ms',helvetica,sans-serif;
+}
+
+input.cw_iphone_textarea {
+    font: normal 200% 'trebuchet ms',helvetica,sans-serif;
+    white-space: nowrap; 
+    text-align: right; 
+    width: 100px;
+}
+
+select.cw_iphone_textarea {
+    font: normal 200% 'trebuchet ms',helvetica,sans-serif;
+    white-space: nowrap; 
+    text-align: right; 
+}
+
+
+
+
+TABLE.xdLayout TD {
+	BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none
+}
+TABLE.msoUcTable TD {
+	BORDER-TOP: 1pt solid; BORDER-RIGHT: 1pt solid; BORDER-BOTTOM: 1pt solid; BORDER-LEFT: 1pt solid
+}
+
+
+
+BODY {
+	FONT-SIZE: 10pt; FONT-FAMILY: Calibri
+}
+SELECT {
+	FONT-SIZE: 10pt; FONT-FAMILY: Calibri
+}
+TABLE {
+	FONT-SIZE: 10pt; FONT-FAMILY: Calibri; TEXT-TRANSFORM: none; FONT-WEIGHT: normal; COLOR: black; FONT-STYLE: normal
+}
+.optionalPlaceholder {
+	FONT-SIZE: 9pt; FONT-FAMILY: Calibri; FONT-WEIGHT: normal; COLOR: #333333; FONT-STYLE: normal; PADDING-LEFT: 20px; TEXT-DECORATION: none; BEHAVIOR: url(#default#xOptional)
+}
+.langFont {
+	FONT-SIZE: 10pt; FONT-FAMILY: Calibri; WIDTH: 150px
+}
+.defaultInDocUI {
+	FONT-SIZE: 9pt; FONT-FAMILY: Calibri
+}
+.optionalPlaceholder {
+	PADDING-RIGHT: 20px
+}
+
+
+
+TABLE {
+	BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-COLLAPSE: collapse; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none
+}
+TD {
+	BORDER-TOP-COLOR: #d8d8d8; BORDER-BOTTOM-COLOR: #d8d8d8; BORDER-RIGHT-COLOR: #d8d8d8; BORDER-LEFT-COLOR: #d8d8d8
+}
+TH {
+	BORDER-TOP-COLOR: #000000; COLOR: black; BORDER-BOTTOM-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BACKGROUND-COLOR: #f2f2f2; BORDER-LEFT-COLOR: #000000
+}
+.xdTableHeader {
+	COLOR: black; BACKGROUND-COLOR: #f2f2f2
+}
+.light1 {
+	BACKGROUND-COLOR: #ffffff
+}
+.dark1 {
+	BACKGROUND-COLOR: #000000
+}
+.light2 {
+	BACKGROUND-COLOR: #f6f6f6
+}
+.dark2 {
+	BACKGROUND-COLOR: #182738
+}
+.accent1 {
+	BACKGROUND-COLOR: #0072bc
+}
+.accent2 {
+	BACKGROUND-COLOR: #ec008c
+}
+.accent3 {
+	BACKGROUND-COLOR: #00adee
+}
+.accent4 {
+	BACKGROUND-COLOR: #fd9f08
+}
+.accent5 {
+	BACKGROUND-COLOR: #36b000
+}
+.accent6 {
+	BACKGROUND-COLOR: #fae032
+}</style>
+      <style tableStyle="SharePoint">TR.xdTitleRow {
+	MIN-HEIGHT: 58px
+}
+TD.xdTitleCell {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-RIGHT: #d8d8d8 1pt solid; PADDING-BOTTOM: 6px; PADDING-TOP: 18px; PADDING-LEFT: 22px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #ffffff
+}
+TR.xdTitleRowWithHeading {
+	MIN-HEIGHT: 58px
+}
+TD.xdTitleCellWithHeading {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-RIGHT: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 18px; PADDING-LEFT: 22px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #ffffff
+}
+TR.xdTitleRowWithSubHeading {
+	MIN-HEIGHT: 58px
+}
+TD.xdTitleCellWithSubHeading {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-RIGHT: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 18px; PADDING-LEFT: 22px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #ffffff
+}
+TR.xdTitleRowWithOffsetBody {
+	MIN-HEIGHT: 58px
+}
+TD.xdTitleCellWithOffsetBody {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-RIGHT: #d8d8d8 1pt solid; PADDING-BOTTOM: 6px; PADDING-TOP: 18px; PADDING-LEFT: 22px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #ffffff
+}
+TR.xdTitleHeadingRow {
+	MIN-HEIGHT: 38px
+}
+TD.xdTitleHeadingCell {
+	BORDER-RIGHT: #d8d8d8 1pt solid; PADDING-BOTTOM: 12px; PADDING-TOP: 0px; PADDING-LEFT: 22px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #ffffff; valign: top
+}
+TR.xdTitleSubheadingRow {
+	MIN-HEIGHT: 67px
+}
+TD.xdTitleSubheadingCell {
+	BORDER-TOP: #243b56 1pt solid; BORDER-RIGHT: #d8d8d8 1pt solid; PADDING-BOTTOM: 18px; PADDING-TOP: 8px; PADDING-LEFT: 22px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #ffffff
+}
+TD.xdVerticalFill {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; BORDER-LEFT: #d8d8d8 1pt solid; BACKGROUND-COLOR: #6890be
+}
+TD.xdTableContentCellWithVerticalOffset {
+	BORDER-RIGHT: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 0px; PADDING-TOP: 12px; PADDING-LEFT: 85px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 10px; BACKGROUND-COLOR: #ffffff
+}
+TR.xdTableContentRow {
+	MIN-HEIGHT: 140px
+}
+TD.xdTableContentCell {
+	BORDER-RIGHT: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 0px; BACKGROUND-COLOR: #ffffff
+}
+TD.xdTableContentCellWithVerticalFill {
+	BORDER-RIGHT: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 1px; BORDER-LEFT: #d8d8d8 1pt solid; PADDING-RIGHT: 1px; BACKGROUND-COLOR: #ffffff
+}
+TD.xdTableStyleOneCol {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 22px; PADDING-RIGHT: 22px
+}
+TR.xdContentRowOneCol {
+	MIN-HEIGHT: 45px; valign: center
+}
+TR.xdHeadingRow {
+	MIN-HEIGHT: 36px
+}
+TD.xdHeadingCell {
+	BORDER-BOTTOM: #6890be 1.5pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 6px; PADDING-LEFT: 22px; PADDING-RIGHT: 22px
+}
+TR.xdSubheadingRow {
+	MIN-HEIGHT: 27px
+}
+TD.xdSubheadingCell {
+	BORDER-BOTTOM: #a5a5a5 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 22px; PADDING-RIGHT: 22px
+}
+TR.xdHeadingRowEmphasis {
+	MIN-HEIGHT: 36px
+}
+TD.xdHeadingCellEmphasis {
+	BORDER-BOTTOM: #6890be 1.5pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 6px; PADDING-LEFT: 22px; PADDING-RIGHT: 22px
+}
+TR.xdSubheadingRowEmphasis {
+	MIN-HEIGHT: 27px
+}
+TD.xdSubheadingCellEmphasis {
+	BORDER-BOTTOM: #a5a5a5 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 22px; PADDING-RIGHT: 22px
+}
+TR.xdTableLabelControlStackedRow {
+	MIN-HEIGHT: 45px
+}
+TD.xdTableLabelControlStackedCellLabel {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 22px; PADDING-RIGHT: 5px
+}
+TD.xdTableLabelControlStackedCellComponent {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 5px; PADDING-RIGHT: 22px
+}
+TR.xdTableRow {
+	MIN-HEIGHT: 30px
+}
+TD.xdTableCellLabel {
+	PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 22px; PADDING-RIGHT: 5px
+}
+TD.xdTableCellComponent {
+	PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 5px; PADDING-RIGHT: 22px
+}
+TD.xdTableMiddleCell {
+	PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px
+}
+TR.xdTableEmphasisRow {
+	MIN-HEIGHT: 30px
+}
+TD.xdTableEmphasisCellLabel {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 22px; PADDING-RIGHT: 5px; BACKGROUND-COLOR: #f6f6f6
+}
+TD.xdTableEmphasisCellComponent {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 5px; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #f6f6f6
+}
+TD.xdTableMiddleCellEmphasis {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND-COLOR: #f6f6f6
+}
+TR.xdTableOffsetRow {
+	MIN-HEIGHT: 30px
+}
+TD.xdTableOffsetCellLabel {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 22px; PADDING-RIGHT: 5px
+}
+TD.xdTableOffsetCellComponent {
+	BORDER-TOP: #d8d8d8 1pt solid; BORDER-BOTTOM: #d8d8d8 1pt solid; PADDING-BOTTOM: 4px; PADDING-TOP: 4px; PADDING-LEFT: 5px; PADDING-RIGHT: 22px; BACKGROUND-COLOR: #f6f6f6
+}
+P {
+	FONT-SIZE: 10pt; COLOR: #3f3f3f; MARGIN-TOP: 0px
+}
+H1 {
+	MARGIN-BOTTOM: 0px; FONT-SIZE: 22pt; FONT-WEIGHT: normal; COLOR: #3f3f3f; MARGIN-TOP: 0px
+}
+H2 {
+	MARGIN-BOTTOM: 0px; FONT-SIZE: 15pt; FONT-WEIGHT: normal; COLOR: #262626; MARGIN-TOP: 0px
+}
+H3 {
+	MARGIN-BOTTOM: 0px; FONT-SIZE: 12pt; FONT-WEIGHT: bold; COLOR: #3f3f3f; MARGIN-TOP: 0px
+}
+H4 {
+	MARGIN-BOTTOM: 0px; FONT-SIZE: 10pt; FONT-WEIGHT: normal; COLOR: #3f3f3f; MARGIN-TOP: 0px
+}
+H5 {
+	MARGIN-BOTTOM: 0px; FONT-SIZE: 10pt; FONT-WEIGHT: bold; COLOR: #3f3f3f; MARGIN-TOP: 0px
+}
+H6 {
+	MARGIN-BOTTOM: 0px; FONT-SIZE: 10pt; FONT-WEIGHT: normal; COLOR: #3f3f3f; MARGIN-TOP: 0px
+}
+BODY {
+	COLOR: black
+}
