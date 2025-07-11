@@ -4,10 +4,10 @@
     "\\src",
     "\\src\\routes",
     "\\src\\routes\\public",
-    "\\src\\routes\\public\\css\\jquery\\1.11.1",
-    "\\src\\_old_fileservices\\routes",
-    "\\src\\_old_webservices\\routes"
+    "\\src\\routes\\public\\formwidgets\\New folder",
+    "\\src\\routes\\public\\widgets",
+    "\\src\\widgets"
   ],
-  "SelectedNode": "\\src\\routes\\public\\uris.json",
+  "SelectedNode": "\\src\\widgets\\bwActiveMenu_Main.js",
   "PreviewInSolutionExplorer": false
 }

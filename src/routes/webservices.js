@@ -39433,23 +39433,9 @@ router.post('/_bw/addarequesttype', function (request, response) {
                         return v.toString(16);
                     });
 
-                    BwRequestTypes.find({ bwRequestTypeId: bwRequestTypeId }, function (rtfError, rtfResult) {
-                        try {
-                            if (rtfError) {
-
-                                var msg = 'Error in start.js.addarequesttype(). Error finding the request type. rtfError: ' + rtfError;
-                                var threatLevel = 'severe'; // severe, high, elevated, guarded, low.
-                                var source = 'start.js.addarequesttype()';
-                                var errorCode = null;
-                                WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
-
-                                var result = {
-                                    status: 'ERROR',
-                                    message: msg
-                                }
-                                response.send(result);
-
-                            } else {
+                    BwRequestTypes.find({ bwRequestTypeId: bwRequestTypeId })
+                        .then(function (rtfResult) {
+                            try {
 
                                 if (rtfResult && rtfResult.length && (rtfResult.length > 0)) {
 
@@ -39485,22 +39471,8 @@ router.post('/_bw/addarequesttype', function (request, response) {
                                             hasWorkflow: hasWorkflow
                                         });
 
-                                    bwRequestTypes.save(function (rtError, rtMod) {
-                                        if (rtError) {
-
-                                            var msg = 'Error in start.js.addarequesttype():save:1: ' + bwRequestTypeId + ', ' + abbreviation + '. rtError: ' + rtError;
-                                            var threatLevel = 'high'; // severe, high, elevated, guarded, low.
-                                            var source = 'start.js.addarequesttype()';
-                                            var errorCode = null;
-                                            WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
-
-                                            var result = {
-                                                status: 'ERROR',
-                                                message: msg
-                                            };
-                                            response.send(result);
-
-                                        } else {
+                                    bwRequestTypes.save().then(function (rtMod) {
+                                        try {
 
                                             var msg = 'In start.js.addarequesttype(). A bwRequestType was created rtMod: ' + JSON.stringify(rtMod);
                                             var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
@@ -39525,201 +39497,175 @@ router.post('/_bw/addarequesttype', function (request, response) {
                                                     bwFormActive: true, // AT SOME TIEM THIS WILL VBE DEPRECATED> 7-27-2023.
                                                     isActive: true // Added 7-27-2023.
                                                 });
-                                            bwForm.save(function (fsError, fsMod) {
+                                            bwForm.save().then(function (fsMod) {
                                                 try {
-                                                    if (fsError) {
 
-                                                        var msg = 'Error in start.js.addarequesttype():2: ' + e.message + ', ' + e.stack;
-                                                        var threatLevel = 'high'; // severe, high, elevated, guarded, low.
-                                                        var source = 'start.js.addarequesttype()';
-                                                        var errorCode = null;
-                                                        WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+                                                    var msg = 'In start.js.addarequesttype(). A Form was created for this request type. fsMod: ' + JSON.stringify(fsMod);
+                                                    var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
+                                                    var source = 'start.js.addarequesttype()';
+                                                    var errorCode = null;
+                                                    WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
 
-                                                        var result = {
-                                                            status: 'ERROR',
-                                                            message: msg
-                                                        };
-                                                        response.send(result);
+                                                    if (!((hasWorkflow == true) || (hasWorkflow == 'true'))) {
 
-                                                    } else {
-
-                                                        var msg = 'In start.js.addarequesttype(). A Form was created for this request type. fsMod: ' + JSON.stringify(fsMod);
+                                                        var msg = 'In start.js.addarequesttype(). No workflow will be created for this request type. hasWorkflow: ' + hasWorkflow;
                                                         var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
                                                         var source = 'start.js.addarequesttype()';
                                                         var errorCode = null;
                                                         WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
 
-                                                        if (!((hasWorkflow == true) || (hasWorkflow == 'true'))) {
+                                                        // No workflow will be created for this request type.
+                                                        BwRequestTypes.find({ bwWorkflowAppId: bwWorkflowAppId }).then(function (rtfResult) {
+                                                            try {
 
-                                                            var msg = 'In start.js.addarequesttype(). No workflow will be created for this request type. hasWorkflow: ' + hasWorkflow;
-                                                            var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
+                                                                var result = {
+                                                                    status: 'SUCCESS',
+                                                                    message: 'SUCCESS',
+                                                                    RequestTypes: rtfResult,
+                                                                    bwForm: bwForm//,
+                                                                    //bwWorkflow: null
+                                                                }
+                                                                response.send(result);
+
+                                                            } catch (e) {
+
+                                                                var msg = 'Exception in start.js.addarequesttype():4: ' + e.message + ', ' + e.stack;
+                                                                var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                                                var source = 'start.js.addarequesttype()';
+                                                                var errorCode = null;
+                                                                WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                                                var result = {
+                                                                    status: 'EXCEPTION',
+                                                                    message: msg
+                                                                };
+                                                                response.send(result);
+
+                                                            }
+
+                                                        }).catch(function (e) {
+
+                                                            var msg = 'Error in start.js.addarequesttype(). Error finding the request type: ' + JSON.stringify(e);
+                                                            var threatLevel = 'severe'; // severe, high, elevated, guarded, low.
                                                             var source = 'start.js.addarequesttype()';
                                                             var errorCode = null;
                                                             WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
 
-                                                            // No workflow will be created for this request type.
-                                                            BwRequestTypes.find({ bwWorkflowAppId: bwWorkflowAppId }, function (rtfError, rtfResult) {
-                                                                try {
-                                                                    if (rtfError) {
+                                                            var result = {
+                                                                status: 'ERROR',
+                                                                message: msg
+                                                            }
+                                                            response.send(result);
 
-                                                                        var msg = 'Error in start.js.addarequesttype(). Error finding the request type. rtfError: ' + rtfError;
-                                                                        var threatLevel = 'severe'; // severe, high, elevated, guarded, low.
-                                                                        var source = 'start.js.addarequesttype()';
-                                                                        var errorCode = null;
-                                                                        WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+                                                        });
 
-                                                                        var result = {
-                                                                            status: 'ERROR',
-                                                                            message: msg
-                                                                        }
-                                                                        response.send(result);
+                                                    } else {
 
-                                                                    } else {
+                                                        var msg = 'In start.js.addarequesttype(). A workflow will be created for this request type. hasWorkflow: ' + hasWorkflow;
+                                                        var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
+                                                        var source = 'start.js.addarequesttype()';
+                                                        var errorCode = null;
+                                                        WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                                        // Create a workflow for this request type.
+                                                        // defaultWorkflow << This is a global JSON object representing the default workflow. The user can change it any way they like, this is just the default.
+                                                        var bwWorkflowId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                                                            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                                                            return v.toString(16);
+                                                        });
+
+                                                        var bwWorkflow = new BwWorkflow(
+                                                            {
+                                                                bwWorkflowId: bwWorkflowId,
+                                                                bwWorkflowAppId: bwWorkflowAppId,
+                                                                bwRequestTypeId: bwRequestTypeId,
+                                                                bwWorkflowJson: JSON.stringify(defaultWorkflow), // 4-8-2022 // The default one to get the user started.
+                                                                isActive: true
+                                                            });
+                                                        bwWorkflow.save().then(function (wsMod) {
+                                                            try {
+
+                                                                var msg = 'In start.js.addarequesttype(). A workflow was created for the new Request Type. wsMod: ' + JSON.stringify(wsMod);
+                                                                var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
+                                                                var source = 'start.js.addarequesttype()';
+                                                                var errorCode = null;
+                                                                WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                                                BwRequestTypes.find({ bwWorkflowAppId: bwWorkflowAppId }).then(function (rtfResult) {
+                                                                    try {
 
                                                                         var result = {
                                                                             status: 'SUCCESS',
                                                                             message: 'SUCCESS',
                                                                             RequestTypes: rtfResult,
                                                                             bwForm: bwForm//,
-                                                                            //bwWorkflow: null
+                                                                            //bwWorkflow: bwWorkflow
                                                                         }
                                                                         response.send(result);
 
-                                                                    }
+                                                                    } catch (e) {
 
-                                                                } catch (e) {
-
-                                                                    var msg = 'Exception in start.js.addarequesttype():4: ' + e.message + ', ' + e.stack;
-                                                                    var threatLevel = 'high'; // severe, high, elevated, guarded, low.
-                                                                    var source = 'start.js.addarequesttype()';
-                                                                    var errorCode = null;
-                                                                    WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
-
-                                                                    var result = {
-                                                                        status: 'EXCEPTION',
-                                                                        message: msg
-                                                                    };
-                                                                    response.send(result);
-
-                                                                }
-
-                                                            });
-
-                                                        } else {
-
-                                                            var msg = 'In start.js.addarequesttype(). A workflow will be created for this request type. hasWorkflow: ' + hasWorkflow;
-                                                            var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
-                                                            var source = 'start.js.addarequesttype()';
-                                                            var errorCode = null;
-                                                            WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
-
-                                                            // Create a workflow for this request type.
-                                                            // defaultWorkflow << This is a global JSON object representing the default workflow. The user can change it any way they like, this is just the default.
-                                                            var bwWorkflowId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                                                                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                                                                return v.toString(16);
-                                                            });
-
-                                                            var bwWorkflow = new BwWorkflow(
-                                                                {
-                                                                    bwWorkflowId: bwWorkflowId,
-                                                                    bwWorkflowAppId: bwWorkflowAppId,
-                                                                    bwRequestTypeId: bwRequestTypeId,
-                                                                    bwWorkflowJson: JSON.stringify(defaultWorkflow), // 4-8-2022 // The default one to get the user started.
-                                                                    isActive: true
-                                                                });
-                                                            bwWorkflow.save(function (wsError, wsMod) {
-                                                                try {
-                                                                    if (wsError) {
-
-                                                                        var msg = 'Error in start.js.addarequesttype():3: ' + e.message + ', ' + e.stack;
+                                                                        var msg = 'Exception in start.js.addarequesttype():4: ' + e.message + ', ' + e.stack;
                                                                         var threatLevel = 'high'; // severe, high, elevated, guarded, low.
                                                                         var source = 'start.js.addarequesttype()';
                                                                         var errorCode = null;
                                                                         WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
 
                                                                         var result = {
-                                                                            status: 'ERROR',
+                                                                            status: 'EXCEPTION',
                                                                             message: msg
                                                                         };
                                                                         response.send(result);
 
-                                                                    } else {
-
-                                                                        var msg = 'In start.js.addarequesttype(). A workflow was created for the new Request Type. wsMod: ' + JSON.stringify(wsMod);
-                                                                        var threatLevel = 'elevated'; // severe, high, elevated, guarded, low.
-                                                                        var source = 'start.js.addarequesttype()';
-                                                                        var errorCode = null;
-                                                                        WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
-
-                                                                        BwRequestTypes.find({ bwWorkflowAppId: bwWorkflowAppId }, function (rtfError, rtfResult) {
-                                                                            try {
-                                                                                if (rtfError) {
-
-                                                                                    var msg = 'Error in start.js.addarequesttype(). Error finding the request type. rtfError: ' + rtfError;
-                                                                                    var threatLevel = 'severe'; // severe, high, elevated, guarded, low.
-                                                                                    var source = 'start.js.addarequesttype()';
-                                                                                    var errorCode = null;
-                                                                                    WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
-
-                                                                                    var result = {
-                                                                                        status: 'ERROR',
-                                                                                        message: msg
-                                                                                    }
-                                                                                    response.send(result);
-
-                                                                                } else {
-
-                                                                                    var result = {
-                                                                                        status: 'SUCCESS',
-                                                                                        message: 'SUCCESS',
-                                                                                        RequestTypes: rtfResult,
-                                                                                        bwForm: bwForm//,
-                                                                                        //bwWorkflow: bwWorkflow
-                                                                                    }
-                                                                                    response.send(result);
-
-                                                                                }
-
-                                                                            } catch (e) {
-
-                                                                                var msg = 'Exception in start.js.addarequesttype():4: ' + e.message + ', ' + e.stack;
-                                                                                var threatLevel = 'high'; // severe, high, elevated, guarded, low.
-                                                                                var source = 'start.js.addarequesttype()';
-                                                                                var errorCode = null;
-                                                                                WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
-
-                                                                                var result = {
-                                                                                    status: 'EXCEPTION',
-                                                                                    message: msg
-                                                                                };
-                                                                                response.send(result);
-
-                                                                            }
-
-                                                                        });
-
                                                                     }
 
-                                                                } catch (e) {
+                                                                }).catch(function (e) {
 
-                                                                    var msg = 'Exception in start.js.addarequesttype():3: ' + e.message + ', ' + e.stack;
-                                                                    var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                                                    var msg = 'Error in start.js.addarequesttype(). Error finding the request type: ' + JSON.stringify(e);
+                                                                    var threatLevel = 'severe'; // severe, high, elevated, guarded, low.
                                                                     var source = 'start.js.addarequesttype()';
                                                                     var errorCode = null;
                                                                     WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
 
                                                                     var result = {
-                                                                        status: 'EXCEPTION',
+                                                                        status: 'ERROR',
                                                                         message: msg
-                                                                    };
+                                                                    }
                                                                     response.send(result);
 
-                                                                }
+                                                                });
 
-                                                            });
+                                                            } catch (e) {
 
-                                                        }
+                                                                var msg = 'Exception in start.js.addarequesttype():3: ' + e.message + ', ' + e.stack;
+                                                                var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                                                var source = 'start.js.addarequesttype()';
+                                                                var errorCode = null;
+                                                                WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                                                var result = {
+                                                                    status: 'EXCEPTION',
+                                                                    message: msg
+                                                                };
+                                                                response.send(result);
+
+                                                            }
+
+                                                        }).catch(function (e) {
+
+                                                            var msg = 'Error in start.js.addarequesttype():3: ' + JSON.stringify(e);
+                                                            var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                                            var source = 'start.js.addarequesttype()';
+                                                            var errorCode = null;
+                                                            WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                                            var result = {
+                                                                status: 'ERROR',
+                                                                message: msg
+                                                            };
+                                                            response.send(result);
+
+                                                        });
 
                                                     }
 
@@ -39739,33 +39685,88 @@ router.post('/_bw/addarequesttype', function (request, response) {
 
                                                 }
 
+                                            }).catch(function (e) {
+
+                                                var msg = 'Error in start.js.addarequesttype():2: ' + JSON.stringify(e);
+                                                var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                                var source = 'start.js.addarequesttype()';
+                                                var errorCode = null;
+                                                WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                                var result = {
+                                                    status: 'ERROR',
+                                                    message: msg
+                                                };
+                                                response.send(result);
+
                                             });
+
+                                        } catch (e) {
+
+                                            var msg = 'Exception in start.js.addarequesttype():4xcx5: ' + e.message + ', ' + e.stack;
+                                            var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                            var source = 'start.js.addarequesttype()';
+                                            var errorCode = null;
+                                            WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                            var result = {
+                                                status: 'EXCEPTION',
+                                                message: msg
+                                            };
+                                            response.send(result);
 
                                         }
 
-                                    });
+                                    }).catch(function (e) {
+
+                                        var msg = 'Error in start.js.addarequesttype():save:1: ' + bwRequestTypeId + ', ' + abbreviation + ': ' + JSON.stringify(e);
+                                        var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                        var source = 'start.js.addarequesttype()';
+                                        var errorCode = null;
+                                        WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                        var result = {
+                                            status: 'ERROR',
+                                            message: msg
+                                        };
+                                        response.send(result);
+
+                                    })
 
                                 }
 
+                            } catch (e) {
+
+                                var msg = 'Exception in start.js.addarequesttype():4: ' + e.message + ', ' + e.stack;
+                                var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                                var source = 'start.js.addarequesttype()';
+                                var errorCode = null;
+                                WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+
+                                var result = {
+                                    status: 'EXCEPTION',
+                                    message: msg
+                                };
+                                response.send(result);
+
                             }
 
-                        } catch (e) {
+                        }).catch(function (e) {
 
-                            var msg = 'Exception in start.js.addarequesttype():4: ' + e.message + ', ' + e.stack;
-                            var threatLevel = 'high'; // severe, high, elevated, guarded, low.
+                            var msg = 'Error in start.js.addarequesttype.BwRequestTypes.find():2-21: ' + JSON.stringify(e);
+                            var threatLevel = 'severe'; // severe, high, elevated, guarded, low.
                             var source = 'start.js.addarequesttype()';
                             var errorCode = null;
-                            WriteToErrorLog(threatLevel, source, errorCode, msg, bwWorkflowAppId_LoggedIn);
+                            WriteToErrorLog(threatLevel, source, errorCode, msg);
+                            console.log(msg);
 
                             var result = {
-                                status: 'EXCEPTION',
+                                status: 'ERROR',
                                 message: msg
-                            };
+                            }
                             response.send(result);
 
-                        }
-
-                    });
+                        });
 
                 } else {
 
